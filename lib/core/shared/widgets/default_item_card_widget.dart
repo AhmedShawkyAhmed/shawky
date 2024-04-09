@@ -1,6 +1,7 @@
 import 'package:finance/core/resources/color_manger.dart';
 import 'package:finance/core/services/navigation_service.dart';
 import 'package:finance/core/shared/models/home_item_model.dart';
+import 'package:finance/core/shared/widgets/default_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -15,7 +16,7 @@ class DefaultItemCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         NavigationService.pushNamed(model.route);
       },
       child: Container(
@@ -37,13 +38,8 @@ class DefaultItemCardWidget extends StatelessWidget {
             ),
             Row(
               children: [
-                Text(
-                  model.title,
-                  style: TextStyle(
-                    color: ColorManager.secondary,
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500
-                  ),
+                DefaultText(
+                  text: model.title,
                 ),
               ],
             ),

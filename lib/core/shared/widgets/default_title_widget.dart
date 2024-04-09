@@ -1,5 +1,6 @@
 import 'package:finance/core/resources/color_manger.dart';
 import 'package:finance/core/services/navigation_service.dart';
+import 'package:finance/core/shared/widgets/default_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -14,16 +15,15 @@ class DefaultTitleWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsetsDirectional.only(top: 17.h, start: 15.w, end: 17.w),
+      padding: EdgeInsetsDirectional.only(
+          top: 17.h, start: 15.w, end: 17.w, bottom: 10.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            title,
-            style: TextStyle(
-              color: ColorManager.white,
-              fontSize: 20.sp,
-            ),
+          DefaultText(
+            text: title,
+            textColor: ColorManager.white,
+            fontSize: 20.sp,
           ),
           GestureDetector(
             onTap: () => NavigationService.pop(),

@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:finance/core/resources/color_manger.dart';
 import 'package:finance/core/services/navigation_service.dart';
+import 'package:finance/core/shared/widgets/default_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -40,7 +41,7 @@ showToast({
         const SizedBox(
           width: 8,
         ),
-        Expanded(child: Text(message)),
+        Expanded(child: DefaultText(text:message)),
       ],
     ),
   );

@@ -13,25 +13,25 @@ class MoneyCubit extends Cubit<MoneyState> {
       id: 1,
       title: "Accounts",
       icon: Icons.account_balance_rounded,
-      route: "",
+      route: Routes.moneyAccountsScreen,
     ),
     DefaultItemModel(
       id: 2,
       title: "Cards",
       icon: Icons.credit_card_rounded,
-      route: "",
+      route: Routes.moneyAccountsScreen,
     ),
     DefaultItemModel(
       id: 3,
       title: "Expenses",
       icon: Icons.local_atm_rounded,
-      route: "",
+      route: Routes.moneyAccountsScreen,
     ),
     DefaultItemModel(
       id: 4,
       title: "Loans",
       icon: Icons.attach_money_rounded,
-      route: "",
+      route: Routes.moneyAccountsScreen,
     ),
   ];
 }

@@ -1,4 +1,5 @@
 import 'package:finance/core/services/navigation_service.dart';
+import 'package:finance/core/shared/widgets/default_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -35,11 +36,8 @@ class ErrorDialog {
                     ),
                   ),
                   if (message != null) ...[
-                    Text(
-                      message,
-                      style: Theme.of(NavigationService.context)
-                          .textTheme
-                          .titleMedium,
+                    DefaultText(
+                      text: message,
                     ),
                   ]
                 ],
@@ -51,11 +49,8 @@ class ErrorDialog {
                       () {
                         NavigationService.pop();
                       },
-                  child: Text(
-                    "Ok",
-                    style: Theme.of(NavigationService.context)
-                        .textTheme
-                        .titleMedium,
+                  child: const DefaultText(
+                    text: "Ok",
                   ),
                 ),
                 if (canPop)
@@ -63,11 +58,8 @@ class ErrorDialog {
                     onPressed: () {
                       NavigationService.pop();
                     },
-                    child: Text(
-                      "Back",
-                      style: Theme.of(NavigationService.context)
-                          .textTheme
-                          .titleMedium,
+                    child: const DefaultText(
+                      text: "Back",
                     ),
                   ),
               ],

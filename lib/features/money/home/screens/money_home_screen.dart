@@ -1,7 +1,7 @@
 import 'package:finance/core/resources/color_manger.dart';
 import 'package:finance/core/shared/widgets/default_item_card_widget.dart';
 import 'package:finance/core/shared/widgets/default_title_widget.dart';
-import 'package:finance/features/money/cubit/money_cubit.dart';
+import 'package:finance/features/money/home/cubit/money_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,13 +16,12 @@ class MoneyHomeScreen extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           backgroundColor: ColorManager.secondary,
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                const DefaultTitleWidget(title: "Money",),
-                GridView.builder(
+          body: Column(
+            children: [
+              const DefaultTitleWidget(title: "Money"),
+              Expanded(
+                child: GridView.builder(
                   shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
                   padding: EdgeInsets.symmetric(
                     vertical: 15.h,
                     horizontal: 15.w,
@@ -41,8 +40,8 @@ class MoneyHomeScreen extends StatelessWidget {
                     );
                   },
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         );
       },

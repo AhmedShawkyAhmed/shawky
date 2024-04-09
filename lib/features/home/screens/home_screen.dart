@@ -16,13 +16,13 @@ class HomeScreen extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           backgroundColor: ColorManager.secondary,
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                const UserInfoWidget(),
-                GridView.builder(
+          body: Column(
+            children: [
+              const UserInfoWidget(),
+              Expanded(
+                child: GridView.builder(
                   shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
+                  // physics: const NeverScrollableScrollPhysics(),
                   padding: EdgeInsets.symmetric(
                     vertical: 15.h,
                     horizontal: 15.w,
@@ -41,8 +41,8 @@ class HomeScreen extends StatelessWidget {
                     );
                   },
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         );
       },

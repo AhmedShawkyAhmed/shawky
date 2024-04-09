@@ -1,0 +1,55 @@
+import 'package:finance/core/resources/color_manger.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+class DefaultText extends StatelessWidget {
+  final String text;
+  final Color? textColor;
+  final double? fontSize;
+  final int? maxLines;
+  final bool underLined;
+  final bool lineThrow;
+  final FontWeight? fontWeight;
+  final VoidCallback? onTap;
+  final TextAlign? align;
+  final double letterSpacing;
+
+  const DefaultText({
+    required this.text,
+    this.textColor,
+    this.fontSize,
+    this.underLined = false,
+    this.lineThrow = false,
+    this.maxLines,
+    this.fontWeight,
+    this.onTap,
+    this.align,
+    this.letterSpacing = 0.0,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Text(
+        text,
+        textAlign: align ?? TextAlign.start,
+        style: TextStyle(
+          letterSpacing: letterSpacing,
+          decoration: underLined
+              ? TextDecoration.underline
+              : lineThrow
+                  ? TextDecoration.lineThrough
+                  : TextDecoration.none,
+          color: textColor ?? ColorManager.secondary,
+          fontSize: fontSize ?? 14.sp,
+          fontWeight: fontWeight ?? FontWeight.w500,
+        ),
+        textDirection: TextDirection.ltr,
+        maxLines: maxLines ?? 1,
+        overflow: TextOverflow.ellipsis,
+      ),
+    );
+  }
+}

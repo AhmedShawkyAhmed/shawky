@@ -1,5 +1,6 @@
 import 'package:finance/core/resources/assets_manager.dart';
 import 'package:finance/core/resources/color_manger.dart';
+import 'package:finance/core/shared/widgets/default_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -13,18 +14,16 @@ class UserInfoWidget extends StatelessWidget {
       child: Row(
         children: [
           Padding(
-            padding: EdgeInsetsDirectional.only(start: 15.w,end: 10.w),
+            padding: EdgeInsetsDirectional.only(start: 15.w, end: 10.w),
             child: Image.asset(
               ImageAssets.logo,
               width: 60.w,
             ),
           ),
-          Text(
-            "Ahmed Shawky\nSoftware Engineer",
-            style: TextStyle(
-              color: ColorManager.white,
-              fontSize: 15.sp,
-            ),
+          DefaultText(
+            text: "Ahmed Shawky\nSoftware Engineer",
+            textColor: ColorManager.white,
+            fontSize: 15.sp,
           ),
         ],
       ),

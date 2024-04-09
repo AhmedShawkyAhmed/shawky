@@ -1,4 +1,5 @@
 import 'package:finance/core/resources/color_manger.dart';
+import 'package:finance/core/shared/widgets/default_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -19,12 +20,9 @@ class ErrorScreen extends StatelessWidget {
             color: ColorManager.redError,
             size: 200.sp,
           ),
-          Text(
-            "Internal Server Error",
-            style: TextStyle(
-              color: ColorManager.black,
-              fontSize: 20.sp,
-            ),
+          DefaultText(
+            text: "Internal Server Error",
+            fontSize: 20.sp,
           ),
         ],
       ),

@@ -1,4 +1,5 @@
 import 'package:finance/core/services/navigation_service.dart';
+import 'package:finance/core/shared/widgets/default_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -28,11 +29,8 @@ class SuccessDialog {
                   ),
                 ),
                 if (message != null) ...[
-                  Text(
-                    message,
-                    style: Theme.of(NavigationService.context)
-                        .textTheme
-                        .titleMedium,
+                  DefaultText(
+                    text: message,
                   ),
                 ]
               ],
@@ -44,10 +42,8 @@ class SuccessDialog {
                     () {
                       NavigationService.pop();
                     },
-                child: Text(
-                  "Ok",
-                  style:
-                      Theme.of(NavigationService.context).textTheme.titleMedium,
+                child: const DefaultText(
+                  text: "Ok",
                 ),
               ),
             ],
