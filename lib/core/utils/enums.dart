@@ -3,3 +3,13 @@ enum Currency{
   usd,
 }
 
+enum AccountTypes{
+  main,
+  saving,
+  emergency,
+  investment,
+  retirement,
+  cash,
+  wallet,
+}
+

@@ -2,6 +2,7 @@ import 'package:finance/core/resources/color_manger.dart';
 import 'package:finance/core/shared/widgets/default_text.dart';
 import 'package:finance/core/shared/widgets/percentage_widget.dart';
 import 'package:finance/core/utils/enums.dart';
+import 'package:finance/core/utils/extentions.dart';
 import 'package:finance/features/money/accounts/data/models/money_account_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -34,7 +35,7 @@ class AccountCardWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 DefaultText(
-                  text: "${model.type} - ${model.name}",
+                  text: "${model.type.name.toCapitalized()} - ${model.name}",
                   fontSize: 13.sp,
                 ),
                 DefaultText(

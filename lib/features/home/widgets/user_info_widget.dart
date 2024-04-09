@@ -13,8 +13,13 @@ class UserInfoWidget extends StatelessWidget {
       padding: EdgeInsetsDirectional.only(top: 17.h),
       child: Row(
         children: [
-          Padding(
-            padding: EdgeInsetsDirectional.only(start: 15.w, end: 10.w),
+          Container(
+            padding: EdgeInsetsDirectional.all(8.sp),
+            margin: EdgeInsetsDirectional.only(start: 15.w,end: 10.w),
+            decoration: BoxDecoration(
+              color: ColorManager.primaryDark.withOpacity(0.3),
+              borderRadius: BorderRadius.circular(100.r),
+            ),
             child: Image.asset(
               ImageAssets.logo,
               width: 60.w,
@@ -24,6 +29,7 @@ class UserInfoWidget extends StatelessWidget {
             text: "Ahmed Shawky\nSoftware Engineer",
             textColor: ColorManager.white,
             fontSize: 15.sp,
+            maxLines: 2,
           ),
         ],
       ),

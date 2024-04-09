@@ -6,4 +6,6 @@ class Routes {
   static const String moneyHomeScreen = "/moneyHomeScreen";
   static const String moneyAccountsScreen = "/moneyAccountsScreen";
   static const String moneyAddAccountsScreen = "/moneyAddAccountsScreen";
+  static const String moneyCardsScreen = "/moneyCardsScreen";
+  static const String moneyAddCardsScreen = "/moneyAddCardsScreen";
 }

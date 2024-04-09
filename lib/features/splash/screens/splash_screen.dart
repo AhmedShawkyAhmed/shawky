@@ -13,23 +13,32 @@ class SplashScreen extends StatelessWidget {
     return BlocBuilder<SplashCubit, SplashState>(
       builder: (context, state) {
         return Scaffold(
-          backgroundColor: ColorManager.primary,
+          backgroundColor: ColorManager.secondary,
           body: SizedBox(
             width: double.infinity,
             height: double.infinity,
             child: Stack(
               children: [
                 Positioned(
-                  left: -60,
-                  top: 130,
+                  left: -120,
+                  top: 140,
                   child: RotationTransition(
                     turns: const AlwaysStoppedAnimation(-30 / 360),
                     child: Container(
-                      width: 250.w,
+                      width: 300.w,
                       height: 60.h,
                       decoration: BoxDecoration(
-                        color: ColorManager.primaryDark,
                         borderRadius: BorderRadius.circular(100.r),
+                        gradient: const LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.topRight,
+                          colors: [
+                            ColorManager.white,
+                            ColorManager.primaryLight,
+                            ColorManager.primary,
+                            ColorManager.primaryDark,
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -51,6 +60,8 @@ class SplashScreen extends StatelessWidget {
                             colors: [
                               ColorManager.white,
                               ColorManager.primaryLight,
+                              ColorManager.primary,
+                              ColorManager.primaryDark,
                             ],
                           ),
                         ),
@@ -62,7 +73,7 @@ class SplashScreen extends StatelessWidget {
                           width: 200.w,
                           height: 200.w,
                           decoration: BoxDecoration(
-                            color: ColorManager.primary,
+                            color: ColorManager.secondary,
                             borderRadius: BorderRadius.circular(200.r),
                           ),
                         ),
@@ -77,16 +88,25 @@ class SplashScreen extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  right: -60,
-                  bottom: 120,
+                  right: -120,
+                  bottom: 140,
                   child: RotationTransition(
                     turns: const AlwaysStoppedAnimation(-30 / 360),
                     child: Container(
-                      width: 250.w,
+                      width: 300.w,
                       height: 60.h,
                       decoration: BoxDecoration(
-                        color: ColorManager.primaryDark,
                         borderRadius: BorderRadius.circular(100.r),
+                        gradient: const LinearGradient(
+                          begin: Alignment.topRight,
+                          end: Alignment.topLeft,
+                          colors: [
+                            ColorManager.white,
+                            ColorManager.primaryLight,
+                            ColorManager.primary,
+                            ColorManager.primaryDark,
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -108,6 +128,8 @@ class SplashScreen extends StatelessWidget {
                             colors: [
                               ColorManager.white,
                               ColorManager.primaryLight,
+                              ColorManager.primary,
+                              ColorManager.primaryDark,
                             ],
                           ),
                         ),
@@ -119,7 +141,7 @@ class SplashScreen extends StatelessWidget {
                           width: 200.w,
                           height: 200.w,
                           decoration: BoxDecoration(
-                            color: ColorManager.primary,
+                            color: ColorManager.secondary,
                             borderRadius: BorderRadius.circular(200.r),
                           ),
                         ),

@@ -1,4 +1,7 @@
 import 'package:finance/core/resources/color_manger.dart';
+import 'package:finance/core/routes/routes_names.dart';
+import 'package:finance/core/services/navigation_service.dart';
+import 'package:finance/core/shared/widgets/default_floating_button.dart';
 import 'package:finance/core/shared/widgets/default_title_widget.dart';
 import 'package:finance/features/money/accounts/cubit/money_accounts_cubit.dart';
 import 'package:finance/features/money/accounts/widgets/account_card_widget.dart';
@@ -17,6 +20,11 @@ class MoneyAccountsScreen extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           backgroundColor: ColorManager.secondary,
+          floatingActionButton: DefaultFloatingButton(
+            onPressed: () {
+              NavigationService.pushNamed(Routes.moneyAddAccountsScreen);
+            },
+          ),
           body: Column(
             children: [
               const DefaultTitleWidget(title: "Accounts"),
@@ -41,7 +49,8 @@ class MoneyAccountsScreen extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return AccountCardWidget(
                       model: moneyAccountsCubit.moneyAccounts[index],
-                      total: moneyAccountsCubit.moneyAccounts.fold(0, (num sum, e) => sum + (e.amount * e.rate)),
+                      total: moneyAccountsCubit.moneyAccounts
+                          .fold(0, (num sum, e) => sum + (e.amount * e.rate)),
                     );
                   },
                 ),

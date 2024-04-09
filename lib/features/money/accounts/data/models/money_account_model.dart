@@ -2,7 +2,7 @@ import 'package:finance/core/utils/enums.dart';
 
 class MoneyAccountModel{
   final int id;
-  final String type;
+  final AccountTypes type;
   final String name;
   final Currency currency;
   final String updatedAt;
