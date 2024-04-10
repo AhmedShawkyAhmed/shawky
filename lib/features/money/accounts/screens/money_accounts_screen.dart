@@ -15,7 +15,7 @@ class MoneyAccountsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    MoneyAccountsCubit moneyAccountsCubit = BlocProvider.of(context);
+    MoneyAccountsCubit cubit = BlocProvider.of(context);
     return BlocBuilder<MoneyAccountsCubit, MoneyAccountsState>(
       builder: (context, state) {
         return Scaffold(
@@ -30,7 +30,7 @@ class MoneyAccountsScreen extends StatelessWidget {
               const DefaultTitleWidget(title: "Accounts"),
               TotalBalanceWidget(
                   total:
-                      "${moneyAccountsCubit.moneyAccounts.fold(0, (num sum, e) => sum + (e.amount * e.rate))}"),
+                      "${cubit.moneyAccounts.fold(0, (num sum, e) => sum + (e.amount * e.rate))}"),
               Expanded(
                 child: GridView.builder(
                   shrinkWrap: true,
@@ -45,11 +45,11 @@ class MoneyAccountsScreen extends StatelessWidget {
                     mainAxisExtent: 100.h,
                   ),
                   scrollDirection: Axis.vertical,
-                  itemCount: moneyAccountsCubit.moneyAccounts.length,
+                  itemCount: cubit.moneyAccounts.length,
                   itemBuilder: (context, index) {
                     return AccountCardWidget(
-                      model: moneyAccountsCubit.moneyAccounts[index],
-                      total: moneyAccountsCubit.moneyAccounts
+                      model: cubit.moneyAccounts[index],
+                      total: cubit.moneyAccounts
                           .fold(0, (num sum, e) => sum + (e.amount * e.rate)),
                     );
                   },

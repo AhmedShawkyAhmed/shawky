@@ -56,82 +56,85 @@ class DefaultTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: height ?? 50.h,
-      width: width ?? double.infinity,
-      margin: EdgeInsetsDirectional.only(
-        start: marginHorizontal ?? 15.w,
-        end: marginHorizontal ?? 15.w,
-      ),
-      decoration: BoxDecoration(
-        color: color ?? ColorManager.transparent,
-        borderRadius: BorderRadius.circular(radius ?? 7),
-      ),
-      child: TextField(
-        textInputAction: TextInputAction.go,
-        onSubmitted: (value) {
-          FocusManager.instance.primaryFocus?.unfocus();
-        },
-        keyboardType: keyboardType ?? TextInputType.text,
-        textAlignVertical: TextAlignVertical.center,
-        enabled: enabled ?? true,
-        controller: controller,
-        obscureText: password ?? false,
-        obscuringCharacter: "*",
-        textDirection: TextDirection.ltr,
-        style: TextStyle(
-          color: textColor ?? ColorManager.secondary,
-          fontSize: fontSize ?? 15.sp,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: height ?? 50.h,
+        width: width ?? double.infinity,
+        margin: EdgeInsetsDirectional.only(
+          start: marginHorizontal ?? 15.w,
+          end: marginHorizontal ?? 15.w,
         ),
-        cursorColor: cursorColor ?? ColorManager.primary,
-        maxLines: maxLine ?? 1,
-        maxLength: maxLength,
-        decoration: InputDecoration(
-          counterText: "",
-          counterStyle: const TextStyle(color: ColorManager.secondary),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(radius ?? 7),
-            borderSide: const BorderSide(
-              color: ColorManager.secondary,
-            ),
-          ),
-          disabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(radius ?? 7),
-            borderSide: const BorderSide(
-              color: ColorManager.secondary,
-            ),
-          ),
-          errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(radius ?? 7),
-            borderSide: const BorderSide(
-              color: ColorManager.secondary,
-            ),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(radius ?? 7),
-            borderSide: const BorderSide(
-              color: ColorManager.primary,
-            ),
-          ),
-          prefixIcon: prefix,
-          suffixIcon: suffix,
-          hintText: hintText,
-          alignLabelWithHint: true,
-          hintStyle: TextStyle(
-            color: ColorManager.secondary.withOpacity(0.7),
-            fontSize: 15.sp,
-          ),
-          border: InputBorder.none,
-          hintTextDirection: TextDirection.ltr,
-          filled: true,
-          fillColor: ColorManager.white,
-          contentPadding: EdgeInsets.only(
-            bottom: 5.sp,
-            left: 5.sp,
-            right: 5.sp,
-          ),
+        decoration: BoxDecoration(
+          color: color ?? ColorManager.transparent,
+          borderRadius: BorderRadius.circular(radius ?? 7),
         ),
-        onChanged: onChange,
+        child: TextField(
+          textInputAction: TextInputAction.go,
+          onSubmitted: (value) {
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
+          keyboardType: keyboardType ?? TextInputType.text,
+          textAlignVertical: TextAlignVertical.center,
+          enabled: enabled ?? true,
+          controller: controller,
+          obscureText: password ?? false,
+          obscuringCharacter: "*",
+          textDirection: TextDirection.ltr,
+          style: TextStyle(
+            color: textColor ?? ColorManager.secondary,
+            fontSize: fontSize ?? 15.sp,
+          ),
+          cursorColor: cursorColor ?? ColorManager.primary,
+          maxLines: maxLine ?? 1,
+          maxLength: maxLength,
+          decoration: InputDecoration(
+            counterText: "",
+            counterStyle: const TextStyle(color: ColorManager.secondary),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(radius ?? 7),
+              borderSide: const BorderSide(
+                color: ColorManager.secondary,
+              ),
+            ),
+            disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(radius ?? 7),
+              borderSide: const BorderSide(
+                color: ColorManager.secondary,
+              ),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(radius ?? 7),
+              borderSide: const BorderSide(
+                color: ColorManager.secondary,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(radius ?? 7),
+              borderSide: const BorderSide(
+                color: ColorManager.primary,
+              ),
+            ),
+            prefixIcon: prefix,
+            suffixIcon: suffix,
+            hintText: hintText,
+            alignLabelWithHint: true,
+            hintStyle: TextStyle(
+              color: ColorManager.secondary.withOpacity(0.7),
+              fontSize: 15.sp,
+            ),
+            border: InputBorder.none,
+            hintTextDirection: TextDirection.ltr,
+            filled: true,
+            fillColor: ColorManager.white,
+            contentPadding: EdgeInsets.only(
+              bottom: 5.sp,
+              left: 5.sp,
+              right: 5.sp,
+            ),
+          ),
+          onChanged: onChange,
+        ),
       ),
     );
   }

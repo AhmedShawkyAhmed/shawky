@@ -1,9 +1,7 @@
-import 'package:flutter/material.dart';
-
-class DefaultItemModel{
+class DefaultItemModel {
   final int id;
   final String title;
-  final IconData icon;
+  final String icon;
   final String route;
 
   DefaultItemModel({
@@ -11,5 +9,5 @@ class DefaultItemModel{
     required this.title,
     required this.icon,
     required this.route,
-});
+  });
 }

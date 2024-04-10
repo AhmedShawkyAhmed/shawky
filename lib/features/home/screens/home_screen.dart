@@ -11,7 +11,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    HomeCubit homeCubit = BlocProvider.of(context);
+    HomeCubit cubit = BlocProvider.of(context);
     return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
         return Scaffold(
@@ -34,10 +34,10 @@ class HomeScreen extends StatelessWidget {
                     mainAxisExtent: 120.h,
                   ),
                   scrollDirection: Axis.vertical,
-                  itemCount: homeCubit.itemList.length,
+                  itemCount: cubit.itemList.length,
                   itemBuilder: (context, index) {
                     return DefaultItemCardWidget(
-                      model: homeCubit.itemList[index],
+                      model: cubit.itemList[index],
                     );
                   },
                 ),

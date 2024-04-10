@@ -28,13 +28,9 @@ class DefaultItemCardWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Padding(
-              padding: EdgeInsetsDirectional.only(top: 6.h),
-              child: Icon(
-                model.icon,
-                color: ColorManager.secondary,
-                size: 60.sp,
-              ),
+            Image.asset(
+              model.icon,
+              width: 80.w,
             ),
             Row(
               children: [

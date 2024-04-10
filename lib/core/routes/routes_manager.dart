@@ -7,6 +7,8 @@ import 'package:finance/features/home/screens/home_screen.dart';
 import 'package:finance/features/money/accounts/cubit/money_accounts_cubit.dart';
 import 'package:finance/features/money/accounts/screens/add_account_screen.dart';
 import 'package:finance/features/money/accounts/screens/money_accounts_screen.dart';
+import 'package:finance/features/money/cards/cubit/money_cards_cubit.dart';
+import 'package:finance/features/money/cards/screens/add_card_screen.dart';
 import 'package:finance/features/money/cards/screens/money_cards_screen.dart';
 import 'package:finance/features/money/home/cubit/money_cubit.dart';
 import 'package:finance/features/money/home/screens/money_home_screen.dart';
@@ -68,8 +70,16 @@ class RouteGenerator {
         return MaterialPageRoute(
           settings: const RouteSettings(name: Routes.moneyCardsScreen),
           builder: (_) => BlocProvider(
-            create: (context) => MoneyAccountsCubit(),
+            create: (context) => MoneyCardsCubit(),
             child: const MoneyCardsScreen(),
+          ),
+        );
+      case Routes.moneyAddCardsScreen:
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: Routes.moneyAddCardsScreen),
+          builder: (_) => BlocProvider(
+            create: (context) => MoneyCardsCubit(),
+            child: const AddCardScreen(),
           ),
         );
       default:

@@ -1,9 +1,9 @@
-enum Currency{
+enum Currency {
   egp,
   usd,
 }
 
-enum AccountTypes{
+enum AccountTypes {
   main,
   saving,
   emergency,
@@ -13,3 +13,14 @@ enum AccountTypes{
   wallet,
 }
 
+enum CardType {
+  debit,
+  credit,
+  prepaid,
+}
+
+enum CardCompany {
+  visa,
+  mastercard,
+  meeza,
+}

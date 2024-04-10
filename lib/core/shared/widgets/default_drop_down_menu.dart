@@ -20,6 +20,7 @@ class DefaultDropdown<T> extends StatelessWidget {
     this.showSearchBox = false,
     this.maxHeight,
     this.dropDownKey,
+    this.padding,
     this.selectedTextStyle,
     this.dropdownTextStyle,
     this.decoration,
@@ -43,6 +44,7 @@ class DefaultDropdown<T> extends StatelessWidget {
   final BorderSide? border;
   final bool enabled, hasBorder, hasShadow, filled, isCollapsed, showSearchBox;
   final double? maxHeight;
+  final double? padding;
   final Key? dropDownKey;
   final TextStyle? selectedTextStyle;
   final TextStyle? dropdownTextStyle;
@@ -73,7 +75,7 @@ class DefaultDropdown<T> extends StatelessWidget {
       ),
     );
     return Padding(
-      padding: EdgeInsetsDirectional.only(start: 15.w,end: 15.w, bottom: 10.h),
+      padding: EdgeInsetsDirectional.only(start: padding ?? 15.w,end: padding ?? 15.w, bottom: 10.h),
       child: DropdownSearch<T>(
         key: dropDownKey,
         enabled: enabled,

@@ -11,7 +11,7 @@ class MoneyHomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    MoneyCubit moneyCubit = BlocProvider.of(context);
+    MoneyCubit cubit = BlocProvider.of(context);
     return BlocBuilder<MoneyCubit, MoneyState>(
       builder: (context, state) {
         return Scaffold(
@@ -33,10 +33,10 @@ class MoneyHomeScreen extends StatelessWidget {
                     mainAxisExtent: 120.h,
                   ),
                   scrollDirection: Axis.vertical,
-                  itemCount: moneyCubit.itemList.length,
+                  itemCount: cubit.itemList.length,
                   itemBuilder: (context, index) {
                     return DefaultItemCardWidget(
-                      model: moneyCubit.itemList[index],
+                      model: cubit.itemList[index],
                     );
                   },
                 ),
