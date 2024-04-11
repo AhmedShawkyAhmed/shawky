@@ -4,13 +4,23 @@ import 'package:finance/core/shared/widgets/default_text.dart';
 import 'package:finance/core/utils/enums.dart';
 import 'package:finance/core/utils/extentions.dart';
 import 'package:finance/features/money/cards/data/models/bank_card_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class CardWidget extends StatelessWidget {
+class CardWidget extends StatefulWidget {
   final BankCardModel model;
 
   const CardWidget({required this.model, super.key});
+
+  @override
+  State<CardWidget> createState() => _CardWidgetState();
+}
+
+class _CardWidgetState extends State<CardWidget> {
+  bool isVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -34,11 +44,11 @@ class CardWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 DefaultText(
-                  text: model.name,
+                  text: widget.model.name ?? "-",
                   fontSize: 15.sp,
                 ),
                 DefaultText(
-                  text: model.cardType.name.toCapitalized(),
+                  text: widget.model.cardType?.name.toCapitalized() ?? "-",
                   fontSize: 15.sp,
                 ),
               ],
@@ -72,27 +82,54 @@ class CardWidget extends StatelessWidget {
               ],
             ),
           ),
-          DefaultText(
-            text: model.cardNumber,
-            fontSize: 24.sp,
+          GestureDetector(
+            onTap: () async {
+              await Clipboard.setData(
+                ClipboardData(text: widget.model.cardNumber ?? "-"),
+              );
+            },
+            child: DefaultText(
+              text: widget.model.cardNumber ?? "-",
+              fontSize: 24.sp,
+            ),
           ),
           Row(
             children: [
               Column(
                 children: [
-                  Padding(
-                    padding: EdgeInsetsDirectional.only(
-                      start: 110.w,
-                      top: 5.h,
-                      bottom: 5.h,
-                    ),
-                    child: DefaultText(
-                      text: model.exp,
-                      fontSize: 13.sp,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isVisible = !isVisible;
+                          });
+                        },
+                        child: SizedBox(
+                          width: 70.w,
+                          child: DefaultText(
+                            text:
+                                " CVV ${isVisible ? (widget.model.cvv ?? "-") : "***"}",
+                            fontSize: 13.sp,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.only(
+                          start: 40.w,
+                          top: 5.h,
+                          bottom: 5.h,
+                        ),
+                        child: DefaultText(
+                          text: "EXP ${widget.model.exp ?? "-"}",
+                          fontSize: 13.sp,
+                        ),
+                      ),
+                    ],
                   ),
                   DefaultText(
-                    text: model.nameOnCard,
+                    text: widget.model.nameOnCard ?? "-",
                     fontSize: 15.sp,
                   ),
                   SizedBox(height: 8.h),
@@ -100,7 +137,7 @@ class CardWidget extends StatelessWidget {
               ),
               const Spacer(),
               Image.asset(
-                model.cardCompany == CardCompany.visa
+                widget.model.cardCompany == CardCompany.visa
                     ? ImageAssets.visa
                     : ImageAssets.masterCard,
                 width: 55.w,

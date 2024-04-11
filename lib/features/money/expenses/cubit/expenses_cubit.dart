@@ -30,8 +30,8 @@ class ExpensesCubit extends Cubit<ExpensesState> {
     ),
     ExpensesCategoryModel(
       id: 4,
-      name: "Investment",
-      color: ExpensesCategoryColors.investment,
+      name: "Stocks",
+      color: ExpensesCategoryColors.stocks,
     ),
     ExpensesCategoryModel(
       id: 5,
@@ -50,8 +50,8 @@ class ExpensesCubit extends Cubit<ExpensesState> {
     ),
     ExpensesCategoryModel(
       id: 8,
-      name: "Shopping",
-      color: ExpensesCategoryColors.shopping,
+      name: "Fund",
+      color: ExpensesCategoryColors.fund,
     ),
     ExpensesCategoryModel(
       id: 9,

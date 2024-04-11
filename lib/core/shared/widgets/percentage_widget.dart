@@ -17,14 +17,14 @@ class PercentageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return CircularPercentIndicator(
       radius: 40.w,
-      lineWidth: 6.sp,
+      lineWidth: 7.sp,
       addAutomaticKeepAlive: true,
       percent: (percent / (count == 0 ? 1 : count)).toDouble(),
       animation: true,
       animateFromLastPercent: true,
       center: DefaultText(
         text:
-            "${((percent / (count == 0 ? 1 : count)) * 100).toStringAsFixed(1)} %",
+            "${((percent / (count == 0 ? 1 : count)) * 100).toStringAsFixed(2)} %",
         fontSize: 10.sp,
       ),
       // footer: DefaultText(text: title),

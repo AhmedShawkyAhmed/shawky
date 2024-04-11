@@ -1,22 +1,24 @@
 import 'package:finance/core/utils/enums.dart';
 
 class BankCardModel{
-  final int id;
-  final String name;
-  final String nameOnCard;
-  final String cardNumber;
-  final String exp;
-  final CardType cardType;
-  final CardCompany cardCompany;
+   int? id;
+   String? name;
+   String? nameOnCard;
+   String? cardNumber;
+   String? exp;
+   String? cvv;
+   CardType? cardType;
+   CardCompany? cardCompany;
 
 
   BankCardModel({
-    required this.id,
-    required this.name,
-    required this.nameOnCard,
-    required this.cardNumber,
-    required this.exp,
-    required this.cardType,
-    required this.cardCompany,
+     this.id,
+     this.name,
+     this.nameOnCard,
+     this.cardNumber,
+     this.exp,
+     this.cvv,
+     this.cardType,
+     this.cardCompany,
   });
 }

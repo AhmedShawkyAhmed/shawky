@@ -28,4 +28,5 @@ enum CardCompany {
 enum ExpensesType {
   income,
   expenses,
+  transfer,
 }

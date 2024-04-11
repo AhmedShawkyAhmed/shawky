@@ -20,15 +20,15 @@ class ColorManager {
 class ExpensesCategoryColors {
   static const Color home = Color(0xfff05527);
   static const Color internet = Color(0xff953041);
-  static const Color gas = Color(0xff895745);
-  static const Color investment = Color(0xff257d8f);
+  static const Color gas = Color(0xffe8c648);
+  static const Color stocks = Color(0xff01da87);
   static const Color retirement = Color(0xff3344a1);
   static const Color electricity = Color(0xffd9952f);
   static const Color mobile = Color(0xff8f29f8);
-  static const Color shopping = Color(0xff733656);
+  static const Color fund = Color(0xff257d8f);
   static const Color food = Color(0xff4a9c49);
-  static const Color clothing = Color(0xff491b4a);
-  static const Color entertainment = Color(0xff5296a4);
+  static const Color entertainment = Color(0xff491b4a);
+  static const Color clothing = Color(0xff5296a4);
   static const Color transportation = Color(0xff154fa1);
   static const Color loan = Color(0xff5e7c85);
   static const Color transfer = Color(0xff0fa58c);
@@ -36,6 +36,6 @@ class ExpensesCategoryColors {
   static const Color tools = Color(0xff6e230c);
   static const Color electronics = Color(0xffaa0c4d);
   static const Color education = Color(0xff7bb60c);
-  static const Color otherBills = Color(0xffe8c648);
+  static const Color otherBills = Color(0xff895745);
   static const Color insurance = Color(0xffc70690);
 }
