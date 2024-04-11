@@ -1,7 +1,9 @@
+import 'package:finance/core/components/dialogs/warning_dialog.dart';
 import 'package:finance/core/resources/color_manger.dart';
 import 'package:finance/core/routes/routes_names.dart';
 import 'package:finance/core/services/navigation_service.dart';
 import 'package:finance/core/shared/widgets/default_floating_button.dart';
+import 'package:finance/core/shared/widgets/default_text.dart';
 import 'package:finance/core/shared/widgets/default_title_widget.dart';
 import 'package:finance/features/money/cards/cubit/cards_cubit.dart';
 import 'package:finance/features/money/cards/widgets/credit_card.dart';
@@ -28,24 +30,45 @@ class BankCardsScreen extends StatelessWidget {
             children: [
               const DefaultTitleWidget(title: "Cards"),
               Expanded(
-                child: GridView.builder(
-                  shrinkWrap: true,
-                  padding: EdgeInsets.symmetric(
-                    vertical: 5.h,
-                    horizontal: 15.w,
-                  ),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 1,
-                    crossAxisSpacing: 20.sp,
-                    mainAxisSpacing: 10.sp,
-                    mainAxisExtent: 185.h,
-                  ),
-                  scrollDirection: Axis.vertical,
-                  itemCount: cubit.moneyCardList.length,
-                  itemBuilder: (context, index) {
-                    return CreditCard(model: cubit.moneyCardList[index]);
-                  },
-                ),
+                child: cubit.moneyCardList.isEmpty
+                    ? Center(
+                        child: DefaultText(
+                          text: "No Cards Found !",
+                          textColor: ColorManager.white,
+                          fontSize: 18.sp,
+                        ),
+                      )
+                    : GridView.builder(
+                        shrinkWrap: true,
+                        padding: EdgeInsets.symmetric(
+                          vertical: 5.h,
+                          horizontal: 15.w,
+                        ),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 1,
+                          crossAxisSpacing: 20.sp,
+                          mainAxisSpacing: 10.sp,
+                          mainAxisExtent: 185.h,
+                        ),
+                        scrollDirection: Axis.vertical,
+                        itemCount: cubit.moneyCardList.length,
+                        itemBuilder: (context, index) {
+                          return CreditCard(
+                            model: cubit.moneyCardList[index],
+                            onLongPress: () {
+                              WarningDialog.show(
+                                message:
+                                    "Are you Sure you want to Delete this Card ?",
+                                onPressed: () {
+                                  NavigationService.pop();
+                                  cubit.emitDeleteCard(
+                                      cardId: cubit.moneyCardList[index].id!);
+                                },
+                              );
+                            },
+                          );
+                        },
+                      ),
               ),
             ],
           ),

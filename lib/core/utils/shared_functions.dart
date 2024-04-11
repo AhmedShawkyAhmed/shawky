@@ -7,37 +7,37 @@ import 'package:finance/core/shared/widgets/default_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:permission_handler/permission_handler.dart'
     as permission_handler;
 
 import 'package:url_launcher/url_launcher.dart';
 
-
 Color getColor(num current, target) {
   String value =
-  ((current / (target == 0 ? 1 : target)) * 100).toStringAsFixed(2);
+      ((current / (target == 0 ? 1 : target)) * 100).toStringAsFixed(2);
   double percentage = double.parse(value);
   if (percentage > 0 && percentage < 11) {
     return Colors.red;
   } else if (percentage > 10 && percentage < 21) {
     return Colors.pink;
-  }else if (percentage > 20 && percentage < 31) {
+  } else if (percentage > 20 && percentage < 31) {
     return Colors.deepOrange;
-  }else if (percentage > 30 && percentage < 41) {
+  } else if (percentage > 30 && percentage < 41) {
     return Colors.yellow.shade600;
-  }else if (percentage > 40 && percentage < 51) {
+  } else if (percentage > 40 && percentage < 51) {
     return Colors.lightGreen.shade500;
-  }else if (percentage > 50 && percentage < 61) {
+  } else if (percentage > 50 && percentage < 61) {
     return Colors.deepPurple;
-  }else if (percentage > 60 && percentage < 71) {
+  } else if (percentage > 60 && percentage < 71) {
     return Colors.cyan;
-  }else if (percentage > 70 && percentage < 81) {
+  } else if (percentage > 70 && percentage < 81) {
     return Colors.tealAccent.shade700;
-  }else if (percentage > 80 && percentage < 91) {
+  } else if (percentage > 80 && percentage < 91) {
     return Colors.lightBlue.shade700;
   } else if (percentage > 90 && percentage < 101) {
     return ColorManager.primary;
-  }else {
+  } else {
     return Colors.black;
   }
 }
@@ -55,27 +55,20 @@ String concatenateListOfStrings(List<String> listOfString) {
   return concatenate.toString();
 }
 
-showToast({
+Future<bool?> showMyToast({
   required String message,
-  required bool success,
-}) {
-  final SnackBar snackBar;
-  snackBar = SnackBar(
-    content: Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Icon(
-          success ? Icons.check_circle : Icons.error,
-          color: ColorManager.primary,
-        ),
-        const SizedBox(
-          width: 8,
-        ),
-        Expanded(child: DefaultText(text:message)),
-      ],
-    ),
+  bool? success,
+  Toast? toastLength,
+}) async {
+  return await Fluttertoast.showToast(
+    msg: message,
+    toastLength: toastLength ??
+        (message.length > 60 ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT),
+    gravity: ToastGravity.BOTTOM,
+    backgroundColor: success == false ? ColorManager.red : null,
+    textColor: ColorManager.white,
+    fontSize: 14.0,
   );
-  ScaffoldMessenger.of(NavigationService.context).showSnackBar(snackBar);
 }
 
 int convertDateTimeToTimestamp(DateTime dt) {
@@ -124,7 +117,7 @@ Future launchURL(String urlLink, {LinkType? type}) async {
   if (await canLaunchUrl(Uri.parse(url))) {
     await launchUrl(Uri.parse(url), mode: mode);
   } else {
-    showToast(message: "Internal Server Error", success: false);
+    showMyToast(message: "Internal Server Error", success: false);
   }
 }
 

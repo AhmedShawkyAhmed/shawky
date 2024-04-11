@@ -25,6 +25,8 @@ dependencies:
   percent_indicator: ^4.2.3
   dropdown_search: ^5.0.6
   fl_chart: ^0.67.0
+  sqflite: ^2.3.3
+  path: ^1.9.0
 
 dev_dependencies:
   flutter_test:

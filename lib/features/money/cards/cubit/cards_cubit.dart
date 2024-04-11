@@ -1,7 +1,10 @@
 import 'package:bloc/bloc.dart';
+import 'package:finance/core/routes/routes_names.dart';
+import 'package:finance/core/services/navigation_service.dart';
 import 'package:finance/core/utils/enums.dart';
 import 'package:finance/core/utils/shared_functions.dart';
 import 'package:finance/features/money/cards/data/models/bank_card_model.dart';
+import 'package:finance/features/money/cards/database/cards_database.dart';
 import 'package:flutter/material.dart';
 
 part 'cards_state.dart';
@@ -16,38 +19,7 @@ class CardsCubit extends Cubit<CardsState> {
   CardCompany cardCompany = CardCompany.visa;
   String year = "00", month = "00";
 
-  final List<BankCardModel> moneyCardList = [
-    BankCardModel(
-      id: 1,
-      name: "Banque Misr",
-      nameOnCard: "AHMED SHAWKY AHMED",
-      exp: "04/28",
-      cvv: "352",
-      cardNumber: "1542 1565 1565 1545",
-      cardType: CardType.debit,
-      cardCompany: CardCompany.visa,
-    ),
-    BankCardModel(
-      id: 2,
-      name: "Banque Misr",
-      nameOnCard: "AHMED SHAWKY AHMED",
-      exp: "04/28",
-      cvv: "352",
-      cardNumber: "1542 1565 1565 1545",
-      cardType: CardType.debit,
-      cardCompany: CardCompany.visa,
-    ),
-    BankCardModel(
-      id: 3,
-      name: "Banque Misr",
-      nameOnCard: "AHMED SHAWKY AHMED",
-      exp: "04/28",
-      cvv: "352",
-      cardNumber: "1542 1565 1565 1545",
-      cardType: CardType.prepaid,
-      cardCompany: CardCompany.mastercard,
-    ),
-  ];
+  List<BankCardModel> moneyCardList = [];
 
   final List<CardType> cardTypeList = CardType.values;
   final List<CardCompany> cardCompanyList = CardCompany.values;
@@ -97,5 +69,57 @@ class CardsCubit extends Cubit<CardsState> {
   void changeCardCompany(value) {
     cardCompany = value;
     printLog(cardCompany);
+  }
+
+  Future emitGetCard() async {
+    try {
+      emit(GetCardLoading());
+      moneyCardList = await CardsDatabase.getCards();
+      emit(GetCardSuccess());
+    } catch (e) {
+      emit(GetCardError());
+      showMyToast(message: e.toString(), success: false);
+      printError(e.toString());
+    }
+  }
+
+  Future emitInsertCard() async {
+    try {
+      BankCardModel cardModel = BankCardModel(
+        name: nameController.text,
+        nameOnCard: nameOnCardController.text,
+        cardNumber: cardNumberController.text,
+        exp: "$month/${year.substring(2,4)}",
+        cvv: "123",
+        cardType: cardType,
+        cardCompany: cardCompany,
+      );
+      emit(InsertCardLoading());
+      await CardsDatabase.insertCard(cardModel);
+      moneyCardList.add(cardModel);
+      emit(InsertCardSuccess());
+      showMyToast(message: "Card Inserted Successfully", success: true);
+      NavigationService.pushReplacementNamed(Routes.bankCardsScreen);
+    } catch (e) {
+      emit(InsertCardError());
+      showMyToast(message: e.toString(), success: false);
+      printError(e.toString());
+    }
+  }
+
+  Future emitDeleteCard({
+    required int cardId,
+  }) async {
+    try {
+      emit(DeleteCardLoading());
+      await CardsDatabase.deleteCard(cardId);
+      moneyCardList.removeWhere((element) => element.id == cardId);
+      showMyToast(message: "Card Deleted Successfully", success: true);
+      emit(DeleteCardSuccess());
+    } catch (e) {
+      emit(DeleteCardError());
+      showMyToast(message: e.toString(), success: false);
+      printError(e.toString());
+    }
   }
 }

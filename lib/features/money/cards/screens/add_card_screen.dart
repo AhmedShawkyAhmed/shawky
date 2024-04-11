@@ -81,7 +81,9 @@ class AddCardScreen extends StatelessWidget {
                 SizedBox(height: 20.h),
                 DefaultAppButton(
                   title: "Save",
-                  onTap: () {},
+                  onTap: () {
+                    cubit.emitInsertCard();
+                  },
                 ),
               ],
             ),

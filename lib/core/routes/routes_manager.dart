@@ -76,7 +76,7 @@ class RouteGenerator {
         return MaterialPageRoute(
           settings: const RouteSettings(name: Routes.bankCardsScreen),
           builder: (_) => BlocProvider(
-            create: (context) => CardsCubit(),
+            create: (context) => CardsCubit()..emitGetCard(),
             child: const BankCardsScreen(),
           ),
         );
