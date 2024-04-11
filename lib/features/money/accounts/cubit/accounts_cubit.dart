@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:finance/core/utils/enums.dart';
+import 'package:finance/core/utils/shared_functions.dart';
 import 'package:finance/features/money/accounts/data/models/account_model.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +8,13 @@ part 'accounts_state.dart';
 
 class AccountsCubit extends Cubit<AccountsState> {
   AccountsCubit() : super(AccountsInitial());
+
+  TextEditingController accountNameController = TextEditingController();
+  TextEditingController amountController = TextEditingController();
+  TextEditingController rateController = TextEditingController();
+  AccountTypes accountType = AccountTypes.main;
+  Currency currency = Currency.egp;
+  DateTime selectedDate = DateTime.now();
 
   final List<AccountModel> moneyAccounts = [
     AccountModel(
@@ -31,4 +39,14 @@ class AccountsCubit extends Cubit<AccountsState> {
 
   final List<AccountTypes> accountTypesList = AccountTypes.values;
   final List<Currency> currencyList = Currency.values;
+
+  void changeAccountTypes(value) {
+    accountType = value;
+    printLog(accountType);
+  }
+
+  void changeCurrency(value) {
+    currency = value;
+    printLog(currency);
+  }
 }

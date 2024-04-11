@@ -1,6 +1,6 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:finance/core/resources/color_manger.dart';
-import 'package:finance/core/utils/extentions.dart';
+import 'package:finance/core/utils/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -104,8 +104,8 @@ class DefaultDropdown<T> extends StatelessWidget {
                     alignment: dropdownAlign ?? AlignmentDirectional.center,
                     child: Text(
                       itemAsString != null
-                          ? itemAsString!(item).toCapitalized()
-                          : item.toString().toCapitalized(),
+                          ? itemAsString!(item)
+                          : item.toString(),
                       maxLines: 2,
                       textAlign: TextAlign.center,
                       overflow: TextOverflow.ellipsis,
@@ -201,8 +201,8 @@ class DefaultDropdown<T> extends StatelessWidget {
                       value is String
                           ? value
                           : itemAsString == null
-                              ? value.toString().toCapitalized()
-                              : itemAsString!(value).toCapitalized(),
+                              ? value.toString()
+                              : itemAsString!(value),
                       maxLines: 2,
                       textDirection: TextDirection.ltr,
                       overflow: TextOverflow.ellipsis,

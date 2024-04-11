@@ -4,7 +4,7 @@ import 'package:finance/core/services/navigation_service.dart';
 import 'package:finance/core/shared/widgets/default_floating_button.dart';
 import 'package:finance/core/shared/widgets/default_title_widget.dart';
 import 'package:finance/features/money/accounts/cubit/accounts_cubit.dart';
-import 'package:finance/features/money/accounts/widgets/account_card_widget.dart';
+import 'package:finance/features/money/accounts/widgets/account_card.dart';
 import 'package:finance/features/money/accounts/widgets/total_balance_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -47,7 +47,7 @@ class MoneyAccountsScreen extends StatelessWidget {
                   scrollDirection: Axis.vertical,
                   itemCount: cubit.moneyAccounts.length,
                   itemBuilder: (context, index) {
-                    return AccountCardWidget(
+                    return AccountCard(
                       model: cubit.moneyAccounts[index],
                       total: cubit.moneyAccounts.fold(
                           0,

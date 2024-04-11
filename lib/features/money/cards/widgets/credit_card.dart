@@ -2,24 +2,22 @@ import 'package:finance/core/resources/assets_manager.dart';
 import 'package:finance/core/resources/color_manger.dart';
 import 'package:finance/core/shared/widgets/default_text.dart';
 import 'package:finance/core/utils/enums.dart';
-import 'package:finance/core/utils/extentions.dart';
+import 'package:finance/core/utils/extensions.dart';
 import 'package:finance/features/money/cards/data/models/bank_card_model.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class CardWidget extends StatefulWidget {
+class CreditCard extends StatefulWidget {
   final BankCardModel model;
 
-  const CardWidget({required this.model, super.key});
+  const CreditCard({required this.model, super.key});
 
   @override
-  State<CardWidget> createState() => _CardWidgetState();
+  State<CreditCard> createState() => _CreditCardState();
 }
 
-class _CardWidgetState extends State<CardWidget> {
+class _CreditCardState extends State<CreditCard> {
   bool isVisible = false;
 
   @override

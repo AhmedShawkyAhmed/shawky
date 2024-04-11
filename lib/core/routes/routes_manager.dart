@@ -15,6 +15,9 @@ import 'package:finance/features/money/expenses/screens/add_expenses_screen.dart
 import 'package:finance/features/money/expenses/screens/expenses_screen.dart';
 import 'package:finance/features/money/home/cubit/money_cubit.dart';
 import 'package:finance/features/money/home/screens/money_home_screen.dart';
+import 'package:finance/features/money/savings/cubit/savings_cubit.dart';
+import 'package:finance/features/money/savings/screens/add_saving_screen.dart';
+import 'package:finance/features/money/savings/screens/savings_screen.dart';
 import 'package:finance/features/splash/cubit/splash_cubit.dart';
 import 'package:finance/features/splash/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -99,6 +102,22 @@ class RouteGenerator {
           builder: (_) => BlocProvider(
             create: (context) => ExpensesCubit(),
             child: const AddExpensesScreen(),
+          ),
+        );
+      case Routes.savingsScreen:
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: Routes.savingsScreen),
+          builder: (_) => BlocProvider(
+            create: (context) => SavingsCubit(),
+            child: const SavingsScreen(),
+          ),
+        );
+      case Routes.addSavingScreen:
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: Routes.addSavingScreen),
+          builder: (_) => BlocProvider(
+            create: (context) => SavingsCubit(),
+            child: const AddSavingScreen(),
           ),
         );
       default:

@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:finance/core/resources/color_manger.dart';
 import 'package:finance/core/utils/enums.dart';
+import 'package:finance/core/utils/shared_functions.dart';
+import 'package:finance/features/money/accounts/data/models/account_model.dart';
 import 'package:finance/features/money/expenses/data/models/expenses_category_model.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +11,16 @@ part 'expenses_state.dart';
 
 class ExpensesCubit extends Cubit<ExpensesState> {
   ExpensesCubit() : super(ExpensesInitial());
+
+  TextEditingController nameController = TextEditingController();
+  TextEditingController amountController = TextEditingController();
+  TextEditingController rateController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
+  ExpensesType expensesType = ExpensesType.income;
+  Currency currency = Currency.egp;
+  ExpensesCategoryModel expensesCategoryModel = ExpensesCategoryModel();
+  AccountModel fromAccount = AccountModel();
+  AccountModel toAccount = AccountModel();
 
   final List<ExpensesType> expensesTypeList = ExpensesType.values;
   final List<Currency> currencyList = Currency.values;
@@ -114,6 +126,31 @@ class ExpensesCubit extends Cubit<ExpensesState> {
       color: ExpensesCategoryColors.otherBills,
     ),
   ];
+
+  void changeExpensesType(value) {
+    expensesType = value;
+    printLog(expensesType);
+  }
+
+  void changeExpensesCategory(value) {
+    expensesCategoryModel = value;
+    printLog(expensesCategoryModel);
+  }
+
+  void changeFromAccount(value) {
+    fromAccount = value;
+    printLog(fromAccount);
+  }
+
+  void changeToAccount(value) {
+    toAccount = value;
+    printLog(toAccount);
+  }
+
+  void changeCurrency(value) {
+    currency = value;
+    printLog(currency);
+  }
 
   List<PieChartSectionData> chartSections(List<ExpensesCategoryModel> sectors) {
     final List<PieChartSectionData> list = [];

@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:finance/core/utils/enums.dart';
+import 'package:finance/core/utils/shared_functions.dart';
 import 'package:finance/features/money/cards/data/models/bank_card_model.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +8,13 @@ part 'cards_state.dart';
 
 class CardsCubit extends Cubit<CardsState> {
   CardsCubit() : super(CardsInitial());
+
+  TextEditingController nameController = TextEditingController();
+  TextEditingController nameOnCardController = TextEditingController();
+  TextEditingController cardNumberController = TextEditingController();
+  CardType cardType = CardType.debit;
+  CardCompany cardCompany = CardCompany.visa;
+  String year = "00", month = "00";
 
   final List<BankCardModel> moneyCardList = [
     BankCardModel(
@@ -70,4 +78,24 @@ class CardsCubit extends Cubit<CardsState> {
     (DateTime.now().year + 9).toString(),
     (DateTime.now().year + 10).toString(),
   ];
+
+  void changeYear(value) {
+    year = value;
+    printLog(year);
+  }
+
+  void changeMonth(value) {
+    month = value;
+    printLog(month);
+  }
+
+  void changeCardType(value) {
+    cardType = value;
+    printLog(cardType);
+  }
+
+  void changeCardCompany(value) {
+    cardCompany = value;
+    printLog(cardCompany);
+  }
 }

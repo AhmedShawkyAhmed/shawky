@@ -30,9 +30,9 @@ class MoneyCubit extends Cubit<MoneyState> {
     ),
     DefaultItemModel(
       id: 4,
-      title: "Budgeting",
+      title: "Savings",
       icon: ImageAssets.purchases,
-      route: Routes.accountsScreen,
+      route: Routes.savingsScreen,
     ),
     DefaultItemModel(
       id: 5,

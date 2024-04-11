@@ -13,30 +13,30 @@ import 'package:permission_handler/permission_handler.dart'
 import 'package:url_launcher/url_launcher.dart';
 
 
-Color getColor(num percent, count) {
+Color getColor(num current, target) {
   String value =
-  ((percent / (count == 0 ? 1 : count)) * 100).toStringAsFixed(1);
+  ((current / (target == 0 ? 1 : target)) * 100).toStringAsFixed(2);
   double percentage = double.parse(value);
   if (percentage > 0 && percentage < 11) {
     return Colors.red;
   } else if (percentage > 10 && percentage < 21) {
-    return Colors.lightGreen.shade500;
+    return Colors.pink;
   }else if (percentage > 20 && percentage < 31) {
-    return Colors.yellow.shade600;
-  }else if (percentage > 30 && percentage < 41) {
-    return Colors.cyan;
-  }else if (percentage > 40 && percentage < 51) {
     return Colors.deepOrange;
+  }else if (percentage > 30 && percentage < 41) {
+    return Colors.yellow.shade600;
+  }else if (percentage > 40 && percentage < 51) {
+    return Colors.lightGreen.shade500;
   }else if (percentage > 50 && percentage < 61) {
     return Colors.deepPurple;
   }else if (percentage > 60 && percentage < 71) {
-    return Colors.pink;
+    return Colors.cyan;
   }else if (percentage > 70 && percentage < 81) {
     return Colors.tealAccent.shade700;
   }else if (percentage > 80 && percentage < 91) {
-    return Colors.brown;
-  } else if (percentage > 90 && percentage < 101) {
     return Colors.lightBlue.shade700;
+  } else if (percentage > 90 && percentage < 101) {
+    return ColorManager.primary;
   }else {
     return Colors.black;
   }

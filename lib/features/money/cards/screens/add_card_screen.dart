@@ -4,30 +4,18 @@ import 'package:finance/core/shared/widgets/default_drop_down_menu.dart';
 import 'package:finance/core/shared/widgets/default_text_field.dart';
 import 'package:finance/core/shared/widgets/default_title_widget.dart';
 import 'package:finance/core/utils/enums.dart';
+import 'package:finance/core/utils/extensions.dart';
 import 'package:finance/features/money/cards/cubit/cards_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class AddCardScreen extends StatefulWidget {
+class AddCardScreen extends StatelessWidget {
   const AddCardScreen({super.key});
 
   @override
-  State<AddCardScreen> createState() => _AddCardScreenState();
-}
-
-class _AddCardScreenState extends State<AddCardScreen> {
-  late CardsCubit cubit = BlocProvider.of(context);
-
-  TextEditingController nameController = TextEditingController();
-  TextEditingController nameOnCardController = TextEditingController();
-  TextEditingController cardNumberController = TextEditingController();
-  CardType cardType = CardType.debit;
-  CardCompany cardCompany = CardCompany.visa;
-  String year = "00",month = "00";
-
-  @override
   Widget build(BuildContext context) {
+    CardsCubit cubit = BlocProvider.of(context);
     return BlocBuilder<CardsCubit, CardsState>(
       builder: (context, state) {
         return Scaffold(
@@ -38,15 +26,15 @@ class _AddCardScreenState extends State<AddCardScreen> {
                 const DefaultTitleWidget(title: "Add Card"),
                 SizedBox(height: 20.h),
                 DefaultTextField(
-                  controller: nameController,
+                  controller: cubit.nameController,
                   hintText: 'Name',
                 ),
                 DefaultTextField(
-                  controller: nameOnCardController,
+                  controller: cubit.nameOnCardController,
                   hintText: 'Name On Card',
                 ),
                 DefaultTextField(
-                  controller: cardNumberController,
+                  controller: cubit.cardNumberController,
                   hintText: 'Card Number',
                   keyboardType: TextInputType.number,
                 ),
@@ -59,28 +47,20 @@ class _AddCardScreenState extends State<AddCardScreen> {
                         width: 170.w,
                         child: DefaultDropdown<String>(
                           padding: 0,
-                          items: cubit.yearList,
-                          hint: "Year",
+                          items: cubit.monthList,
+                          hint: "Month",
                           itemAsString: (String? u) => u!,
-                          onChanged: (val) {
-                            setState(() {
-                              year = val!;
-                            });
-                          },
+                          onChanged: cubit.changeMonth,
                         ),
                       ),
                       SizedBox(
                         width: 170.w,
                         child: DefaultDropdown<String>(
                           padding: 0,
-                          items: cubit.monthList,
-                          hint: "Month",
+                          items: cubit.yearList,
+                          hint: "Year",
                           itemAsString: (String? u) => u!,
-                          onChanged: (val) {
-                            setState(() {
-                              month = val!;
-                            });
-                          },
+                          onChanged: cubit.changeYear,
                         ),
                       ),
                     ],
@@ -89,22 +69,14 @@ class _AddCardScreenState extends State<AddCardScreen> {
                 DefaultDropdown<CardType>(
                   items: cubit.cardTypeList,
                   hint: "Card Type",
-                  itemAsString: (CardType? u) => u!.name,
-                  onChanged: (val) {
-                    setState(() {
-                      cardType = val!;
-                    });
-                  },
+                  itemAsString: (CardType? u) => u!.name.toCapitalized(),
+                  onChanged: cubit.changeCardType,
                 ),
                 DefaultDropdown<CardCompany>(
                   items: cubit.cardCompanyList,
                   hint: "Card Company",
-                  itemAsString: (CardCompany? u) => u!.name,
-                  onChanged: (val) {
-                    setState(() {
-                      cardCompany = val!;
-                    });
-                  },
+                  itemAsString: (CardCompany? u) => u!.name.toUpperCase(),
+                  onChanged: cubit.changeCardCompany,
                 ),
                 SizedBox(height: 20.h),
                 DefaultAppButton(
