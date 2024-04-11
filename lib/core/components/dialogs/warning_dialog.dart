@@ -1,6 +1,5 @@
 import 'package:finance/core/services/navigation_service.dart';
 import 'package:finance/core/shared/widgets/default_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
