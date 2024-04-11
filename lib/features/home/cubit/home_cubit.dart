@@ -13,7 +13,7 @@ class HomeCubit extends Cubit<HomeState> {
     DefaultItemModel(
       id: 1,
       title: "Money",
-      icon: ImageAssets.creditCard,
+      icon: ImageAssets.money,
       route: Routes.moneyHomeScreen,
     ),
   ];

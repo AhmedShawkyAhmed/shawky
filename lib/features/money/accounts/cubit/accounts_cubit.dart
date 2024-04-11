@@ -1,15 +1,15 @@
 import 'package:bloc/bloc.dart';
 import 'package:finance/core/utils/enums.dart';
-import 'package:finance/features/money/accounts/data/models/money_account_model.dart';
+import 'package:finance/features/money/accounts/data/models/account_model.dart';
 import 'package:flutter/material.dart';
 
-part 'money_accounts_state.dart';
+part 'accounts_state.dart';
 
-class MoneyAccountsCubit extends Cubit<MoneyAccountsState> {
-  MoneyAccountsCubit() : super(MoneyAccountsInitial());
+class AccountsCubit extends Cubit<AccountsState> {
+  AccountsCubit() : super(AccountsInitial());
 
-  final List<MoneyAccountModel> moneyAccounts = [
-    MoneyAccountModel(
+  final List<AccountModel> moneyAccounts = [
+    AccountModel(
       id: 1,
       type: AccountTypes.main,
       name: "BM EGP",
@@ -18,7 +18,7 @@ class MoneyAccountsCubit extends Cubit<MoneyAccountsState> {
       currency: Currency.egp,
       updatedAt: "9/4/2024",
     ),
-    MoneyAccountModel(
+    AccountModel(
       id: 2,
       type: AccountTypes.saving,
       name: "BM USD",

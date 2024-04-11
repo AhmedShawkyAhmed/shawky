@@ -9,14 +9,14 @@ class DefaultFloatingButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-      backgroundColor: ColorManager.primaryDark,
+      backgroundColor: ColorManager.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(100.r),
       ),
       onPressed: onPressed,
       child: Icon(
         Icons.add,
-        color: ColorManager.white,
+        color: ColorManager.primaryDark,
         size: 25.sp,
       ),
     );

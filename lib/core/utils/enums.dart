@@ -24,3 +24,8 @@ enum CardCompany {
   mastercard,
   meeza,
 }
+
+enum ExpensesType {
+  income,
+  expenses,
+}

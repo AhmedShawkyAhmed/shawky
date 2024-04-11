@@ -1,15 +1,15 @@
 import 'package:bloc/bloc.dart';
 import 'package:finance/core/utils/enums.dart';
-import 'package:finance/features/money/accounts/data/models/money_card_model.dart';
+import 'package:finance/features/money/cards/data/models/bank_card_model.dart';
 import 'package:flutter/material.dart';
 
-part 'money_cards_state.dart';
+part 'cards_state.dart';
 
-class MoneyCardsCubit extends Cubit<MoneyCardsState> {
-  MoneyCardsCubit() : super(MoneyCardsInitial());
+class CardsCubit extends Cubit<CardsState> {
+  CardsCubit() : super(CardsInitial());
 
-  final List<MoneyCardModel> moneyCardList = [
-    MoneyCardModel(
+  final List<BankCardModel> moneyCardList = [
+    BankCardModel(
       id: 1,
       name: "Banque Misr",
       nameOnCard: "AHMED SHAWKY AHMED",
@@ -18,7 +18,7 @@ class MoneyCardsCubit extends Cubit<MoneyCardsState> {
       cardType: CardType.debit,
       cardCompany: CardCompany.visa,
     ),
-    MoneyCardModel(
+    BankCardModel(
       id: 2,
       name: "Banque Misr",
       nameOnCard: "AHMED SHAWKY AHMED",
@@ -27,7 +27,7 @@ class MoneyCardsCubit extends Cubit<MoneyCardsState> {
       cardType: CardType.debit,
       cardCompany: CardCompany.visa,
     ),
-    MoneyCardModel(
+    BankCardModel(
       id: 3,
       name: "Banque Misr",
       nameOnCard: "AHMED SHAWKY AHMED",

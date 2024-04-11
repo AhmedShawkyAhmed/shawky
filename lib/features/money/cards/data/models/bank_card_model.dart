@@ -1,6 +1,6 @@
 import 'package:finance/core/utils/enums.dart';
 
-class MoneyCardModel{
+class BankCardModel{
   final int id;
   final String name;
   final String nameOnCard;
@@ -10,7 +10,7 @@ class MoneyCardModel{
   final CardCompany cardCompany;
 
 
-  MoneyCardModel({
+  BankCardModel({
     required this.id,
     required this.name,
     required this.nameOnCard,

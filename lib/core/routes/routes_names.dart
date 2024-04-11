@@ -4,8 +4,10 @@ class Routes {
   static const String homeScreen = "/homeScreen";
   // Money
   static const String moneyHomeScreen = "/moneyHomeScreen";
-  static const String moneyAccountsScreen = "/moneyAccountsScreen";
-  static const String moneyAddAccountsScreen = "/moneyAddAccountsScreen";
-  static const String moneyCardsScreen = "/moneyCardsScreen";
-  static const String moneyAddCardsScreen = "/moneyAddCardsScreen";
+  static const String accountsScreen = "/accountsScreen";
+  static const String addAccountsScreen = "/addAccountsScreen";
+  static const String bankCardsScreen = "/bankCardsScreen";
+  static const String addCardsScreen = "/addCardsScreen";
+  static const String expensesScreen = "/expensesScreen";
+  static const String addExpensesScreen = "/addExpensesScreen";
 }

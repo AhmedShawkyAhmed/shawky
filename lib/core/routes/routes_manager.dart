@@ -4,12 +4,15 @@ import 'package:finance/core/shared/widgets/default_text.dart';
 import 'package:finance/core/utils/shared_functions.dart';
 import 'package:finance/features/home/cubit/home_cubit.dart';
 import 'package:finance/features/home/screens/home_screen.dart';
-import 'package:finance/features/money/accounts/cubit/money_accounts_cubit.dart';
+import 'package:finance/features/money/accounts/cubit/accounts_cubit.dart';
 import 'package:finance/features/money/accounts/screens/add_account_screen.dart';
 import 'package:finance/features/money/accounts/screens/money_accounts_screen.dart';
-import 'package:finance/features/money/cards/cubit/money_cards_cubit.dart';
+import 'package:finance/features/money/cards/cubit/cards_cubit.dart';
 import 'package:finance/features/money/cards/screens/add_card_screen.dart';
-import 'package:finance/features/money/cards/screens/money_cards_screen.dart';
+import 'package:finance/features/money/cards/screens/bank_cards_screen.dart';
+import 'package:finance/features/money/expenses/cubit/expenses_cubit.dart';
+import 'package:finance/features/money/expenses/screens/add_expenses_screen.dart';
+import 'package:finance/features/money/expenses/screens/expenses_screen.dart';
 import 'package:finance/features/money/home/cubit/money_cubit.dart';
 import 'package:finance/features/money/home/screens/money_home_screen.dart';
 import 'package:finance/features/splash/cubit/splash_cubit.dart';
@@ -50,36 +53,52 @@ class RouteGenerator {
             child: const MoneyHomeScreen(),
           ),
         );
-      case Routes.moneyAccountsScreen:
+      case Routes.accountsScreen:
         return MaterialPageRoute(
-          settings: const RouteSettings(name: Routes.moneyAccountsScreen),
+          settings: const RouteSettings(name: Routes.accountsScreen),
           builder: (_) => BlocProvider(
-            create: (context) => MoneyAccountsCubit(),
+            create: (context) => AccountsCubit(),
             child: const MoneyAccountsScreen(),
           ),
         );
-      case Routes.moneyAddAccountsScreen:
+      case Routes.addAccountsScreen:
         return MaterialPageRoute(
-          settings: const RouteSettings(name: Routes.moneyAddAccountsScreen),
+          settings: const RouteSettings(name: Routes.addAccountsScreen),
           builder: (_) => BlocProvider(
-            create: (context) => MoneyAccountsCubit(),
+            create: (context) => AccountsCubit(),
             child: const AddAccountScreen(),
           ),
         );
-      case Routes.moneyCardsScreen:
+      case Routes.bankCardsScreen:
         return MaterialPageRoute(
-          settings: const RouteSettings(name: Routes.moneyCardsScreen),
+          settings: const RouteSettings(name: Routes.bankCardsScreen),
           builder: (_) => BlocProvider(
-            create: (context) => MoneyCardsCubit(),
-            child: const MoneyCardsScreen(),
+            create: (context) => CardsCubit(),
+            child: const BankCardsScreen(),
           ),
         );
-      case Routes.moneyAddCardsScreen:
+      case Routes.addCardsScreen:
         return MaterialPageRoute(
-          settings: const RouteSettings(name: Routes.moneyAddCardsScreen),
+          settings: const RouteSettings(name: Routes.addCardsScreen),
           builder: (_) => BlocProvider(
-            create: (context) => MoneyCardsCubit(),
+            create: (context) => CardsCubit(),
             child: const AddCardScreen(),
+          ),
+        );
+      case Routes.expensesScreen:
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: Routes.expensesScreen),
+          builder: (_) => BlocProvider(
+            create: (context) => ExpensesCubit(),
+            child: const ExpensesScreen(),
+          ),
+        );
+      case Routes.addExpensesScreen:
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: Routes.addExpensesScreen),
+          builder: (_) => BlocProvider(
+            create: (context) => ExpensesCubit(),
+            child: const AddExpensesScreen(),
           ),
         );
       default:

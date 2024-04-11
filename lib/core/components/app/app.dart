@@ -1,3 +1,4 @@
+import 'package:finance/core/resources/color_manger.dart';
 import 'package:finance/core/routes/routes_manager.dart';
 import 'package:finance/core/routes/routes_names.dart';
 import 'package:finance/core/services/navigation_service.dart';
@@ -23,8 +24,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle.dark.copyWith(
-        statusBarColor: Colors.white,
-        statusBarIconBrightness: Brightness.dark,
+        statusBarColor: ColorManager.secondary,
+        statusBarIconBrightness: Brightness.light,
       ),
     );
     return ScreenUtilInit(

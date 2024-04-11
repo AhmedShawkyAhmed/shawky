@@ -3,12 +3,12 @@ import 'package:finance/core/resources/color_manger.dart';
 import 'package:finance/core/shared/widgets/default_text.dart';
 import 'package:finance/core/utils/enums.dart';
 import 'package:finance/core/utils/extentions.dart';
-import 'package:finance/features/money/accounts/data/models/money_card_model.dart';
+import 'package:finance/features/money/cards/data/models/bank_card_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CardWidget extends StatelessWidget {
-  final MoneyCardModel model;
+  final BankCardModel model;
 
   const CardWidget({required this.model, super.key});
 
