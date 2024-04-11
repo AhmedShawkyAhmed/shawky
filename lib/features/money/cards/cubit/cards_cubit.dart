@@ -1,9 +1,9 @@
 import 'package:bloc/bloc.dart';
-import 'package:finance/core/services/navigation_service.dart';
-import 'package:finance/core/utils/enums.dart';
-import 'package:finance/core/utils/shared_functions.dart';
-import 'package:finance/features/money/cards/data/models/bank_card_model.dart';
-import 'package:finance/features/money/cards/database/cards_database.dart';
+import 'package:shawky/core/services/navigation_service.dart';
+import 'package:shawky/core/utils/enums.dart';
+import 'package:shawky/core/utils/shared_functions.dart';
+import 'package:shawky/features/money/cards/data/models/bank_card_model.dart';
+import 'package:shawky/features/money/cards/database/cards_database.dart';
 import 'package:flutter/material.dart';
 
 part 'cards_state.dart';

@@ -1,4 +1,4 @@
-import 'package:finance/core/utils/enums.dart';
+import 'package:shawky/core/utils/enums.dart';
 
 class BankCardModel {
   int? id;

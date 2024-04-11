@@ -1,5 +1,5 @@
-import 'package:finance/core/shared/widgets/default_text.dart';
-import 'package:finance/core/utils/shared_functions.dart';
+import 'package:shawky/core/shared/widgets/default_text.dart';
+import 'package:shawky/core/utils/shared_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:percent_indicator/percent_indicator.dart';

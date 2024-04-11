@@ -1,7 +1,7 @@
-import 'package:finance/core/resources/color_manger.dart';
-import 'package:finance/core/services/navigation_service.dart';
-import 'package:finance/core/shared/models/home_item_model.dart';
-import 'package:finance/core/shared/widgets/default_text.dart';
+import 'package:shawky/core/resources/color_manger.dart';
+import 'package:shawky/core/services/navigation_service.dart';
+import 'package:shawky/core/shared/models/home_item_model.dart';
+import 'package:shawky/core/shared/widgets/default_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

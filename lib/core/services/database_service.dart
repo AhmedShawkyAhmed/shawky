@@ -1,4 +1,4 @@
-import 'package:finance/core/utils/shared_functions.dart';
+import 'package:shawky/core/utils/shared_functions.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 

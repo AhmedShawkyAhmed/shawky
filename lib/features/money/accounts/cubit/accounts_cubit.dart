@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
-import 'package:finance/core/utils/enums.dart';
-import 'package:finance/core/utils/shared_functions.dart';
-import 'package:finance/features/money/accounts/data/models/account_model.dart';
+import 'package:shawky/core/utils/enums.dart';
+import 'package:shawky/core/utils/shared_functions.dart';
+import 'package:shawky/features/money/accounts/data/models/account_model.dart';
 import 'package:flutter/material.dart';
 
 part 'accounts_state.dart';

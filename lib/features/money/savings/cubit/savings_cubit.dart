@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:finance/features/money/savings/data/models/saving_model.dart';
+import 'package:shawky/features/money/savings/data/models/saving_model.dart';
 import 'package:flutter/material.dart';
 
 part 'savings_state.dart';

@@ -1,9 +1,9 @@
-import 'package:finance/features/home/cubit/home_cubit.dart';
-import 'package:finance/features/money/accounts/cubit/accounts_cubit.dart';
-import 'package:finance/features/money/cards/cubit/cards_cubit.dart';
-import 'package:finance/features/money/expenses/cubit/expenses_cubit.dart';
-import 'package:finance/features/money/home/cubit/money_cubit.dart';
-import 'package:finance/features/splash/cubit/splash_cubit.dart';
+import 'package:shawky/features/home/cubit/home_cubit.dart';
+import 'package:shawky/features/money/accounts/cubit/accounts_cubit.dart';
+import 'package:shawky/features/money/cards/cubit/cards_cubit.dart';
+import 'package:shawky/features/money/expenses/cubit/expenses_cubit.dart';
+import 'package:shawky/features/money/home/cubit/money_cubit.dart';
+import 'package:shawky/features/splash/cubit/splash_cubit.dart';
 import 'package:get_it/get_it.dart';
 
 

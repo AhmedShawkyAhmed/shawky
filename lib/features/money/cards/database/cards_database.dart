@@ -1,6 +1,6 @@
-import 'package:finance/core/services/database_service.dart';
-import 'package:finance/core/utils/enums.dart';
-import 'package:finance/features/money/cards/data/models/bank_card_model.dart';
+import 'package:shawky/core/services/database_service.dart';
+import 'package:shawky/core/utils/enums.dart';
+import 'package:shawky/features/money/cards/data/models/bank_card_model.dart';
 import 'package:sqflite/sqflite.dart';
 
 class CardsDatabase {

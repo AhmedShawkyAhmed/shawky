@@ -1,6 +1,6 @@
 
-import 'package:finance/core/components/widgets/loading_widget.dart';
-import 'package:finance/core/services/navigation_service.dart';
+import 'package:shawky/core/components/widgets/loading_widget.dart';
+import 'package:shawky/core/services/navigation_service.dart';
 import 'package:flutter/material.dart';
 
 class LoadingDialog {

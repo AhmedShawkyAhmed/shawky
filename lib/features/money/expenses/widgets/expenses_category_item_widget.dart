@@ -1,6 +1,6 @@
-import 'package:finance/core/resources/color_manger.dart';
-import 'package:finance/core/shared/widgets/default_text.dart';
-import 'package:finance/features/money/expenses/data/models/expenses_category_model.dart';
+import 'package:shawky/core/resources/color_manger.dart';
+import 'package:shawky/core/shared/widgets/default_text.dart';
+import 'package:shawky/features/money/expenses/data/models/expenses_category_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

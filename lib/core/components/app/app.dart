@@ -1,7 +1,7 @@
-import 'package:finance/core/resources/color_manger.dart';
-import 'package:finance/core/routes/routes_manager.dart';
-import 'package:finance/core/routes/routes_names.dart';
-import 'package:finance/core/services/navigation_service.dart';
+import 'package:shawky/core/resources/color_manger.dart';
+import 'package:shawky/core/routes/routes_manager.dart';
+import 'package:shawky/core/routes/routes_names.dart';
+import 'package:shawky/core/services/navigation_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -39,7 +39,7 @@ class _MyAppState extends State<MyApp> {
           debugShowCheckedModeBanner: false,
           onGenerateRoute: RouteGenerator.getRoute,
           initialRoute: Routes.splashRoute,
-          title: 'Finance',
+          title: 'shawky',
         );
       },
     );

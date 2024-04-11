@@ -1,7 +1,7 @@
-import 'package:finance/core/resources/color_manger.dart';
-import 'package:finance/core/shared/widgets/default_text.dart';
-import 'package:finance/features/money/expenses/cubit/expenses_cubit.dart';
-import 'package:finance/features/money/expenses/widgets/expenses_category_item_widget.dart';
+import 'package:shawky/core/resources/color_manger.dart';
+import 'package:shawky/core/shared/widgets/default_text.dart';
+import 'package:shawky/features/money/expenses/cubit/expenses_cubit.dart';
+import 'package:shawky/features/money/expenses/widgets/expenses_category_item_widget.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

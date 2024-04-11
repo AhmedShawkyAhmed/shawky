@@ -1,5 +1,5 @@
-import 'package:finance/features/money/cards/cubit/cards_cubit.dart';
-import 'package:finance/features/money/cards/data/models/bank_card_model.dart';
+import 'package:shawky/features/money/cards/cubit/cards_cubit.dart';
+import 'package:shawky/features/money/cards/data/models/bank_card_model.dart';
 
 class CardArguments {
   final CardsCubit cubit;

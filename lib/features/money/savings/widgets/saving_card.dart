@@ -1,7 +1,7 @@
-import 'package:finance/core/resources/color_manger.dart';
-import 'package:finance/core/shared/widgets/default_text.dart';
-import 'package:finance/core/shared/widgets/percentage_widget.dart';
-import 'package:finance/features/money/savings/data/models/saving_model.dart';
+import 'package:shawky/core/resources/color_manger.dart';
+import 'package:shawky/core/shared/widgets/default_text.dart';
+import 'package:shawky/core/shared/widgets/percentage_widget.dart';
+import 'package:shawky/features/money/savings/data/models/saving_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

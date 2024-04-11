@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
-import 'package:finance/core/resources/assets_manager.dart';
-import 'package:finance/core/routes/routes_names.dart';
-import 'package:finance/core/shared/models/home_item_model.dart';
+import 'package:shawky/core/resources/assets_manager.dart';
+import 'package:shawky/core/routes/routes_names.dart';
+import 'package:shawky/core/shared/models/home_item_model.dart';
 import 'package:flutter/material.dart';
 
 part 'money_state.dart';

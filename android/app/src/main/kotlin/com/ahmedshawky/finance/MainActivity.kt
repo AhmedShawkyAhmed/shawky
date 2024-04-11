@@ -1,5 +1,0 @@
-package com.ahmedshawky.finance
-
-import io.flutter.embedding.android.FlutterActivity
-
-class MainActivity: FlutterActivity()

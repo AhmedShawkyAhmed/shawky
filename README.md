@@ -1,4 +1,4 @@
-# finance
+# shawky
 
 A new Flutter project.
 

@@ -1,5 +1,5 @@
-import 'package:finance/core/resources/assets_manager.dart';
-import 'package:finance/core/resources/color_manger.dart';
+import 'package:shawky/core/resources/assets_manager.dart';
+import 'package:shawky/core/resources/color_manger.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 

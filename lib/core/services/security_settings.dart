@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:finance/core/utils/shared_functions.dart';
+import 'package:shawky/core/utils/shared_functions.dart';
 import 'package:flutter/services.dart';
 
 class SecuritySettings {

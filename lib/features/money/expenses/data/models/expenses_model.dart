@@ -1,6 +1,6 @@
-import 'package:finance/core/utils/enums.dart';
-import 'package:finance/features/money/accounts/data/models/account_model.dart';
-import 'package:finance/features/money/expenses/data/models/expenses_category_model.dart';
+import 'package:shawky/core/utils/enums.dart';
+import 'package:shawky/features/money/accounts/data/models/account_model.dart';
+import 'package:shawky/features/money/expenses/data/models/expenses_category_model.dart';
 
 class ExpensesModel {
   final int id;

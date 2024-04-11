@@ -1,7 +1,7 @@
-import 'package:finance/core/resources/color_manger.dart';
-import 'package:finance/core/shared/widgets/default_item_card_widget.dart';
-import 'package:finance/core/shared/widgets/default_title_widget.dart';
-import 'package:finance/features/money/home/cubit/money_cubit.dart';
+import 'package:shawky/core/resources/color_manger.dart';
+import 'package:shawky/core/shared/widgets/default_item_card_widget.dart';
+import 'package:shawky/core/shared/widgets/default_title_widget.dart';
+import 'package:shawky/features/money/home/cubit/money_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

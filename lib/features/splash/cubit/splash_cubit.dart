@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:finance/core/routes/routes_names.dart';
-import 'package:finance/core/services/navigation_service.dart';
+import 'package:shawky/core/routes/routes_names.dart';
+import 'package:shawky/core/services/navigation_service.dart';
 import 'package:flutter/material.dart';
 
 part 'splash_state.dart';
