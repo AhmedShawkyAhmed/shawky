@@ -1,5 +1,5 @@
 import 'package:shawky/core/resources/color_manger.dart';
-import 'package:shawky/core/resources/credit_card_fromatter.dart';
+import 'package:shawky/core/resources/credit_card_formatter.dart';
 import 'package:shawky/core/routes/arguments/card_arguments.dart';
 import 'package:shawky/core/shared/widgets/default_app_button.dart';
 import 'package:shawky/core/shared/widgets/default_drop_down_menu.dart';
