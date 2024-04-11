@@ -1,95 +1,117 @@
 import 'package:finance/core/resources/color_manger.dart';
+import 'package:finance/core/resources/credit_card_fromatter.dart';
+import 'package:finance/core/routes/arguments/card_arguments.dart';
 import 'package:finance/core/shared/widgets/default_app_button.dart';
 import 'package:finance/core/shared/widgets/default_drop_down_menu.dart';
 import 'package:finance/core/shared/widgets/default_text_field.dart';
 import 'package:finance/core/shared/widgets/default_title_widget.dart';
 import 'package:finance/core/utils/enums.dart';
 import 'package:finance/core/utils/extensions.dart';
-import 'package:finance/features/money/cards/cubit/cards_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AddCardScreen extends StatelessWidget {
-  const AddCardScreen({super.key});
+  final CardArguments args;
+
+  const AddCardScreen({
+    super.key,
+    required this.args,
+  });
 
   @override
   Widget build(BuildContext context) {
-    CardsCubit cubit = BlocProvider.of(context);
-    return BlocBuilder<CardsCubit, CardsState>(
-      builder: (context, state) {
-        return Scaffold(
-          backgroundColor: ColorManager.secondary,
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                const DefaultTitleWidget(title: "Add Card"),
-                SizedBox(height: 20.h),
-                DefaultTextField(
-                  controller: cubit.nameController,
-                  hintText: 'Name',
-                ),
-                DefaultTextField(
-                  controller: cubit.nameOnCardController,
-                  hintText: 'Name On Card',
-                ),
-                DefaultTextField(
-                  controller: cubit.cardNumberController,
-                  hintText: 'Card Number',
-                  keyboardType: TextInputType.number,
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.symmetric(horizontal: 15.w),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: 170.w,
-                        child: DefaultDropdown<String>(
-                          padding: 0,
-                          items: cubit.monthList,
-                          hint: "Month",
-                          itemAsString: (String? u) => u!,
-                          onChanged: cubit.changeMonth,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 170.w,
-                        child: DefaultDropdown<String>(
-                          padding: 0,
-                          items: cubit.yearList,
-                          hint: "Year",
-                          itemAsString: (String? u) => u!,
-                          onChanged: cubit.changeYear,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                DefaultDropdown<CardType>(
-                  items: cubit.cardTypeList,
-                  hint: "Card Type",
-                  itemAsString: (CardType? u) => u!.name.toCapitalized(),
-                  onChanged: cubit.changeCardType,
-                ),
-                DefaultDropdown<CardCompany>(
-                  items: cubit.cardCompanyList,
-                  hint: "Card Company",
-                  itemAsString: (CardCompany? u) => u!.name.toUpperCase(),
-                  onChanged: cubit.changeCardCompany,
-                ),
-                SizedBox(height: 20.h),
-                DefaultAppButton(
-                  title: "Save",
-                  onTap: () {
-                    cubit.emitInsertCard();
-                  },
-                ),
-              ],
+    return Scaffold(
+      backgroundColor: ColorManager.secondary,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            DefaultTitleWidget(title: args.title),
+            SizedBox(height: 20.h),
+            DefaultTextField(
+              controller: args.cubit.nameController,
+              hintText: args.model?.name ?? 'Name',
+              maxLength: 20,
             ),
-          ),
-        );
-      },
+            DefaultTextField(
+              controller: args.cubit.nameOnCardController,
+              hintText: args.model?.nameOnCard ?? 'Name On Card',
+              maxLength: 20,
+            ),
+            DefaultTextField(
+              controller: args.cubit.cardNumberController,
+              hintText: args.model?.cardNumber ?? 'Card Number',
+              maxLength: 19,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                CreditCardNumberFormatter(),
+              ],
+              keyboardType: TextInputType.number,
+            ),
+            DefaultTextField(
+              controller: args.cubit.cvvController,
+              hintText: args.model?.cvv ?? 'CVV',
+              maxLength: 3,
+              keyboardType: TextInputType.number,
+            ),
+            Padding(
+              padding: EdgeInsetsDirectional.symmetric(horizontal: 15.w),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: 170.w,
+                    child: DefaultDropdown<String>(
+                      padding: 0,
+                      items: args.cubit.monthList,
+                      hint: "Month",
+                      selectedItem: args.model?.exp.substring(0, 2),
+                      itemAsString: (String? u) => u!,
+                      onChanged: args.cubit.changeMonth,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 170.w,
+                    child: DefaultDropdown<String>(
+                      padding: 0,
+                      items: args.cubit.yearList,
+                      hint: "Year",
+                      selectedItem: args.model?.exp.substring(3, 5),
+                      itemAsString: (String? u) => u!,
+                      onChanged: args.cubit.changeYear,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            DefaultDropdown<CardType>(
+              items: args.cubit.cardTypeList,
+              hint: "Card Type",
+              selectedItem: args.model?.cardType,
+              itemAsString: (CardType? u) => u!.name.toCapitalized(),
+              onChanged: args.cubit.changeCardType,
+            ),
+            DefaultDropdown<CardCompany>(
+              items: args.cubit.cardCompanyList,
+              hint: "Card Company",
+              selectedItem: args.model?.cardCompany,
+              itemAsString: (CardCompany? u) => u!.name.toUpperCase(),
+              onChanged: args.cubit.changeCardCompany,
+            ),
+            SizedBox(height: 20.h),
+            DefaultAppButton(
+              title: "Save",
+              onTap: () {
+                if (args.model == null) {
+                  args.cubit.emitInsertCard();
+                } else {
+                  args.cubit.emitUpdateCard(model: args.model!);
+                }
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

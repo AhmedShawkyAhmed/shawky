@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:finance/core/routes/routes_names.dart';
 import 'package:finance/core/services/navigation_service.dart';
 import 'package:finance/core/utils/enums.dart';
 import 'package:finance/core/utils/shared_functions.dart';
@@ -15,6 +14,7 @@ class CardsCubit extends Cubit<CardsState> {
   TextEditingController nameController = TextEditingController();
   TextEditingController nameOnCardController = TextEditingController();
   TextEditingController cardNumberController = TextEditingController();
+  TextEditingController cvvController = TextEditingController();
   CardType cardType = CardType.debit;
   CardCompany cardCompany = CardCompany.visa;
   String year = "00", month = "00";
@@ -71,6 +71,13 @@ class CardsCubit extends Cubit<CardsState> {
     printLog(cardCompany);
   }
 
+  void dispose() {
+    nameController = TextEditingController();
+    nameOnCardController = TextEditingController();
+    cardNumberController = TextEditingController();
+    cvvController = TextEditingController();
+  }
+
   Future emitGetCard() async {
     try {
       emit(GetCardLoading());
@@ -89,17 +96,53 @@ class CardsCubit extends Cubit<CardsState> {
         name: nameController.text,
         nameOnCard: nameOnCardController.text,
         cardNumber: cardNumberController.text,
-        exp: "$month/${year.substring(2,4)}",
-        cvv: "123",
+        exp: "$month/${year.substring(2, 4)}",
+        cvv: cvvController.text,
         cardType: cardType,
         cardCompany: cardCompany,
       );
       emit(InsertCardLoading());
       await CardsDatabase.insertCard(cardModel);
-      moneyCardList.add(cardModel);
       emit(InsertCardSuccess());
+      emitGetCard();
       showMyToast(message: "Card Inserted Successfully", success: true);
-      NavigationService.pushReplacementNamed(Routes.bankCardsScreen);
+      dispose();
+      NavigationService.pop();
+    } catch (e) {
+      emit(InsertCardError());
+      showMyToast(message: e.toString(), success: false);
+      printError(e.toString());
+    }
+  }
+
+  Future emitUpdateCard({
+    required BankCardModel model,
+  }) async {
+    try {
+      BankCardModel cardModel = BankCardModel(
+        id: model.id,
+        name: nameController.text.isEmpty ? model.name : nameController.text,
+        nameOnCard: nameOnCardController.text.isEmpty
+            ? model.nameOnCard
+            : nameOnCardController.text,
+        cardNumber: cardNumberController.text.isEmpty
+            ? model.cardNumber
+            : cardNumberController.text,
+        exp:
+            "${month == "00" ? model.exp.substring(0, 2) : month}/${year == "00" ? model.exp.substring(3, 5) : year.substring(2, 4)}",
+        cvv: cvvController.text.isEmpty ? model.cvv : cvvController.text,
+        cardType: model.cardType,
+        cardCompany: model.cardCompany,
+      );
+      emit(InsertCardLoading());
+      await CardsDatabase.updateCard(cardModel);
+      emit(InsertCardSuccess());
+      int index = moneyCardList.indexOf(model);
+      moneyCardList.removeAt(index);
+      moneyCardList.insert(index, cardModel);
+      showMyToast(message: "Card Updated Successfully", success: true);
+      dispose();
+      NavigationService.pop();
     } catch (e) {
       emit(InsertCardError());
       showMyToast(message: e.toString(), success: false);

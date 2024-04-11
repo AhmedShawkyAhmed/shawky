@@ -1,5 +1,7 @@
 import 'package:finance/core/components/app/error_screen.dart';
+import 'package:finance/core/routes/arguments/card_arguments.dart';
 import 'package:finance/core/routes/routes_names.dart';
+import 'package:finance/core/services/service_locator.dart';
 import 'package:finance/core/shared/widgets/default_text.dart';
 import 'package:finance/core/utils/shared_functions.dart';
 import 'package:finance/features/home/cubit/home_cubit.dart';
@@ -76,17 +78,15 @@ class RouteGenerator {
         return MaterialPageRoute(
           settings: const RouteSettings(name: Routes.bankCardsScreen),
           builder: (_) => BlocProvider(
-            create: (context) => CardsCubit()..emitGetCard(),
+            create: (context) => getIt<CardsCubit>()..emitGetCard(),
             child: const BankCardsScreen(),
           ),
         );
       case Routes.addCardsScreen:
+        final CardArguments args = settings.arguments as CardArguments;
         return MaterialPageRoute(
           settings: const RouteSettings(name: Routes.addCardsScreen),
-          builder: (_) => BlocProvider(
-            create: (context) => CardsCubit(),
-            child: const AddCardScreen(),
-          ),
+          builder: (_) => AddCardScreen(args: args),
         );
       case Routes.expensesScreen:
         return MaterialPageRoute(

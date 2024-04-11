@@ -1,5 +1,6 @@
 import 'package:finance/core/resources/color_manger.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DefaultTextField extends StatelessWidget {
@@ -26,6 +27,8 @@ class DefaultTextField extends StatelessWidget {
   final TextInputType? keyboardType;
   final TextDirection? direction;
   final Function(String)? onChange;
+  final String? Function(String?)? validator;
+  final List<TextInputFormatter>? inputFormatters;
 
   const DefaultTextField({
     required this.controller,
@@ -51,6 +54,8 @@ class DefaultTextField extends StatelessWidget {
     this.marginVertical,
     this.direction,
     this.onChange,
+    this.validator,
+    this.inputFormatters,
     super.key,
   });
 
@@ -69,11 +74,13 @@ class DefaultTextField extends StatelessWidget {
           color: color ?? ColorManager.transparent,
           borderRadius: BorderRadius.circular(radius ?? 7),
         ),
-        child: TextField(
+        child: TextFormField(
           textInputAction: TextInputAction.go,
-          onSubmitted: (value) {
+          onEditingComplete: () {
             FocusManager.instance.primaryFocus?.unfocus();
           },
+          inputFormatters: inputFormatters,
+          validator: validator,
           keyboardType: keyboardType ?? TextInputType.text,
           textAlignVertical: TextAlignVertical.center,
           enabled: enabled ?? true,
@@ -106,7 +113,7 @@ class DefaultTextField extends StatelessWidget {
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(radius ?? 7),
               borderSide: const BorderSide(
-                color: ColorManager.secondary,
+                color: ColorManager.red,
               ),
             ),
             focusedBorder: OutlineInputBorder(

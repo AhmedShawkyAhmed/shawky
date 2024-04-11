@@ -6,6 +6,7 @@ import 'package:finance/core/utils/extensions.dart';
 import 'package:finance/core/utils/shared_functions.dart';
 import 'package:finance/features/money/cards/cubit/cards_cubit.dart';
 import 'package:finance/features/money/cards/data/models/bank_card_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,10 +15,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class CreditCard extends StatefulWidget {
   final BankCardModel model;
   final VoidCallback onLongPress;
+  final VoidCallback onTap;
 
   const CreditCard({
     required this.model,
     required this.onLongPress,
+    required this.onTap,
     super.key,
   });
 
@@ -79,12 +82,17 @@ class _CreditCardState extends State<CreditCard> {
                       width: 40.w,
                     ),
                     const Spacer(),
-                    RotationTransition(
-                      turns: const AlwaysStoppedAnimation(90 / 360),
-                      child: Icon(
-                        Icons.wifi,
-                        color: ColorManager.secondary,
-                        size: 40.sp,
+                    GestureDetector(
+                      onTap: (){
+                        widget.onTap();
+                      },
+                      child: RotationTransition(
+                        turns: const AlwaysStoppedAnimation(90 / 360),
+                        child: Icon(
+                          Icons.wifi,
+                          color: ColorManager.secondary,
+                          size: 40.sp,
+                        ),
                       ),
                     ),
                   ],

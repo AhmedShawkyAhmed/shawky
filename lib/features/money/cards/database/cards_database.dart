@@ -43,6 +43,7 @@ class CardsDatabase {
       card.toMap(),
       where: 'id = ?',
       whereArgs: [card.id],
+      conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
 
