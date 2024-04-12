@@ -30,7 +30,7 @@ class MoneyHomeScreen extends StatelessWidget {
                     crossAxisCount: 2,
                     crossAxisSpacing: 20.sp,
                     mainAxisSpacing: 20.sp,
-                    mainAxisExtent: 120.h,
+                    mainAxisExtent: 130.h,
                   ),
                   scrollDirection: Axis.vertical,
                   itemCount: cubit.itemList.length,
