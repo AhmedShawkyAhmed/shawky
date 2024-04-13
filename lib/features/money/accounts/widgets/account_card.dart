@@ -59,7 +59,7 @@ class AccountCard extends StatelessWidget {
                   ),
                   const Spacer(),
                   DefaultText(
-                    text: model.updatedAt ?? "-",
+                    text: model.updatedAt?.substring(0,10) ?? "-",
                     fontSize: 9.sp,
                   ),
                 ],

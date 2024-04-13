@@ -1,7 +1,7 @@
 import 'package:shawky/core/utils/enums.dart';
 
 class AccountModel {
-  String? id;
+  int? id;
   AccountTypes? accountType;
   String? name;
   Currency? currency;

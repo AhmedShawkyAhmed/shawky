@@ -50,7 +50,7 @@ class AccountsDatabase {
     );
   }
 
-  static Future<void> deleteAccount(String id) async {
+  static Future<void> deleteAccount(int id) async {
     final db = await LocalDatabase.database;
     await db.delete(
       _accountTable,

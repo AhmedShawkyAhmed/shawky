@@ -60,7 +60,7 @@ class AddAccountScreen extends StatelessWidget {
               title: "Save",
               onTap: () {
                 if (args.model == null) {
-                  args.cubit.emitAddCard();
+                  args.cubit.emitAddAccount();
                 } else {
                   args.cubit.emitUpdateAccount(model: args.model!);
                 }

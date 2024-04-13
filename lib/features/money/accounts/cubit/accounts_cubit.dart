@@ -58,7 +58,7 @@ class AccountsCubit extends Cubit<AccountsState> {
     }
   }
 
-  Future emitAddCard() async {
+  Future emitAddAccount() async {
     try {
       AccountModel accountModel = AccountModel(
         name: accountNameController.text,
@@ -116,13 +116,13 @@ class AccountsCubit extends Cubit<AccountsState> {
   }
 
   Future emitDeleteAccount({
-    required String accountId,
+    required int accountId,
   }) async {
     try {
       emit(DeleteAccountLoading());
       await AccountsDatabase.deleteAccount(accountId);
       moneyAccounts.removeWhere((element) => element.id == accountId);
-      showMyToast(message: "Card Deleted Successfully", success: true);
+      showMyToast(message: "Account Deleted Successfully", success: true);
       emit(DeleteAccountSuccess());
     } catch (e) {
       emit(DeleteAccountError());

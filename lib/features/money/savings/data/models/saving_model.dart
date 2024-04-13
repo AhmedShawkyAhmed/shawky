@@ -10,4 +10,23 @@ class SavingModel {
     this.target,
     this.current,
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'target': target,
+      'current': current,
+    };
+  }
+
+  @override
+  String toString() {
+    return 'Account{'
+        'id: $id, '
+        'name: $name, '
+        'target: $target, '
+        'current: $current, '
+        '}';
+  }
 }

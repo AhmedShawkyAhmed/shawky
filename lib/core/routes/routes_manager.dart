@@ -1,6 +1,7 @@
 import 'package:shawky/core/components/app/error_screen.dart';
 import 'package:shawky/core/routes/arguments/account_arguments.dart';
 import 'package:shawky/core/routes/arguments/card_arguments.dart';
+import 'package:shawky/core/routes/arguments/saving_arguments.dart';
 import 'package:shawky/core/routes/routes_names.dart';
 import 'package:shawky/core/services/service_locator.dart';
 import 'package:shawky/core/shared/widgets/default_text.dart';
@@ -71,7 +72,7 @@ class RouteGenerator {
         final AccountArguments args = settings.arguments as AccountArguments;
         return MaterialPageRoute(
           settings: const RouteSettings(name: Routes.addAccountsScreen),
-          builder: (_) =>  AddAccountScreen(args: args),
+          builder: (_) => AddAccountScreen(args: args),
         );
       case Routes.bankCardsScreen:
         return MaterialPageRoute(
@@ -107,17 +108,15 @@ class RouteGenerator {
         return MaterialPageRoute(
           settings: const RouteSettings(name: Routes.savingsScreen),
           builder: (_) => BlocProvider(
-            create: (context) => SavingsCubit(),
+            create: (context) => SavingsCubit()..emitGetSavings(),
             child: const SavingsScreen(),
           ),
         );
       case Routes.addSavingScreen:
+        final SavingArguments args = settings.arguments as SavingArguments;
         return MaterialPageRoute(
           settings: const RouteSettings(name: Routes.addSavingScreen),
-          builder: (_) => BlocProvider(
-            create: (context) => SavingsCubit(),
-            child: const AddSavingScreen(),
-          ),
+          builder: (_) => AddSavingScreen(args: args),
         );
       default:
         return unDefinedRoute();
