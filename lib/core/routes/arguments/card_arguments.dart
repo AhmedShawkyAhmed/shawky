@@ -5,12 +5,10 @@ class CardArguments {
   final CardsCubit cubit;
   final String title;
   final BankCardModel? model;
-  final bool isEdit;
 
   CardArguments({
     required this.cubit,
     required this.title,
     this.model,
-    this.isEdit = false,
   });
 }

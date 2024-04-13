@@ -90,7 +90,7 @@ class CardsCubit extends Cubit<CardsState> {
     }
   }
 
-  Future emitInsertCard() async {
+  Future emitAddCard() async {
     try {
       BankCardModel cardModel = BankCardModel(
         name: nameController.text,
@@ -101,15 +101,15 @@ class CardsCubit extends Cubit<CardsState> {
         cardType: cardType,
         cardCompany: cardCompany,
       );
-      emit(InsertCardLoading());
-      await CardsDatabase.insertCard(cardModel);
-      emit(InsertCardSuccess());
+      emit(AddCardLoading());
+      await CardsDatabase.addCard(cardModel);
+      emit(AddCardSuccess());
       emitGetCard();
-      showMyToast(message: "Card Inserted Successfully", success: true);
+      showMyToast(message: "Card Added Successfully", success: true);
       dispose();
       NavigationService.pop();
     } catch (e) {
-      emit(InsertCardError());
+      emit(AddCardError());
       showMyToast(message: e.toString(), success: false);
       printError(e.toString());
     }
@@ -134,9 +134,9 @@ class CardsCubit extends Cubit<CardsState> {
         cardType: model.cardType,
         cardCompany: model.cardCompany,
       );
-      emit(InsertCardLoading());
+      emit(UpdateCardLoading());
       await CardsDatabase.updateCard(cardModel);
-      emit(InsertCardSuccess());
+      emit(UpdateCardSuccess());
       int index = moneyCardList.indexOf(model);
       moneyCardList.removeAt(index);
       moneyCardList.insert(index, cardModel);
@@ -144,7 +144,7 @@ class CardsCubit extends Cubit<CardsState> {
       dispose();
       NavigationService.pop();
     } catch (e) {
-      emit(InsertCardError());
+      emit(UpdateCardError());
       showMyToast(message: e.toString(), success: false);
       printError(e.toString());
     }

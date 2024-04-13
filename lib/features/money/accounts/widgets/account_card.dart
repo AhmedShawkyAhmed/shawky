@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 import 'package:shawky/core/resources/color_manger.dart';
 import 'package:shawky/core/shared/widgets/default_text.dart';
 import 'package:shawky/core/shared/widgets/percentage_widget.dart';
@@ -9,10 +11,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AccountCard extends StatelessWidget {
   final AccountModel model;
+  final VoidCallback onLongPress;
+  final VoidCallback onTap;
   final num total;
 
   const AccountCard({
     required this.model,
+    required this.onLongPress,
+    required this.onTap,
     required this.total,
     super.key,
   });
@@ -29,37 +35,48 @@ class AccountCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          SizedBox(
-            width: 250.w,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                DefaultText(
-                  text: "${model.type!.name.toCapitalized()} - ${model.name}",
-                  fontSize: 13.sp,
-                ),
-                DefaultText(
-                  text: "${model.amount} ${model.currency!.name.toUpperCase()}",
-                  fontSize: 17.sp,
-                ),
-                if(model.currency != Currency.egp)
-                DefaultText(
-                  text: "${((model.amount ?? 0) * (model.rate ?? 0))} ${Currency.egp.name.toUpperCase()}",
-                  fontSize: 11.sp,
-                ),
-                const Spacer(),
-                DefaultText(
-                  text: model.updatedAt ?? "-",
-                  fontSize: 9.sp,
-                ),
-              ],
+          GestureDetector(
+            onTap: (){
+              onTap();
+            },
+            child: SizedBox(
+              width: 250.w,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  DefaultText(
+                    text: "${model.accountType!.name.toCapitalized()} - ${model.name}",
+                    fontSize: 13.sp,
+                  ),
+                  DefaultText(
+                    text: "${model.amount} ${model.currency!.name.toUpperCase()}",
+                    fontSize: 17.sp,
+                  ),
+                  if(model.currency != Currency.egp)
+                  DefaultText(
+                    text: "${((model.amount ?? 0) * (model.rate ?? 0))} ${Currency.egp.name.toUpperCase()}",
+                    fontSize: 11.sp,
+                  ),
+                  const Spacer(),
+                  DefaultText(
+                    text: model.updatedAt ?? "-",
+                    fontSize: 9.sp,
+                  ),
+                ],
+              ),
             ),
           ),
-          SizedBox(
-            width: 40.w,
-            child: PercentageWidget(
-              target: total,
-              current: ((model.amount ?? 0) * (model.rate ?? 0)),
+          GestureDetector(
+            onLongPress: () {
+              onLongPress();
+              WidgetsBinding.instance.reassembleApplication();
+            },
+            child: SizedBox(
+              width: 50.w,
+              child: PercentageWidget(
+                target: total,
+                current: ((model.amount ?? 0) * (model.rate ?? 0)),
+              ),
             ),
           ),
         ],

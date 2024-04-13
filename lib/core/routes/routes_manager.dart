@@ -1,4 +1,5 @@
 import 'package:shawky/core/components/app/error_screen.dart';
+import 'package:shawky/core/routes/arguments/account_arguments.dart';
 import 'package:shawky/core/routes/arguments/card_arguments.dart';
 import 'package:shawky/core/routes/routes_names.dart';
 import 'package:shawky/core/services/service_locator.dart';
@@ -62,17 +63,15 @@ class RouteGenerator {
         return MaterialPageRoute(
           settings: const RouteSettings(name: Routes.accountsScreen),
           builder: (_) => BlocProvider(
-            create: (context) => AccountsCubit(),
+            create: (context) => AccountsCubit()..emitGetAccounts(),
             child: const MoneyAccountsScreen(),
           ),
         );
       case Routes.addAccountsScreen:
+        final AccountArguments args = settings.arguments as AccountArguments;
         return MaterialPageRoute(
           settings: const RouteSettings(name: Routes.addAccountsScreen),
-          builder: (_) => BlocProvider(
-            create: (context) => AccountsCubit(),
-            child: const AddAccountScreen(),
-          ),
+          builder: (_) =>  AddAccountScreen(args: args),
         );
       case Routes.bankCardsScreen:
         return MaterialPageRoute(

@@ -103,7 +103,7 @@ class AddCardScreen extends StatelessWidget {
               title: "Save",
               onTap: () {
                 if (args.model == null) {
-                  args.cubit.emitInsertCard();
+                  args.cubit.emitAddCard();
                 } else {
                   args.cubit.emitUpdateCard(model: args.model!);
                 }

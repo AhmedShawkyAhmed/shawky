@@ -6,7 +6,6 @@ import 'package:shawky/core/services/navigation_service.dart';
 import 'package:shawky/core/shared/widgets/default_floating_button.dart';
 import 'package:shawky/core/shared/widgets/default_text.dart';
 import 'package:shawky/core/shared/widgets/default_title_widget.dart';
-import 'package:shawky/core/utils/shared_functions.dart';
 import 'package:shawky/features/money/cards/cubit/cards_cubit.dart';
 import 'package:shawky/features/money/cards/widgets/credit_card.dart';
 import 'package:flutter/material.dart';
@@ -69,7 +68,6 @@ class BankCardsScreen extends StatelessWidget {
                                 arguments: CardArguments(
                                   cubit: cubit,
                                   title: "Edit Card",
-                                  isEdit: true,
                                   model: cubit.moneyCardList[index],
                                 ),
                               );
@@ -80,9 +78,9 @@ class BankCardsScreen extends StatelessWidget {
                                     "Are you Sure you want to Delete this Card ?",
                                 onPressed: () {
                                   NavigationService.pop();
-                                  printLog(cubit.moneyCardList[index]);
                                   cubit.emitDeleteCard(
-                                      cardId: cubit.moneyCardList[index].id!);
+                                    cardId: cubit.moneyCardList[index].id!,
+                                  );
                                 },
                               );
                             },

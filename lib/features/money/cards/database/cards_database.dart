@@ -1,25 +1,15 @@
-import 'package:shawky/core/services/database_service.dart';
+import 'package:shawky/core/database/local_database.dart';
 import 'package:shawky/core/utils/enums.dart';
 import 'package:shawky/features/money/cards/data/models/bank_card_model.dart';
 import 'package:sqflite/sqflite.dart';
 
 class CardsDatabase {
-  static const cardsTable = "cards";
-
-  static Future<void> insertCard(BankCardModel cardModel) async {
-    final db = await DatabaseService.database;
-
-    await db.insert(
-      cardsTable,
-      cardModel.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
-  }
+  static const _cardsTable = "cards";
 
   static Future<List<BankCardModel>> getCards() async {
-    final db = await DatabaseService.database;
+    final db = await LocalDatabase.database;
 
-    final List<Map<String, dynamic>> maps = await db.query(cardsTable);
+    final List<Map<String, dynamic>> maps = await db.query(_cardsTable);
 
     return List.generate(maps.length, (i) {
       return BankCardModel(
@@ -29,17 +19,31 @@ class CardsDatabase {
         cardNumber: maps[i]['cardNumber'],
         exp: maps[i]['exp'],
         cvv: maps[i]['cvv'],
-        cardType: CardType.values.where((element) => element.name == maps[i]['cardType']).first,
-        cardCompany: CardCompany.values.where((element) => element.name == maps[i]['cardCompany']).first,
+        cardType: CardType.values
+            .where((element) => element.name == maps[i]['cardType'])
+            .first,
+        cardCompany: CardCompany.values
+            .where((element) => element.name == maps[i]['cardCompany'])
+            .first,
       );
     });
   }
 
+  static Future<void> addCard(BankCardModel cardModel) async {
+    final db = await LocalDatabase.database;
+
+    await db.insert(
+      _cardsTable,
+      cardModel.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
   static Future<void> updateCard(BankCardModel card) async {
-    final db = await DatabaseService.database;
+    final db = await LocalDatabase.database;
 
     await db.update(
-      cardsTable,
+      _cardsTable,
       card.toMap(),
       where: 'id = ?',
       whereArgs: [card.id],
@@ -48,9 +52,9 @@ class CardsDatabase {
   }
 
   static Future<void> deleteCard(int id) async {
-    final db = await DatabaseService.database;
+    final db = await LocalDatabase.database;
     await db.delete(
-      cardsTable,
+      _cardsTable,
       where: 'id = ?',
       whereArgs: [id],
     );
