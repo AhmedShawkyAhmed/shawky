@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shawky/core/utils/enums.dart';
 
 class AccountModel {
@@ -20,35 +19,28 @@ class AccountModel {
     this.rate,
   });
 
-  factory AccountModel.fromFirestore(
-    DocumentSnapshot<Map<String, dynamic>> snapshot,
-    SnapshotOptions? options,
-  ) {
-    final data = snapshot.data();
-    return AccountModel(
-      id: data?['id'],
-      accountType: AccountTypes.values
-          .where((element) => element.name == data?['type'])
-          .first,
-      name: data?['name'],
-      currency: Currency.values
-          .where((element) => element.name == data?['currency'])
-          .first,
-      updatedAt: data?['updatedAt'],
-      amount: data?['amount'],
-      rate: data?['rate'],
-    );
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'updatedAt': updatedAt,
+      'amount': amount,
+      'rate': rate,
+      'accountType': accountType?.name,
+      'currency': currency?.name,
+    };
   }
 
-  Map<String, dynamic> toFirestore() {
-    return {
-      if (id != null) "id": id,
-      if (accountType != null) "type": accountType?.name,
-      if (name != null) "name": name,
-      if (currency != null) "currency": currency?.name,
-      if (updatedAt != null) "updatedAt": updatedAt,
-      if (amount != null) "amount": amount,
-      if (rate != null) "rate": rate,
-    };
+  @override
+  String toString() {
+    return 'Account{'
+        'id: $id, '
+        'name: $name, '
+        'accountType: $accountType, '
+        'currency: $currency, '
+        'amount: $amount, '
+        'rate: $rate, '
+        'updatedAt: $updatedAt, '
+        '}';
   }
 }
