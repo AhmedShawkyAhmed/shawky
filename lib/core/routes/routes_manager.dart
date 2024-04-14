@@ -1,6 +1,7 @@
 import 'package:shawky/core/components/app/error_screen.dart';
 import 'package:shawky/core/routes/arguments/account_arguments.dart';
 import 'package:shawky/core/routes/arguments/card_arguments.dart';
+import 'package:shawky/core/routes/arguments/expenses_arguments.dart';
 import 'package:shawky/core/routes/arguments/saving_arguments.dart';
 import 'package:shawky/core/routes/routes_names.dart';
 import 'package:shawky/core/services/service_locator.dart';
@@ -91,18 +92,23 @@ class RouteGenerator {
       case Routes.expensesScreen:
         return MaterialPageRoute(
           settings: const RouteSettings(name: Routes.expensesScreen),
-          builder: (_) => BlocProvider(
-            create: (context) => ExpensesCubit(),
+          builder: (_) => MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => ExpensesCubit()..emitGetExpenses(),
+              ),
+              BlocProvider(
+                create: (context) => AccountsCubit()..emitGetAccounts(),
+              ),
+            ],
             child: const ExpensesScreen(),
           ),
         );
       case Routes.addExpensesScreen:
+        final ExpensesArguments args = settings.arguments as ExpensesArguments;
         return MaterialPageRoute(
           settings: const RouteSettings(name: Routes.addExpensesScreen),
-          builder: (_) => BlocProvider(
-            create: (context) => ExpensesCubit(),
-            child: const AddExpensesScreen(),
-          ),
+          builder: (_) => AddExpensesScreen(args: args),
         );
       case Routes.savingsScreen:
         return MaterialPageRoute(

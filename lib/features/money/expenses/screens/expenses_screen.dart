@@ -1,8 +1,11 @@
+import 'package:shawky/core/components/dialogs/warning_dialog.dart';
 import 'package:shawky/core/resources/color_manger.dart';
+import 'package:shawky/core/routes/arguments/expenses_arguments.dart';
 import 'package:shawky/core/routes/routes_names.dart';
 import 'package:shawky/core/services/navigation_service.dart';
 import 'package:shawky/core/shared/widgets/default_floating_button.dart';
 import 'package:shawky/core/shared/widgets/default_title_widget.dart';
+import 'package:shawky/features/money/accounts/cubit/accounts_cubit.dart';
 import 'package:shawky/features/money/expenses/cubit/expenses_cubit.dart';
 import 'package:shawky/features/money/expenses/widgets/expenses_card.dart';
 import 'package:shawky/features/money/expenses/widgets/expenses_status_widget.dart';
@@ -16,13 +19,21 @@ class ExpensesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ExpensesCubit cubit = BlocProvider.of(context);
+    AccountsCubit accountsCubit = BlocProvider.of(context);
     return BlocBuilder<ExpensesCubit, ExpensesState>(
       builder: (context, state) {
         return Scaffold(
           backgroundColor: ColorManager.secondary,
           floatingActionButton: DefaultFloatingButton(
             onPressed: () {
-              NavigationService.pushNamed(Routes.addExpensesScreen);
+              NavigationService.pushNamed(
+                Routes.addExpensesScreen,
+                arguments: ExpensesArguments(
+                  cubit: cubit,
+                  accountsCubit: accountsCubit,
+                  title: "Add Expenses",
+                ),
+              );
             },
           ),
           body: Column(
@@ -43,9 +54,23 @@ class ExpensesScreen extends StatelessWidget {
                     mainAxisExtent: 90.h,
                   ),
                   scrollDirection: Axis.vertical,
-                  itemCount: 15,
+                  itemCount: cubit.expensesList.length,
                   itemBuilder: (context, index) {
-                    return const ExpensesCard();
+                    return ExpensesCard(
+                      model: cubit.expensesList[index],
+                      onLongPress: (){
+                        WarningDialog.show(
+                          message:
+                          "Are you Sure you want to Delete this Expenses ?",
+                          onPressed: () {
+                            NavigationService.pop();
+                            cubit.emitDeleteExpense(
+                              expenseId: cubit.expensesList[index].id!,
+                            );
+                          },
+                        );
+                      },
+                    );
                   },
                 ),
               ),

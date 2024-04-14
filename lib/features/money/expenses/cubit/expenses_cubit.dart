@@ -1,11 +1,14 @@
 import 'package:bloc/bloc.dart';
 import 'package:shawky/core/resources/color_manger.dart';
+import 'package:shawky/core/services/navigation_service.dart';
 import 'package:shawky/core/utils/enums.dart';
 import 'package:shawky/core/utils/shared_functions.dart';
 import 'package:shawky/features/money/accounts/data/models/account_model.dart';
 import 'package:shawky/features/money/expenses/data/models/expenses_category_model.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:shawky/features/money/expenses/data/models/expenses_model.dart';
+import 'package:shawky/features/money/expenses/database/expenses_database.dart';
 
 part 'expenses_state.dart';
 
@@ -16,11 +19,12 @@ class ExpensesCubit extends Cubit<ExpensesState> {
   TextEditingController amountController = TextEditingController();
   TextEditingController rateController = TextEditingController();
   TextEditingController dateController = TextEditingController();
-  ExpensesType expensesType = ExpensesType.income;
-  Currency currency = Currency.egp;
   ExpensesCategoryModel expensesCategoryModel = ExpensesCategoryModel();
   AccountModel fromAccount = AccountModel();
   AccountModel toAccount = AccountModel();
+  ExpensesType expensesType = ExpensesType.income;
+  Currency currency = Currency.egp;
+  int expensesCategory = 0;
 
   final List<ExpensesType> expensesTypeList = ExpensesType.values;
   final List<Currency> currencyList = Currency.values;
@@ -126,30 +130,54 @@ class ExpensesCubit extends Cubit<ExpensesState> {
       color: ExpensesCategoryColors.otherBills,
     ),
   ];
+  Set<ExpensesCategoryModel> categoryList = {};
+  List<ExpensesModel> expensesList = [];
+
+  dispose() {
+    nameController = TextEditingController();
+    amountController = TextEditingController();
+    rateController = TextEditingController();
+    dateController = TextEditingController();
+    expensesCategoryModel = ExpensesCategoryModel();
+    fromAccount = AccountModel();
+    toAccount = AccountModel();
+  }
+
+  void getCategoryList() {
+    List<int>? expensesIds = expensesList.map((e) => e.category).toList();
+    for (int i = 0; i < expensesIds.length; i++) {
+      if(expensesIds[i] != 0){
+        categoryList.add(expensesCategoryList
+            .where((element) => (element.id == expensesIds[i]))
+            .toList()
+            .first);
+      }
+    }
+  }
 
   void changeExpensesType(value) {
     expensesType = value;
-    printLog(expensesType);
   }
 
   void changeExpensesCategory(value) {
     expensesCategoryModel = value;
-    printLog(expensesCategoryModel);
+    expensesCategory = expensesCategoryModel.id!;
   }
 
   void changeFromAccount(value) {
     fromAccount = value;
-    printLog(fromAccount);
   }
 
   void changeToAccount(value) {
     toAccount = value;
-    printLog(toAccount);
   }
 
   void changeCurrency(value) {
     currency = value;
-    printLog(currency);
+    if (currency == Currency.egp) {
+      rateController.clear();
+      rateController.text = "1";
+    }
   }
 
   List<PieChartSectionData> chartSections(List<ExpensesCategoryModel> sectors) {
@@ -165,5 +193,95 @@ class ExpensesCubit extends Cubit<ExpensesState> {
       list.add(data);
     }
     return list;
+  }
+
+  Future emitGetExpenses() async {
+    try {
+      emit(GetExpenseLoading());
+      expensesList = await ExpensesDatabase.getExpenses();
+      getCategoryList();
+      emit(GetExpenseSuccess());
+    } catch (e) {
+      emit(GetExpenseError());
+      showMyToast(message: e.toString(), success: false);
+      printError(e.toString());
+    }
+  }
+
+  Future emitAddExpense() async {
+    try {
+      ExpensesModel expensesModel = ExpensesModel(
+        name: nameController.text,
+        amount: double.tryParse(amountController.text)!,
+        rate: currency == Currency.egp
+            ? 1.0
+            : double.tryParse(rateController.text)!,
+        fromAccount: fromAccount,
+        toAccount: toAccount,
+        date: DateTime.now().toString(),
+        currency: currency,
+        type: expensesType,
+        category: expensesCategory,
+      );
+      emit(AddExpenseLoading());
+      await ExpensesDatabase.addExpense(expensesModel);
+      emit(AddExpenseSuccess());
+      emitGetExpenses();
+      showMyToast(message: "Expense Added Successfully", success: true);
+      dispose();
+      NavigationService.pop();
+    } catch (e) {
+      emit(AddExpenseError());
+      showMyToast(message: e.toString(), success: false);
+      printError(e.toString());
+    }
+  }
+
+  Future emitUpdateExpense({
+    required ExpensesModel model,
+  }) async {
+    try {
+      // ExpensesModel expensesModel = ExpensesModel(
+      //   id: model.id,
+      //   name: nameController.text.isEmpty ? model.name : nameController.text,
+      //   amount: ,
+      //   rate: ,
+      //   date: ,
+      //   currency: ,
+      //   type: ,
+      //   fromAccount: ,
+      //   toAccount: ,
+      //   category: ,
+      // );
+      emit(UpdateExpenseLoading());
+      await ExpensesDatabase.updateExpense(model);
+      emit(UpdateExpenseSuccess());
+      // int index = expensesList.indexOf(model);
+      // expensesList.removeAt(index);
+      // expensesList.insert(index, expensesModel);
+      showMyToast(message: "Expense Updated Successfully", success: true);
+      dispose();
+      NavigationService.pop();
+    } catch (e) {
+      emit(UpdateExpenseError());
+      showMyToast(message: e.toString(), success: false);
+      printError(e.toString());
+    }
+  }
+
+  Future emitDeleteExpense({
+    required int expenseId,
+  }) async {
+    try {
+      emit(DeleteExpenseLoading());
+      await ExpensesDatabase.deleteExpense(expenseId);
+      expensesList.removeWhere((element) => element.id == expenseId);
+      showMyToast(message: "Expense Deleted Successfully", success: true);
+      emit(DeleteExpenseSuccess());
+    } catch (e) {
+      emit(DeleteExpenseError());
+      showMyToast(message: e.toString(), success: false);
+      printError(e.toString());
+    }
   }
 }

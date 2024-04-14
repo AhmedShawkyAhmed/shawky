@@ -1,5 +1,6 @@
 import 'package:shawky/core/resources/color_manger.dart';
 import 'package:shawky/core/shared/widgets/default_text.dart';
+import 'package:shawky/core/utils/enums.dart';
 import 'package:shawky/features/money/expenses/cubit/expenses_cubit.dart';
 import 'package:shawky/features/money/expenses/widgets/expenses_category_item_widget.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -56,7 +57,7 @@ class ExpensesStatusWidget extends StatelessWidget {
                       textColor: ColorManager.white,
                     ),
                     DefaultText(
-                      text: "54212 £",
+                      text: "${cubit.expensesList.fold(0, (num sum, e) => sum + (e.type == ExpensesType.income ? ((e.amount) * (e.rate)) : 0))} £",
                       textColor: ColorManager.green,
                       fontSize: 12.sp,
                     ),
@@ -69,7 +70,7 @@ class ExpensesStatusWidget extends StatelessWidget {
                       textColor: ColorManager.white,
                     ),
                     DefaultText(
-                      text: "212 £",
+                      text: "${cubit.expensesList.fold(0, (num sum, e) => sum + (e.type == ExpensesType.expenses ? ((e.amount) * (e.rate)) : 0))} £",
                       textColor: ColorManager.red,
                       fontSize: 12.sp,
                     ),
@@ -82,7 +83,7 @@ class ExpensesStatusWidget extends StatelessWidget {
                       textColor: ColorManager.white,
                     ),
                     DefaultText(
-                      text: "542512 £",
+                      text: "${cubit.expensesList.fold(0, (num sum, e) => sum + (e.type != ExpensesType.transfer ? ((e.amount) * (e.rate)) : 0))} £",
                       textColor: ColorManager.green,
                       fontSize: 12.sp,
                     ),
@@ -115,7 +116,7 @@ class ExpensesStatusWidget extends StatelessWidget {
                   aspectRatio: 1,
                   child: PieChart(
                     PieChartData(
-                      sections: cubit.chartSections(cubit.expensesCategoryList),
+                      sections: cubit.chartSections(cubit.categoryList.toList()),
                       centerSpaceRadius: 55.w,
                       sectionsSpace: 2.5.sp,
                     ),
@@ -140,10 +141,10 @@ class ExpensesStatusWidget extends StatelessWidget {
                       mainAxisExtent: 14.h,
                     ),
                     scrollDirection: Axis.vertical,
-                    itemCount: 17,
+                    itemCount: cubit.categoryList.length,
                     itemBuilder: (context, index) {
                       return ExpensesCategoryItemWidget(
-                        model: cubit.expensesCategoryList[index],
+                        model: cubit.categoryList.toList()[index],
                       );
                     },
                   ),
