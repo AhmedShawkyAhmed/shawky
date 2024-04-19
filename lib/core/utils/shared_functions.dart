@@ -166,6 +166,20 @@ void printError(Object? object) {
 void printLog(Object? object) {
   String text = "$object";
   if (kDebugMode) {
+    debugPrint('\x1B[35m$text\x1B[0m');
+  }
+}
+
+void printCubit(Object? object) {
+  String text = "$object";
+  if (kDebugMode) {
     debugPrint('\x1B[34m$text\x1B[0m');
+  }
+}
+
+void printRoute(Object? object) {
+  String text = "$object";
+  if (kDebugMode) {
+    debugPrint('\x1B[30m$text\x1B[0m');
   }
 }

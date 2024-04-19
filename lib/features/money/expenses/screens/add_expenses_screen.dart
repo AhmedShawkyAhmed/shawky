@@ -47,7 +47,7 @@ class AddExpensesScreen extends StatelessWidget {
               hintText: 'Date',
               enabled: false,
               onTap: () {
-                args.cubit.selectDate();
+                args.cubit.selectDate(true);
               },
             ),
             DefaultDropdown<ExpensesType>(

@@ -30,7 +30,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
-    printLog("Route ${settings.name}");
+    printRoute("Route ${settings.name}");
     switch (settings.name) {
       case Routes.splashRoute:
         return MaterialPageRoute(

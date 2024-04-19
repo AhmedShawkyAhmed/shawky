@@ -1,12 +1,12 @@
+import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shawky/core/resources/color_manger.dart';
 import 'package:shawky/core/shared/widgets/default_text.dart';
 import 'package:shawky/core/utils/enums.dart';
 import 'package:shawky/features/money/expenses/cubit/expenses_cubit.dart';
 import 'package:shawky/features/money/expenses/widgets/expenses_category_item_widget.dart';
-import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ExpensesStatusWidget extends StatelessWidget {
   final ExpensesCubit cubit;
@@ -26,22 +26,27 @@ class ExpensesStatusWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  DefaultText(
-                    text: "04",
-                    textColor: ColorManager.white,
-                  ),
-                  DefaultText(
-                    text: "  -  ",
-                    textColor: ColorManager.white,
-                  ),
-                  DefaultText(
-                    text: "2024",
-                    textColor: ColorManager.white,
-                  ),
-                ],
+              GestureDetector(
+                onTap: (){
+                  cubit.selectDate(false);
+                },
+                child:  Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    DefaultText(
+                      text: cubit.currentDate.month.toString(),
+                      textColor: ColorManager.white,
+                    ),
+                    const DefaultText(
+                      text: "  -  ",
+                      textColor: ColorManager.white,
+                    ),
+                    DefaultText(
+                      text: cubit.currentDate.year.toString(),
+                      textColor: ColorManager.white,
+                    ),
+                  ],
+                ),
               ),
               Padding(
                 padding: EdgeInsetsDirectional.only(
@@ -114,50 +119,53 @@ class ExpensesStatusWidget extends StatelessWidget {
                 ),
                 clipBehavior: Clip.antiAliasWithSaveLayer,
               ),
-              Row(
-                children: [
-                  SizedBox(
-                    width: 170.w,
-                    child: AspectRatio(
-                      aspectRatio: 1,
-                      child: PieChart(
-                        PieChartData(
-                          sections: cubit.pieChartSectionData,
-                          centerSpaceRadius: 55.w,
-                          sectionsSpace: 2.5.sp,
+              cubit.categoryList.toList().isEmpty
+                  ? const SizedBox()
+                  : Row(
+                      children: [
+                        SizedBox(
+                          width: 170.w,
+                          child: AspectRatio(
+                            aspectRatio: 1,
+                            child: PieChart(
+                              PieChartData(
+                                sections: cubit.pieChartSectionData,
+                                centerSpaceRadius: 55.w,
+                                sectionsSpace: 2.5.sp,
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
+                        SizedBox(
+                          height: 200.h,
+                          width: 205.w,
+                          child: Center(
+                            child: GridView.builder(
+                              shrinkWrap: true,
+                              padding: EdgeInsets.symmetric(
+                                vertical: 5.h,
+                                horizontal: 1.w,
+                              ),
+                              physics: const NeverScrollableScrollPhysics(),
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 5.sp,
+                                mainAxisSpacing: 5.sp,
+                                mainAxisExtent: 14.h,
+                              ),
+                              scrollDirection: Axis.vertical,
+                              itemCount: cubit.categoryList.length,
+                              itemBuilder: (context, index) {
+                                return ExpensesCategoryItemWidget(
+                                  model: cubit.categoryList.toList()[index],
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  SizedBox(
-                    height: 200.h,
-                    width: 205.w,
-                    child: Center(
-                      child: GridView.builder(
-                        shrinkWrap: true,
-                        padding: EdgeInsets.symmetric(
-                          vertical: 5.h,
-                          horizontal: 1.w,
-                        ),
-                        physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 5.sp,
-                          mainAxisSpacing: 5.sp,
-                          mainAxisExtent: 14.h,
-                        ),
-                        scrollDirection: Axis.vertical,
-                        itemCount: cubit.categoryList.length,
-                        itemBuilder: (context, index) {
-                          return ExpensesCategoryItemWidget(
-                            model: cubit.categoryList.toList()[index],
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                ],
-              ),
               Container(
                 width: double.infinity,
                 height: 1.h,

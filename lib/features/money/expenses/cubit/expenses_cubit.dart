@@ -1,12 +1,12 @@
 import 'package:bloc/bloc.dart';
+import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/material.dart';
 import 'package:shawky/core/resources/color_manger.dart';
 import 'package:shawky/core/services/navigation_service.dart';
 import 'package:shawky/core/utils/enums.dart';
 import 'package:shawky/core/utils/shared_functions.dart';
 import 'package:shawky/features/money/accounts/data/models/account_model.dart';
 import 'package:shawky/features/money/expenses/data/models/expenses_category_model.dart';
-import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/material.dart';
 import 'package:shawky/features/money/expenses/data/models/expenses_model.dart';
 import 'package:shawky/features/money/expenses/database/expenses_database.dart';
 
@@ -33,6 +33,7 @@ class ExpensesCubit extends Cubit<ExpensesState> {
   ExpensesType expensesType = ExpensesType.expenses;
   Currency currency = Currency.egp;
   int expensesCategory = 0;
+  DateTime currentDate = DateTime.now();
 
   final List<ExpensesType> expensesTypeList = ExpensesType.values;
   final List<Currency> currencyList = Currency.values;
@@ -168,14 +169,34 @@ class ExpensesCubit extends Cubit<ExpensesState> {
     toAccount = AccountModel();
   }
 
-  Future<void> selectDate() async {
-    DateTime? picked = await showDatePicker(
-        context: NavigationService.context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(2020, 8),
-        lastDate: DateTime(2101));
+  Future<void> selectDate(bool inForm) async {
+    final DateTime? picked = await showDatePicker(
+      context: NavigationService.context,
+      initialEntryMode: DatePickerEntryMode.calendarOnly,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2020, 8),
+      lastDate: DateTime(2100),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            colorScheme: ColorScheme.fromSwatch(
+              primarySwatch: Colors.blue,
+              cardColor: const Color(0xff232323),
+              brightness: Brightness.dark,
+            ),
+            dialogBackgroundColor: ColorManager.white,
+          ),
+          child: child!,
+        );
+      },
+    );
     if (picked != null) {
-      dateController.text = picked.toString().substring(0,10);
+      if(inForm){
+        dateController.text = picked.toString().substring(0, 10);
+      }else{
+        currentDate = picked;
+        WidgetsBinding.instance.reassembleApplication();
+      }
     }
   }
 
@@ -256,8 +277,11 @@ class ExpensesCubit extends Cubit<ExpensesState> {
     }
   }
 
-  Color getExpensesColor(int id){
-    return expensesCategoryList.where((element) => element.id == id).first.color!;
+  Color getExpensesColor(int id) {
+    return expensesCategoryList
+        .where((element) => element.id == id)
+        .first
+        .color!;
   }
 
   Future emitGetExpenses() async {
