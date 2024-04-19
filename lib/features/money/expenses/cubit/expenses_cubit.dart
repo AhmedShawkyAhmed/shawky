@@ -30,7 +30,7 @@ class ExpensesCubit extends Cubit<ExpensesState> {
     id: 0,
     name: "Salary",
   );
-  ExpensesType expensesType = ExpensesType.income;
+  ExpensesType expensesType = ExpensesType.expenses;
   Currency currency = Currency.egp;
   int expensesCategory = 0;
 
@@ -168,6 +168,17 @@ class ExpensesCubit extends Cubit<ExpensesState> {
     toAccount = AccountModel();
   }
 
+  Future<void> selectDate() async {
+    DateTime? picked = await showDatePicker(
+        context: NavigationService.context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2020, 8),
+        lastDate: DateTime(2101));
+    if (picked != null) {
+      dateController.text = picked.toString().substring(0,10);
+    }
+  }
+
   void getCategoryList() {
     categoryList.clear();
     for (int i = 0; i < expensesList.length; i++) {
@@ -206,6 +217,7 @@ class ExpensesCubit extends Cubit<ExpensesState> {
 
   void changeExpensesType(value) {
     expensesType = value;
+    WidgetsBinding.instance.reassembleApplication();
   }
 
   void changeExpensesCategory(value) {
@@ -244,6 +256,10 @@ class ExpensesCubit extends Cubit<ExpensesState> {
     }
   }
 
+  Color getExpensesColor(int id){
+    return expensesCategoryList.where((element) => element.id == id).first.color!;
+  }
+
   Future emitGetExpenses() async {
     try {
       clearLists();
@@ -269,7 +285,7 @@ class ExpensesCubit extends Cubit<ExpensesState> {
             : double.tryParse(rateController.text)!,
         fromAccount: fromAccount.name == null ? salaryAccount : fromAccount,
         toAccount: toAccount.name == null ? expensesAccount : toAccount,
-        date: DateTime.now().toString(),
+        date: dateController.text,
         currency: currency,
         type: expensesType,
         category: expensesCategory,
@@ -294,7 +310,6 @@ class ExpensesCubit extends Cubit<ExpensesState> {
     try {
       emit(DeleteExpenseLoading());
       await ExpensesDatabase.deleteExpense(expenseId);
-      // expensesList.removeWhere((element) => element.id == expenseId);
       emitGetExpenses();
       showMyToast(message: "Expense Deleted Successfully", success: true);
       emit(DeleteExpenseSuccess());

@@ -57,6 +57,7 @@ class ExpensesScreen extends StatelessWidget {
                   itemCount: cubit.expensesList.length,
                   itemBuilder: (context, index) {
                     return ExpensesCard(
+                      cubit: cubit,
                       model: cubit.expensesList[index],
                       onLongPress: (){
                         WarningDialog.show(

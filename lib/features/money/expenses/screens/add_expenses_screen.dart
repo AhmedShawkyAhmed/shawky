@@ -45,11 +45,16 @@ class AddExpensesScreen extends StatelessWidget {
             DefaultTextField(
               controller: args.cubit.dateController,
               hintText: 'Date',
+              enabled: false,
+              onTap: () {
+                args.cubit.selectDate();
+              },
             ),
             DefaultDropdown<ExpensesType>(
               items: args.cubit.expensesTypeList,
               hint: "Expenses Type",
               itemAsString: (ExpensesType? u) => u!.name.toCapitalized(),
+              selectedItem: args.cubit.expensesType,
               onChanged: args.cubit.changeExpensesType,
             ),
             DefaultDropdown<ExpensesCategoryModel>(
@@ -60,22 +65,25 @@ class AddExpensesScreen extends StatelessWidget {
                   u!.name!.toCapitalized(),
               onChanged: args.cubit.changeExpensesCategory,
             ),
-            DefaultDropdown<AccountModel>(
-              items: args.accountsCubit.moneyAccounts,
-              hint: "From Account",
-              itemAsString: (AccountModel? u) => u!.name!.toCapitalized(),
-              onChanged: args.cubit.changeFromAccount,
-            ),
-            DefaultDropdown<AccountModel>(
-              items: args.accountsCubit.moneyAccounts,
-              hint: "To Account",
-              itemAsString: (AccountModel? u) => u!.name!.toCapitalized(),
-              onChanged: args.cubit.changeToAccount,
-            ),
+            if (args.cubit.expensesType != ExpensesType.income)
+              DefaultDropdown<AccountModel>(
+                items: args.accountsCubit.moneyAccounts,
+                hint: "From Account",
+                itemAsString: (AccountModel? u) => u!.name!.toCapitalized(),
+                onChanged: args.cubit.changeFromAccount,
+              ),
+            if (args.cubit.expensesType != ExpensesType.expenses)
+              DefaultDropdown<AccountModel>(
+                items: args.accountsCubit.moneyAccounts,
+                hint: "To Account",
+                itemAsString: (AccountModel? u) => u!.name!.toCapitalized(),
+                onChanged: args.cubit.changeToAccount,
+              ),
             DefaultDropdown<Currency>(
               items: args.cubit.currencyList,
               hint: "Currency",
               itemAsString: (Currency? u) => u!.name.toUpperCase(),
+              selectedItem: args.cubit.currency,
               onChanged: args.cubit.changeCurrency,
             ),
             SizedBox(height: 20.h),

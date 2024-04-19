@@ -90,13 +90,19 @@ class AccountsCubit extends Cubit<AccountsState> {
     try {
       AccountModel accountModel = AccountModel(
         id: model.id,
-        name: accountNameController.text.isEmpty ? model.name : accountNameController.text,
-        amount:amountController.text.isEmpty?model.amount: double.tryParse(amountController.text),
+        name: accountNameController.text.isEmpty
+            ? model.name
+            : accountNameController.text,
+        amount: amountController.text.isEmpty
+            ? model.amount
+            : double.tryParse(amountController.text),
         rate: currency == Currency.egp
             ? 1.0
-            :rateController.text.isEmpty?model.rate: double.tryParse(rateController.text),
-        accountType: model.accountType,
-        currency: model.currency,
+            : rateController.text.isEmpty
+                ? model.rate
+                : double.tryParse(rateController.text),
+        accountType: model.accountType ?? accountType,
+        currency: model.currency ?? currency,
         updatedAt: selectedDate.toString(),
       );
       emit(UpdateAccountLoading());

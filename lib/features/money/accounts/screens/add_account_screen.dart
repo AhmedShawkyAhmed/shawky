@@ -44,14 +44,14 @@ class AddAccountScreen extends StatelessWidget {
             DefaultDropdown<AccountTypes>(
               items: args.cubit.accountTypesList,
               hint: "Account Type",
-              selectedItem: args.model?.accountType,
+              selectedItem: args.model?.accountType ?? args.cubit.accountType,
               itemAsString: (AccountTypes? u) => u!.name.toCapitalized(),
               onChanged: args.cubit.changeAccountTypes,
             ),
             DefaultDropdown<Currency>(
               items: args.cubit.currencyList,
               hint: "Currency",
-              selectedItem: args.model?.currency,
+              selectedItem: args.model?.currency ?? args.cubit.currency,
               itemAsString: (Currency? u) => u!.name.toUpperCase(),
               onChanged: args.cubit.changeCurrency,
             ),

@@ -87,14 +87,14 @@ class AddCardScreen extends StatelessWidget {
             DefaultDropdown<CardType>(
               items: args.cubit.cardTypeList,
               hint: "Card Type",
-              selectedItem: args.model?.cardType,
+              selectedItem: args.model?.cardType ?? args.cubit.cardType,
               itemAsString: (CardType? u) => u!.name.toCapitalized(),
               onChanged: args.cubit.changeCardType,
             ),
             DefaultDropdown<CardCompany>(
               items: args.cubit.cardCompanyList,
               hint: "Card Company",
-              selectedItem: args.model?.cardCompany,
+              selectedItem: args.model?.cardCompany ?? args.cubit.cardCompany,
               itemAsString: (CardCompany? u) => u!.name.toUpperCase(),
               onChanged: args.cubit.changeCardCompany,
             ),

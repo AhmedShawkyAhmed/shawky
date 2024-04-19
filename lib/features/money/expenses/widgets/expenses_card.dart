@@ -5,14 +5,17 @@ import 'package:intl/intl.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shawky/core/utils/enums.dart';
 import 'package:shawky/core/utils/extensions.dart';
+import 'package:shawky/features/money/expenses/cubit/expenses_cubit.dart';
 import 'package:shawky/features/money/expenses/data/models/expenses_model.dart';
 
 class ExpensesCard extends StatelessWidget {
+  final ExpensesCubit cubit;
   final ExpensesModel model;
   final VoidCallback onLongPress;
 
   const ExpensesCard({
     super.key,
+    required this.cubit,
     required this.model,
     required this.onLongPress,
   });
@@ -20,12 +23,13 @@ class ExpensesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onLongPress: (){
+      onLongPress: () {
         onLongPress();
         WidgetsBinding.instance.reassembleApplication();
       },
       child: Container(
-        padding: EdgeInsetsDirectional.symmetric(horizontal: 10.w, vertical: 5.h),
+        padding:
+            EdgeInsetsDirectional.symmetric(horizontal: 10.w, vertical: 5.h),
         decoration: BoxDecoration(
           color: ColorManager.white,
           borderRadius: BorderRadius.circular(10.r),
@@ -67,18 +71,18 @@ class ExpensesCard extends StatelessWidget {
                   ],
                 ),
                 const Spacer(flex: 3),
-                DefaultText(
-                  text: model.type == ExpensesType.income
-                      ? "${model.amount * model.rate} £"
-                      : "0.0 £",
-                  textColor: ColorManager.green,
+                Container(
+                  width: 10.w,
+                  height: 10.w,
+                  decoration: BoxDecoration(
+                    color: cubit.getExpensesColor(model.category),
+                    borderRadius: BorderRadius.circular(500.r),
+                  ),
                 ),
-                const Spacer(),
+                SizedBox(width: 5.w),
                 DefaultText(
-                  text: model.type == ExpensesType.income
-                      ? "0.0 £"
-                      : "${model.amount * model.rate} £",
-                  textColor: ColorManager.red,
+                  text: model.type.name.toCapitalized(),
+                  fontSize: 12.sp,
                 ),
                 SizedBox(width: 10.w),
               ],
@@ -90,11 +94,6 @@ class ExpensesCard extends StatelessWidget {
             Row(
               children: [
                 SizedBox(width: 5.w),
-                DefaultText(
-                  text: model.type.name.toCapitalized(),
-                  fontSize: 12.sp,
-                ),
-                SizedBox(width: 25.w),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -102,7 +101,8 @@ class ExpensesCard extends StatelessWidget {
                       text: model.name,
                     ),
                     DefaultText(
-                      text: "${model.fromAccount.name} - ${model.toAccount.name}",
+                      text:
+                          "${model.fromAccount.name} - ${model.toAccount.name}",
                       fontSize: 10.sp,
                     ),
                   ],
