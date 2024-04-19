@@ -22,6 +22,14 @@ class ExpensesCubit extends Cubit<ExpensesState> {
   ExpensesCategoryModel expensesCategoryModel = ExpensesCategoryModel();
   AccountModel fromAccount = AccountModel();
   AccountModel toAccount = AccountModel();
+  AccountModel expensesAccount = AccountModel(
+    id: 0,
+    name: "Expenses",
+  );
+  AccountModel salaryAccount = AccountModel(
+    id: 0,
+    name: "Salary",
+  );
   ExpensesType expensesType = ExpensesType.income;
   Currency currency = Currency.egp;
   int expensesCategory = 0;
@@ -31,23 +39,23 @@ class ExpensesCubit extends Cubit<ExpensesState> {
   final List<ExpensesCategoryModel> expensesCategoryList = [
     ExpensesCategoryModel(
       id: 1,
-      name: "Home",
+      name: "Salary",
       color: ExpensesCategoryColors.home,
     ),
     ExpensesCategoryModel(
       id: 2,
-      name: "Internet",
-      color: ExpensesCategoryColors.internet,
+      name: "Profit",
+      color: ExpensesCategoryColors.profit,
     ),
     ExpensesCategoryModel(
       id: 3,
-      name: "Gas",
-      color: ExpensesCategoryColors.gas,
+      name: "Home",
+      color: ExpensesCategoryColors.home,
     ),
     ExpensesCategoryModel(
       id: 4,
-      name: "Stocks",
-      color: ExpensesCategoryColors.stocks,
+      name: "Internet",
+      color: ExpensesCategoryColors.internet,
     ),
     ExpensesCategoryModel(
       id: 5,
@@ -126,12 +134,29 @@ class ExpensesCubit extends Cubit<ExpensesState> {
     ),
     ExpensesCategoryModel(
       id: 20,
+      name: "Gas",
+      color: ExpensesCategoryColors.gas,
+    ),
+    ExpensesCategoryModel(
+      id: 21,
+      name: "Stocks",
+      color: ExpensesCategoryColors.stocks,
+    ),
+    ExpensesCategoryModel(
+      id: 22,
       name: "Other Bills",
       color: ExpensesCategoryColors.otherBills,
     ),
   ];
-  Set<ExpensesCategoryModel> categoryList = {};
+  List<ExpensesCategoryModel> categoryList = [];
   List<ExpensesModel> expensesList = [];
+  List<PieChartSectionData> pieChartSectionData = [];
+
+  clearLists() {
+    categoryList.clear();
+    expensesList.clear();
+    pieChartSectionData.clear();
+  }
 
   dispose() {
     nameController = TextEditingController();
@@ -144,13 +169,37 @@ class ExpensesCubit extends Cubit<ExpensesState> {
   }
 
   void getCategoryList() {
-    List<int>? expensesIds = expensesList.map((e) => e.category).toList();
-    for (int i = 0; i < expensesIds.length; i++) {
-      if(expensesIds[i] != 0){
-        categoryList.add(expensesCategoryList
-            .where((element) => (element.id == expensesIds[i]))
-            .toList()
-            .first);
+    categoryList.clear();
+    for (int i = 0; i < expensesList.length; i++) {
+      if (categoryList
+          .where((element) => element.id == expensesList[i].category)
+          .toList()
+          .isEmpty) {
+        categoryList.add(
+          ExpensesCategoryModel(
+            id: expensesCategoryList
+                .where((element) => (element.id == expensesList[i].category))
+                .toList()
+                .first
+                .id,
+            name: expensesCategoryList
+                .where((element) => (element.id == expensesList[i].category))
+                .toList()
+                .first
+                .name,
+            color: expensesCategoryList
+                .where((element) => (element.id == expensesList[i].category))
+                .toList()
+                .first
+                .color,
+            amount: (expensesList[i].amount * expensesList[i].rate),
+          ),
+        );
+      } else {
+        int index = categoryList
+            .indexWhere((element) => element.id == expensesList[i].category);
+        categoryList[index].amount = (categoryList[index].amount)! +
+            (expensesList[i].amount * expensesList[i].rate);
       }
     }
   }
@@ -180,26 +229,28 @@ class ExpensesCubit extends Cubit<ExpensesState> {
     }
   }
 
-  List<PieChartSectionData> chartSections(List<ExpensesCategoryModel> sectors) {
-    final List<PieChartSectionData> list = [];
-    for (var sector in sectors) {
+  void chartSections() {
+    pieChartSectionData.clear();
+    for (var sector in categoryList.toList()) {
       const double radius = 20.0;
-      final data = PieChartSectionData(
+      PieChartSectionData data = PieChartSectionData(
         color: sector.color,
-        value: sector.id!.toDouble(),
+        value: sector.amount!.toDouble(),
         radius: radius,
         title: '',
       );
-      list.add(data);
+      pieChartSectionData.add(data);
+      printSuccess(pieChartSectionData.length);
     }
-    return list;
   }
 
   Future emitGetExpenses() async {
     try {
+      clearLists();
       emit(GetExpenseLoading());
       expensesList = await ExpensesDatabase.getExpenses();
       getCategoryList();
+      chartSections();
       emit(GetExpenseSuccess());
     } catch (e) {
       emit(GetExpenseError());
@@ -216,8 +267,8 @@ class ExpensesCubit extends Cubit<ExpensesState> {
         rate: currency == Currency.egp
             ? 1.0
             : double.tryParse(rateController.text)!,
-        fromAccount: fromAccount,
-        toAccount: toAccount,
+        fromAccount: fromAccount.name == null ? salaryAccount : fromAccount,
+        toAccount: toAccount.name == null ? expensesAccount : toAccount,
         date: DateTime.now().toString(),
         currency: currency,
         type: expensesType,
@@ -237,45 +288,14 @@ class ExpensesCubit extends Cubit<ExpensesState> {
     }
   }
 
-  Future emitUpdateExpense({
-    required ExpensesModel model,
-  }) async {
-    try {
-      // ExpensesModel expensesModel = ExpensesModel(
-      //   id: model.id,
-      //   name: nameController.text.isEmpty ? model.name : nameController.text,
-      //   amount: ,
-      //   rate: ,
-      //   date: ,
-      //   currency: ,
-      //   type: ,
-      //   fromAccount: ,
-      //   toAccount: ,
-      //   category: ,
-      // );
-      emit(UpdateExpenseLoading());
-      await ExpensesDatabase.updateExpense(model);
-      emit(UpdateExpenseSuccess());
-      // int index = expensesList.indexOf(model);
-      // expensesList.removeAt(index);
-      // expensesList.insert(index, expensesModel);
-      showMyToast(message: "Expense Updated Successfully", success: true);
-      dispose();
-      NavigationService.pop();
-    } catch (e) {
-      emit(UpdateExpenseError());
-      showMyToast(message: e.toString(), success: false);
-      printError(e.toString());
-    }
-  }
-
   Future emitDeleteExpense({
     required int expenseId,
   }) async {
     try {
       emit(DeleteExpenseLoading());
       await ExpensesDatabase.deleteExpense(expenseId);
-      expensesList.removeWhere((element) => element.id == expenseId);
+      // expensesList.removeWhere((element) => element.id == expenseId);
+      emitGetExpenses();
       showMyToast(message: "Expense Deleted Successfully", success: true);
       emit(DeleteExpenseSuccess());
     } catch (e) {

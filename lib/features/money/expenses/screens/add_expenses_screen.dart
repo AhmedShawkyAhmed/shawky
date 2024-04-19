@@ -82,11 +82,7 @@ class AddExpensesScreen extends StatelessWidget {
             DefaultAppButton(
               title: "Save",
               onTap: () {
-                if (args.model == null) {
-                  args.cubit.emitAddExpense();
-                } else {
-                  args.cubit.emitUpdateExpense(model: args.model!);
-                }
+                args.cubit.emitAddExpense();
               },
             ),
           ],

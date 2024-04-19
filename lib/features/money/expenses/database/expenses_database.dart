@@ -46,18 +46,6 @@ class ExpensesDatabase {
     );
   }
 
-  static Future<void> updateExpense(ExpensesModel expensesModel) async {
-    final db = await LocalDatabase.database;
-
-    await db.update(
-      _expensesTable,
-      expensesModel.toMap(),
-      where: 'id = ?',
-      whereArgs: [expensesModel.id],
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
-  }
-
   static Future<void> deleteExpense(int id) async {
     final db = await LocalDatabase.database;
     await db.delete(

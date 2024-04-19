@@ -18,6 +18,8 @@ class ColorManager {
 }
 
 class ExpensesCategoryColors {
+  static const Color salary = Color(0xff12bb00);
+  static const Color profit = Color(0xff5902e8);
   static const Color home = Color(0xfff05527);
   static const Color internet = Color(0xff953041);
   static const Color gas = Color(0xffe8c648);
