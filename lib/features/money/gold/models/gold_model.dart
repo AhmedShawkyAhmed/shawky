@@ -25,7 +25,7 @@ class GoldModel {
 
   @override
   String toString() {
-    return 'Expenses{'
+    return 'Gold{'
         'id: $id, '
         'name: $name, '
         'weight: $weight, '

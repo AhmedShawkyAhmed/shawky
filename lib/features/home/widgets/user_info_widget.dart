@@ -21,7 +21,7 @@ class UserInfoWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(100.r),
             ),
             child: Image.asset(
-              ImageAssets.logo,
+              AssetsManager.logo,
               width: 60.w,
             ),
           ),

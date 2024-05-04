@@ -4,6 +4,7 @@ import 'package:shawky/core/components/app/error_screen.dart';
 import 'package:shawky/core/routes/arguments/account_arguments.dart';
 import 'package:shawky/core/routes/arguments/card_arguments.dart';
 import 'package:shawky/core/routes/arguments/expenses_arguments.dart';
+import 'package:shawky/core/routes/arguments/profiles_arguments.dart';
 import 'package:shawky/core/routes/arguments/saving_arguments.dart';
 import 'package:shawky/core/routes/routes_names.dart';
 import 'package:shawky/core/services/service_locator.dart';
@@ -28,6 +29,10 @@ import 'package:shawky/features/money/home/screens/money_home_screen.dart';
 import 'package:shawky/features/money/savings/cubit/savings_cubit.dart';
 import 'package:shawky/features/money/savings/screens/add_saving_screen.dart';
 import 'package:shawky/features/money/savings/screens/savings_screen.dart';
+import 'package:shawky/features/profiles/cubit/profiles_cubit.dart';
+import 'package:shawky/features/profiles/screens/add_profile_screen.dart';
+import 'package:shawky/features/profiles/screens/profile_details_screen.dart';
+import 'package:shawky/features/profiles/screens/profiles_screen.dart';
 import 'package:shawky/features/splash/cubit/splash_cubit.dart';
 import 'package:shawky/features/splash/screens/splash_screen.dart';
 
@@ -140,6 +145,26 @@ class RouteGenerator {
         return MaterialPageRoute(
           settings: const RouteSettings(name: Routes.addGoldScreen),
           builder: (_) => AddGoldScreen(cubit: cubit),
+        );
+      case Routes.profilesScreen:
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: Routes.profilesScreen),
+          builder: (_) => BlocProvider(
+            create: (context) => ProfilesCubit()..emitGetProfiles(),
+            child: const ProfilesScreen(),
+          ),
+        );
+      case Routes.profileDetailsScreen:
+        final ProfilesArguments args = settings.arguments as ProfilesArguments;
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: Routes.profileDetailsScreen),
+          builder: (_) => ProfileDetailsScreen(args: args),
+        );
+      case Routes.addProfileScreen:
+        final ProfilesArguments args = settings.arguments as ProfilesArguments;
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: Routes.addProfileScreen),
+          builder: (_) => AddProfileScreen(args: args),
         );
       default:
         return unDefinedRoute();

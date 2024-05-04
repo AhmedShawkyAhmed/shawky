@@ -13,31 +13,31 @@ class MoneyCubit extends Cubit<MoneyState> {
     DefaultItemModel(
       id: 1,
       title: "Accounts",
-      icon: ImageAssets.passbook,
+      icon: AssetsManager.passbook,
       route: Routes.accountsScreen,
     ),
     DefaultItemModel(
       id: 2,
       title: "Cards",
-      icon: ImageAssets.creditCard,
+      icon: AssetsManager.creditCard,
       route: Routes.bankCardsScreen,
     ),
     DefaultItemModel(
       id: 3,
       title: "Expenses",
-      icon: ImageAssets.expenses,
+      icon: AssetsManager.expenses,
       route: Routes.expensesScreen,
     ),
     DefaultItemModel(
       id: 4,
       title: "Savings",
-      icon: ImageAssets.purchases,
+      icon: AssetsManager.purchases,
       route: Routes.savingsScreen,
     ),
     DefaultItemModel(
       id: 5,
       title: "Gold",
-      icon: ImageAssets.gold,
+      icon: AssetsManager.gold,
       route: Routes.goldScreen,
     ),
   ];

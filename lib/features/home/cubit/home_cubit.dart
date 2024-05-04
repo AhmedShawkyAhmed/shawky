@@ -12,8 +12,14 @@ class HomeCubit extends Cubit<HomeState> {
   final List<DefaultItemModel> itemList = [
     DefaultItemModel(
       id: 1,
+      title: "Profiles",
+      icon: AssetsManager.profile,
+      route: Routes.profilesScreen,
+    ),
+    DefaultItemModel(
+      id: 2,
       title: "Money",
-      icon: ImageAssets.money,
+      icon: AssetsManager.money,
       route: Routes.moneyHomeScreen,
     ),
   ];

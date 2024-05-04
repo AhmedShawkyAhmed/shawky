@@ -77,7 +77,7 @@ class _CreditCardState extends State<CreditCard> {
                     ),
                     SizedBox(width: 5.w),
                     Image.asset(
-                      ImageAssets.chip,
+                      AssetsManager.chip,
                       width: 40.w,
                     ),
                     const Spacer(),
@@ -165,8 +165,8 @@ class _CreditCardState extends State<CreditCard> {
                     },
                     child: Image.asset(
                       widget.model.cardCompany == CardCompany.visa
-                          ? ImageAssets.visa
-                          : ImageAssets.masterCard,
+                          ? AssetsManager.visa
+                          : AssetsManager.masterCard,
                       width: 55.w,
                     ),
                   ),

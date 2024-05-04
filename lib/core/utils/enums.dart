@@ -30,3 +30,17 @@ enum ExpensesType {
   expenses,
   transfer,
 }
+
+enum ProfileType{
+  facebook,
+  linkedin,
+  instagram,
+  whatsapp,
+  telegram,
+  discord,
+  threads,
+  x,
+  behance,
+  github,
+  gitlab,
+}

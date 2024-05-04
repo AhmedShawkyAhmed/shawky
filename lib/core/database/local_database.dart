@@ -13,7 +13,7 @@ class LocalDatabase {
 
   static const String _appDatabase = "appDatabase.db";
   static late Future<Database> database;
-  static const int oldVersion = 3;
+  static const int oldVersion = 4;
   static const int currentVersion = oldVersion + 1;
 
   static Future<void> init() async {
@@ -44,9 +44,12 @@ class LocalDatabase {
   }
 
   static void _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    Batch batch = db.batch();
     if (oldVersion == oldVersion) {
-      await db.execute(
-          'CREATE TABLE gold(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT,weight TEXT,price REAL,date TEXT)');
+      batch.execute(
+          'CREATE TABLE profiles(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT,link TEXT,type TEXT)');
+      List<dynamic> res = await batch.commit();
+      printLog(res);
       printSuccess("Database Upgraded");
     }
   }
