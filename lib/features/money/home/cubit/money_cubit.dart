@@ -34,11 +34,11 @@ class MoneyCubit extends Cubit<MoneyState> {
       icon: ImageAssets.purchases,
       route: Routes.savingsScreen,
     ),
-    // DefaultItemModel(
-    //   id: 5,
-    //   title: "Loans",
-    //   icon: ImageAssets.loan,
-    //   route: Routes.accountsScreen,
-    // ),
+    DefaultItemModel(
+      id: 5,
+      title: "Gold",
+      icon: ImageAssets.gold,
+      route: Routes.goldScreen,
+    ),
   ];
 }

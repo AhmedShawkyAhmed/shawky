@@ -1,7 +1,7 @@
 import 'package:shawky/core/database/local_database.dart';
 import 'package:shawky/core/utils/enums.dart';
-import 'package:shawky/features/money/accounts/data/models/account_model.dart';
-import 'package:shawky/features/money/expenses/data/models/expenses_model.dart';
+import 'package:shawky/features/money/accounts/models/account_model.dart';
+import 'package:shawky/features/money/expenses/models/expenses_model.dart';
 import 'package:sqflite/sqflite.dart';
 
 class ExpensesDatabase {

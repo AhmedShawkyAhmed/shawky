@@ -14,6 +14,7 @@ class ImageAssets {
   static const String visa = "$imagePath/visa.png";
   static const String expenses = "$imagePath/expenses.png";
   static const String loan = "$imagePath/loan.png";
+  static const String gold = "$imagePath/gold.png";
   static const String money = "$imagePath/money.png";
   static const String passbook = "$imagePath/passbook.png";
   static const String purchases = "$imagePath/purchases.png";

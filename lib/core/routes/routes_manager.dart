@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shawky/core/components/app/error_screen.dart';
 import 'package:shawky/core/routes/arguments/account_arguments.dart';
 import 'package:shawky/core/routes/arguments/card_arguments.dart';
@@ -18,6 +20,9 @@ import 'package:shawky/features/money/cards/screens/bank_cards_screen.dart';
 import 'package:shawky/features/money/expenses/cubit/expenses_cubit.dart';
 import 'package:shawky/features/money/expenses/screens/add_expenses_screen.dart';
 import 'package:shawky/features/money/expenses/screens/expenses_screen.dart';
+import 'package:shawky/features/money/gold/cubit/gold_cubit.dart';
+import 'package:shawky/features/money/gold/screens/add_gold_screen.dart';
+import 'package:shawky/features/money/gold/screens/gold_screen.dart';
 import 'package:shawky/features/money/home/cubit/money_cubit.dart';
 import 'package:shawky/features/money/home/screens/money_home_screen.dart';
 import 'package:shawky/features/money/savings/cubit/savings_cubit.dart';
@@ -25,8 +30,6 @@ import 'package:shawky/features/money/savings/screens/add_saving_screen.dart';
 import 'package:shawky/features/money/savings/screens/savings_screen.dart';
 import 'package:shawky/features/splash/cubit/splash_cubit.dart';
 import 'package:shawky/features/splash/screens/splash_screen.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
@@ -123,6 +126,20 @@ class RouteGenerator {
         return MaterialPageRoute(
           settings: const RouteSettings(name: Routes.addSavingScreen),
           builder: (_) => AddSavingScreen(args: args),
+        );
+      case Routes.goldScreen:
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: Routes.goldScreen),
+          builder: (_) => BlocProvider(
+            create: (context) => GoldCubit()..emitGetGold(),
+            child: const GoldScreen(),
+          ),
+        );
+      case Routes.addGoldScreen:
+        final GoldCubit cubit = settings.arguments as GoldCubit;
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: Routes.addGoldScreen),
+          builder: (_) => AddGoldScreen(cubit: cubit),
         );
       default:
         return unDefinedRoute();

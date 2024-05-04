@@ -1,6 +1,6 @@
 import 'package:shawky/core/database/local_database.dart';
 import 'package:shawky/core/utils/enums.dart';
-import 'package:shawky/features/money/cards/data/models/bank_card_model.dart';
+import 'package:shawky/features/money/cards/models/bank_card_model.dart';
 import 'package:sqflite/sqflite.dart';
 
 class CardsDatabase {

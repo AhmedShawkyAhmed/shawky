@@ -1,5 +1,5 @@
 import 'package:shawky/core/utils/enums.dart';
-import 'package:shawky/features/money/accounts/data/models/account_model.dart';
+import 'package:shawky/features/money/accounts/models/account_model.dart';
 
 class ExpensesModel {
   final int? id;

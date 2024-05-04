@@ -1,7 +1,6 @@
-
+import 'package:flutter/material.dart';
 import 'package:shawky/core/components/widgets/loading_widget.dart';
 import 'package:shawky/core/services/navigation_service.dart';
-import 'package:flutter/material.dart';
 
 class LoadingDialog {
   LoadingDialog._();

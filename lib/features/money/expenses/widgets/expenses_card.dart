@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shawky/core/utils/enums.dart';
 import 'package:shawky/core/utils/extensions.dart';
 import 'package:shawky/features/money/expenses/cubit/expenses_cubit.dart';
-import 'package:shawky/features/money/expenses/data/models/expenses_model.dart';
+import 'package:shawky/features/money/expenses/models/expenses_model.dart';
 
 class ExpensesCard extends StatelessWidget {
   final ExpensesCubit cubit;

@@ -6,8 +6,8 @@ import 'package:shawky/core/shared/widgets/default_text_field.dart';
 import 'package:shawky/core/shared/widgets/default_title_widget.dart';
 import 'package:shawky/core/utils/enums.dart';
 import 'package:shawky/core/utils/extensions.dart';
-import 'package:shawky/features/money/accounts/data/models/account_model.dart';
-import 'package:shawky/features/money/expenses/data/models/expenses_category_model.dart';
+import 'package:shawky/features/money/accounts/models/account_model.dart';
+import 'package:shawky/features/money/expenses/models/expenses_category_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

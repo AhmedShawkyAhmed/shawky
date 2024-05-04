@@ -1,5 +1,5 @@
 import 'package:shawky/features/money/savings/cubit/savings_cubit.dart';
-import 'package:shawky/features/money/savings/data/models/saving_model.dart';
+import 'package:shawky/features/money/savings/models/saving_model.dart';
 
 class SavingArguments {
   final SavingsCubit cubit;

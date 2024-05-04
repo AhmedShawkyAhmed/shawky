@@ -1,7 +1,7 @@
-import 'package:shawky/core/services/navigation_service.dart';
-import 'package:shawky/core/shared/widgets/default_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shawky/core/services/navigation_service.dart';
+import 'package:shawky/core/shared/widgets/default_text.dart';
 
 import '../../resources/color_manger.dart';
 
@@ -11,7 +11,7 @@ class WarningDialog {
   static void show({
     String? message,
     void Function()? onPressed,
-  })  {
+  }) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       showDialog(
         context: NavigationService.context,

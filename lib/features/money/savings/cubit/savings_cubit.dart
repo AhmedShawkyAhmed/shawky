@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:shawky/core/services/navigation_service.dart';
 import 'package:shawky/core/utils/shared_functions.dart';
-import 'package:shawky/features/money/savings/data/models/saving_model.dart';
+import 'package:shawky/features/money/savings/models/saving_model.dart';
 import 'package:flutter/material.dart';
 import 'package:shawky/features/money/savings/database/saving_database.dart';
 

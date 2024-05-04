@@ -27,14 +27,14 @@ class ExpensesStatusWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               GestureDetector(
-                onTap: (){
-                  cubit.selectDate(false);
+                onTap: ()async {
+                  await cubit.emitFilterExpenses();
                 },
                 child:  Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     DefaultText(
-                      text: cubit.currentDate.month.toString(),
+                      text: (cubit.currentDate ?? DateTime.now()).month.toString(),
                       textColor: ColorManager.white,
                     ),
                     const DefaultText(
@@ -42,7 +42,7 @@ class ExpensesStatusWidget extends StatelessWidget {
                       textColor: ColorManager.white,
                     ),
                     DefaultText(
-                      text: cubit.currentDate.year.toString(),
+                      text: (cubit.currentDate ?? DateTime.now()).year.toString(),
                       textColor: ColorManager.white,
                     ),
                   ],
@@ -66,7 +66,7 @@ class ExpensesStatusWidget extends StatelessWidget {
                         ),
                         DefaultText(
                           text:
-                              "${cubit.expensesList.fold(0, (num sum, e) => sum + (e.type == ExpensesType.income ? ((e.amount) * (e.rate)) : 0))} £",
+                              "${cubit.filteredExpensesList.fold(0, (num sum, e) => sum + (e.type == ExpensesType.income ? ((e.amount) * (e.rate)) : 0))} £",
                           textColor: ColorManager.green,
                           fontSize: 12.sp,
                         ),
@@ -80,7 +80,7 @@ class ExpensesStatusWidget extends StatelessWidget {
                         ),
                         DefaultText(
                           text:
-                              "${cubit.expensesList.fold(0, (num sum, e) => sum + (e.type == ExpensesType.expenses ? ((e.amount) * (e.rate)) : 0))} £",
+                              "${cubit.filteredExpensesList.fold(0, (num sum, e) => sum + (e.type == ExpensesType.expenses ? ((e.amount) * (e.rate)) : 0))} £",
                           textColor: ColorManager.red,
                           fontSize: 12.sp,
                         ),
@@ -94,7 +94,7 @@ class ExpensesStatusWidget extends StatelessWidget {
                         ),
                         DefaultText(
                           text:
-                              "${cubit.expensesList.fold(0, (num sum, e) => sum + (e.type == ExpensesType.income ? ((e.amount) * (e.rate)) : 0)) - cubit.expensesList.fold(0, (num sum, e) => sum + (e.type == ExpensesType.expenses ? ((e.amount) * (e.rate)) : 0))} £",
+                              "${cubit.filteredExpensesList.fold(0, (num sum, e) => sum + (e.type == ExpensesType.income ? ((e.amount) * (e.rate)) : 0)) - cubit.expensesList.fold(0, (num sum, e) => sum + (e.type == ExpensesType.expenses ? ((e.amount) * (e.rate)) : 0))} £",
                           textColor: ColorManager.orange,
                           fontSize: 12.sp,
                         ),

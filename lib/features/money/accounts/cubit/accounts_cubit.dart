@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:shawky/core/services/navigation_service.dart';
 import 'package:shawky/core/utils/enums.dart';
 import 'package:shawky/core/utils/shared_functions.dart';
-import 'package:shawky/features/money/accounts/data/models/account_model.dart';
+import 'package:shawky/features/money/accounts/models/account_model.dart';
 import 'package:flutter/material.dart';
 import 'package:shawky/features/money/accounts/database/accounts_database.dart';
 
@@ -86,6 +86,7 @@ class AccountsCubit extends Cubit<AccountsState> {
 
   Future emitUpdateAccount({
     required AccountModel model,
+    bool fromExpenses = false,
   }) async {
     try {
       AccountModel accountModel = AccountModel(
@@ -108,12 +109,14 @@ class AccountsCubit extends Cubit<AccountsState> {
       emit(UpdateAccountLoading());
       await AccountsDatabase.updateAccount(accountModel);
       emit(UpdateAccountSuccess());
-      int index = moneyAccounts.indexOf(model);
-      moneyAccounts.removeAt(index);
-      moneyAccounts.insert(index, accountModel);
-      showMyToast(message: "Account Updated Successfully", success: true);
-      dispose();
-      NavigationService.pop();
+      if(fromExpenses == false){
+        int index = moneyAccounts.indexOf(model);
+        moneyAccounts.removeAt(index);
+        moneyAccounts.insert(index, accountModel);
+        showMyToast(message: "Account Updated Successfully", success: true);
+        dispose();
+        NavigationService.pop();
+      }
     } catch (e) {
       emit(UpdateAccountError());
       showMyToast(message: e.toString(), success: false);

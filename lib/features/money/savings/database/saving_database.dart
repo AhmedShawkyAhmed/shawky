@@ -1,5 +1,5 @@
 import 'package:shawky/core/database/local_database.dart';
-import 'package:shawky/features/money/savings/data/models/saving_model.dart';
+import 'package:shawky/features/money/savings/models/saving_model.dart';
 import 'package:sqflite/sqflite.dart';
 
 class SavingsDatabase {

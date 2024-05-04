@@ -3,49 +3,40 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shawky/core/components/dialogs/warning_dialog.dart';
 import 'package:shawky/core/resources/color_manger.dart';
-import 'package:shawky/core/routes/arguments/expenses_arguments.dart';
 import 'package:shawky/core/routes/routes_names.dart';
 import 'package:shawky/core/services/navigation_service.dart';
 import 'package:shawky/core/shared/widgets/default_floating_button.dart';
 import 'package:shawky/core/shared/widgets/default_text.dart';
 import 'package:shawky/core/shared/widgets/default_title_widget.dart';
-import 'package:shawky/features/money/accounts/cubit/accounts_cubit.dart';
-import 'package:shawky/features/money/expenses/cubit/expenses_cubit.dart';
-import 'package:shawky/features/money/expenses/widgets/expenses_card.dart';
-import 'package:shawky/features/money/expenses/widgets/expenses_status_widget.dart';
+import 'package:shawky/features/money/gold/cubit/gold_cubit.dart';
+import 'package:shawky/features/money/gold/widgets/gold_card.dart';
 
-class ExpensesScreen extends StatelessWidget {
-  const ExpensesScreen({super.key});
+class GoldScreen extends StatelessWidget {
+  const GoldScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    ExpensesCubit cubit = BlocProvider.of(context);
-    AccountsCubit accountsCubit = BlocProvider.of(context);
-    return BlocBuilder<ExpensesCubit, ExpensesState>(
+    GoldCubit cubit = BlocProvider.of(context);
+    return BlocBuilder<GoldCubit, GoldState>(
       builder: (context, state) {
         return Scaffold(
           backgroundColor: ColorManager.secondary,
           floatingActionButton: DefaultFloatingButton(
             onPressed: () {
               NavigationService.pushNamed(
-                Routes.addExpensesScreen,
-                arguments: ExpensesArguments(
-                  cubit: cubit,
-                  accountsCubit: accountsCubit,
-                  title: "Add Expenses",
-                ),
+                Routes.addGoldScreen,
+                arguments: cubit,
               );
             },
           ),
           body: Column(
             children: [
-              const DefaultTitleWidget(title: "Expenses"),
-              ExpensesStatusWidget(cubit: cubit),
+              const DefaultTitleWidget(title: "Gold"),
               Expanded(
-                child: cubit.filteredExpensesList.isEmpty
+                child: cubit.goldList.isEmpty
                     ? Center(
                         child: DefaultText(
-                          text: "No Expenses Found !",
+                          text: "No Gold Found !",
                           textColor: ColorManager.white,
                           fontSize: 18.sp,
                         ),
@@ -53,29 +44,28 @@ class ExpensesScreen extends StatelessWidget {
                     : GridView.builder(
                         shrinkWrap: true,
                         padding: EdgeInsets.symmetric(
-                          vertical: 10.h,
+                          vertical: 5.h,
                           horizontal: 15.w,
                         ),
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 1,
                           crossAxisSpacing: 20.sp,
                           mainAxisSpacing: 10.sp,
-                          mainAxisExtent: 90.h,
+                          mainAxisExtent: 70.h,
                         ),
                         scrollDirection: Axis.vertical,
-                        itemCount: cubit.filteredExpensesList.length,
+                        itemCount: cubit.goldList.length,
                         itemBuilder: (context, index) {
-                          return ExpensesCard(
-                            cubit: cubit,
-                            model: cubit.filteredExpensesList[index],
+                          return GoldCard(
+                            model: cubit.goldList[index],
                             onLongPress: () {
                               WarningDialog.show(
                                 message:
-                                    "Are you Sure you want to Delete this Expenses ?",
+                                    "Are you Sure you want to Delete this Gold Item ?",
                                 onPressed: () {
                                   NavigationService.pop();
-                                  cubit.emitDeleteExpense(
-                                    expenseId: cubit.filteredExpensesList[index].id!,
+                                  cubit.emitDeleteGold(
+                                    goldId: cubit.goldList[index].id!,
                                   );
                                 },
                               );

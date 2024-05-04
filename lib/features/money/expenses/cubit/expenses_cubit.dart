@@ -1,13 +1,17 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:shawky/core/resources/color_manger.dart';
 import 'package:shawky/core/services/navigation_service.dart';
+import 'package:shawky/core/services/service_locator.dart';
 import 'package:shawky/core/utils/enums.dart';
 import 'package:shawky/core/utils/shared_functions.dart';
-import 'package:shawky/features/money/accounts/data/models/account_model.dart';
-import 'package:shawky/features/money/expenses/data/models/expenses_category_model.dart';
-import 'package:shawky/features/money/expenses/data/models/expenses_model.dart';
+import 'package:shawky/features/money/accounts/cubit/accounts_cubit.dart';
+import 'package:shawky/features/money/accounts/models/account_model.dart';
+import 'package:shawky/features/money/expenses/models/expenses_category_model.dart';
+import 'package:shawky/features/money/expenses/models/expenses_model.dart';
 import 'package:shawky/features/money/expenses/database/expenses_database.dart';
 
 part 'expenses_state.dart';
@@ -33,7 +37,7 @@ class ExpensesCubit extends Cubit<ExpensesState> {
   ExpensesType expensesType = ExpensesType.expenses;
   Currency currency = Currency.egp;
   int expensesCategory = 0;
-  DateTime currentDate = DateTime.now();
+  DateTime? currentDate;
 
   final List<ExpensesType> expensesTypeList = ExpensesType.values;
   final List<Currency> currencyList = Currency.values;
@@ -151,11 +155,13 @@ class ExpensesCubit extends Cubit<ExpensesState> {
   ];
   List<ExpensesCategoryModel> categoryList = [];
   List<ExpensesModel> expensesList = [];
+  List<ExpensesModel> filteredExpensesList = [];
   List<PieChartSectionData> pieChartSectionData = [];
 
   clearLists() {
     categoryList.clear();
     expensesList.clear();
+    filteredExpensesList.clear();
     pieChartSectionData.clear();
   }
 
@@ -191,47 +197,49 @@ class ExpensesCubit extends Cubit<ExpensesState> {
       },
     );
     if (picked != null) {
-      if(inForm){
+      if (inForm) {
         dateController.text = picked.toString().substring(0, 10);
-      }else{
+      } else {
         currentDate = picked;
         WidgetsBinding.instance.reassembleApplication();
       }
     }
   }
 
-  void getCategoryList() {
+  Future getCategoryList({
+    required List<ExpensesModel> expenses,
+  }) async {
     categoryList.clear();
-    for (int i = 0; i < expensesList.length; i++) {
+    for (int i = 0; i < expenses.length; i++) {
       if (categoryList
-          .where((element) => element.id == expensesList[i].category)
+          .where((element) => element.id == expenses[i].category)
           .toList()
           .isEmpty) {
         categoryList.add(
           ExpensesCategoryModel(
             id: expensesCategoryList
-                .where((element) => (element.id == expensesList[i].category))
+                .where((element) => (element.id == expenses[i].category))
                 .toList()
                 .first
                 .id,
             name: expensesCategoryList
-                .where((element) => (element.id == expensesList[i].category))
+                .where((element) => (element.id == expenses[i].category))
                 .toList()
                 .first
                 .name,
             color: expensesCategoryList
-                .where((element) => (element.id == expensesList[i].category))
+                .where((element) => (element.id == expenses[i].category))
                 .toList()
                 .first
                 .color,
-            amount: (expensesList[i].amount * expensesList[i].rate),
+            amount: (expenses[i].amount * expenses[i].rate),
           ),
         );
       } else {
         int index = categoryList
-            .indexWhere((element) => element.id == expensesList[i].category);
+            .indexWhere((element) => element.id == expenses[i].category);
         categoryList[index].amount = (categoryList[index].amount)! +
-            (expensesList[i].amount * expensesList[i].rate);
+            (expenses[i].amount * expenses[i].rate);
       }
     }
   }
@@ -273,7 +281,6 @@ class ExpensesCubit extends Cubit<ExpensesState> {
         title: '',
       );
       pieChartSectionData.add(data);
-      printSuccess(pieChartSectionData.length);
     }
   }
 
@@ -289,13 +296,29 @@ class ExpensesCubit extends Cubit<ExpensesState> {
       clearLists();
       emit(GetExpenseLoading());
       expensesList = await ExpensesDatabase.getExpenses();
-      getCategoryList();
+      filteredExpensesList = expensesList;
+      await getCategoryList(expenses: expensesList);
       chartSections();
       emit(GetExpenseSuccess());
     } catch (e) {
       emit(GetExpenseError());
       showMyToast(message: e.toString(), success: false);
       printError(e.toString());
+    }
+  }
+
+  Future emitFilterExpenses() async {
+    await selectDate(false);
+    if (currentDate!.day == 1) {
+      emitGetExpenses();
+    } else {
+      filteredExpensesList = expensesList
+          .where((element) =>
+              element.date.substring(5, 7) ==
+              currentDate.toString().substring(5, 7))
+          .toList();
+      await getCategoryList(expenses: filteredExpensesList);
+      chartSections();
     }
   }
 
@@ -309,7 +332,9 @@ class ExpensesCubit extends Cubit<ExpensesState> {
             : double.tryParse(rateController.text)!,
         fromAccount: fromAccount.name == null ? salaryAccount : fromAccount,
         toAccount: toAccount.name == null ? expensesAccount : toAccount,
-        date: dateController.text,
+        date: dateController.text.isEmpty
+            ? DateTime.now().toString().substring(0, 10)
+            : dateController.text,
         currency: currency,
         type: expensesType,
         category: expensesCategory,
@@ -319,12 +344,78 @@ class ExpensesCubit extends Cubit<ExpensesState> {
       emit(AddExpenseSuccess());
       emitGetExpenses();
       showMyToast(message: "Expense Added Successfully", success: true);
+      updateAccounts(
+        from: fromAccount,
+        to: toAccount,
+        type: expensesType,
+        amount: amountController.text,
+      );
       dispose();
       NavigationService.pop();
     } catch (e) {
       emit(AddExpenseError());
       showMyToast(message: e.toString(), success: false);
       printError(e.toString());
+    }
+  }
+
+  Future updateAccounts({
+    required AccountModel from,
+    required AccountModel to,
+    required ExpensesType type,
+    required String amount,
+  }) async {
+    if (type == ExpensesType.income) {
+      await getIt<AccountsCubit>().emitUpdateAccount(
+        fromExpenses: true,
+        model: AccountModel(
+          id: to.id,
+          accountType: to.accountType,
+          rate: to.rate,
+          amount: to.amount! + double.tryParse(amount)!,
+          name: to.name,
+          currency: to.currency,
+          updatedAt: to.updatedAt,
+        ),
+      );
+    } else if (type == ExpensesType.expenses) {
+      await getIt<AccountsCubit>().emitUpdateAccount(
+        fromExpenses: true,
+        model: AccountModel(
+          id: from.id,
+          accountType: from.accountType,
+          rate: from.rate,
+          amount: from.amount! - double.tryParse(amount)!,
+          name: from.name,
+          currency: from.currency,
+          updatedAt: from.updatedAt,
+        ),
+      );
+    } else {
+      await getIt<AccountsCubit>().emitUpdateAccount(
+        fromExpenses: true,
+        model: AccountModel(
+          id: to.id,
+          accountType: to.accountType,
+          rate: to.rate,
+          amount: to.amount! + double.tryParse(amount)!,
+          name: to.name,
+          currency: to.currency,
+          updatedAt: to.updatedAt,
+        ),
+      );
+      await getIt<AccountsCubit>().emitUpdateAccount(
+        fromExpenses: true,
+        model: AccountModel(
+          id: from.id,
+          accountType: from.accountType,
+          rate: from.rate,
+          amount: from.amount! - double.tryParse(amount)!,
+          name: from.name,
+          currency: from.currency,
+          updatedAt: from.updatedAt,
+        ),
+      );
     }
   }
 
