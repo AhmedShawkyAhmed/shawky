@@ -26,12 +26,12 @@ class ProfileQr extends StatelessWidget {
       ),
       child: QrImageView(
         data: link,
-        version: QrVersions.min,
+        version: QrVersions.auto,
         size: 100.sp,
         embeddedImage: AssetImage(
             "${AssetsManager.imagePath}${AssetsManager.profileDir}/$type.png"),
         embeddedImageStyle: QrEmbeddedImageStyle(
-          size: Size(80.sp, 80.sp),
+          size: Size(70.sp, 70.sp),
         ),
       ),
     );

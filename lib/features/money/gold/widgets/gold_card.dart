@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shawky/core/resources/color_manger.dart';
 import 'package:shawky/core/shared/widgets/default_text.dart';
@@ -35,7 +36,7 @@ class GoldCard extends StatelessWidget {
               children: [
                 SizedBox(width: 5.w),
                 DefaultText(
-                  text: "Sat",
+                  text: "${DateTime.parse(model.date).day}",
                   fontSize: 22.sp,
                   fontWeight: FontWeight.w600,
                 ),
@@ -44,7 +45,8 @@ class GoldCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     DefaultText(
-                      text: "5 - 2024",
+                      text:
+                      "${DateTime.parse(model.date).month} - ${DateTime.parse(model.date).year}",
                       fontSize: 10.sp,
                     ),
                     Container(
@@ -54,7 +56,9 @@ class GoldCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(2.r),
                       ),
                       child: DefaultText(
-                        text: "11",
+                        text: DateFormat('EEEE')
+                            .format(DateTime.parse(model.date))
+                            .substring(0, 3),
                         fontSize: 10.sp,
                         textColor: ColorManager.white,
                       ),

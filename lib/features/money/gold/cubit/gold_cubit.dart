@@ -64,6 +64,7 @@ class GoldCubit extends Cubit<GoldState> {
   }
 
   Future emitAddGold() async {
+    printResponse(dateController.text);
     try {
       GoldModel goldModel = GoldModel(
         name: nameController.text,
