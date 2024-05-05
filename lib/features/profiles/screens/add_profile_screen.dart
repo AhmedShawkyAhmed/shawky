@@ -26,12 +26,10 @@ class AddProfileScreen extends StatelessWidget {
             DefaultTextField(
               controller: args.cubit.nameController,
               hintText: args.model?.name ?? 'Name',
-              maxLength: 20,
             ),
             DefaultTextField(
               controller: args.cubit.linkController,
               hintText: args.model?.link ?? 'Link',
-              maxLength: 20,
             ),
             DefaultDropdown<ProfileType>(
               items: args.cubit.profileTypeList,
