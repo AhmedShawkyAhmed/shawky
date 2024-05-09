@@ -1,17 +1,19 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shawky/core/components/dialogs/warning_dialog.dart';
 import 'package:shawky/core/resources/color_manger.dart';
+import 'package:shawky/core/resources/globals.dart';
 import 'package:shawky/core/routes/arguments/account_arguments.dart';
 import 'package:shawky/core/routes/routes_names.dart';
 import 'package:shawky/core/services/navigation_service.dart';
 import 'package:shawky/core/shared/widgets/default_floating_button.dart';
 import 'package:shawky/core/shared/widgets/default_text.dart';
 import 'package:shawky/core/shared/widgets/default_title_widget.dart';
+import 'package:shawky/core/utils/enums.dart';
 import 'package:shawky/features/money/accounts/cubit/accounts_cubit.dart';
 import 'package:shawky/features/money/accounts/widgets/account_card.dart';
 import 'package:shawky/features/money/accounts/widgets/total_balance_widget.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MoneyAccountsScreen extends StatelessWidget {
   const MoneyAccountsScreen({super.key});
@@ -39,7 +41,7 @@ class MoneyAccountsScreen extends StatelessWidget {
               const DefaultTitleWidget(title: "Accounts"),
               TotalBalanceWidget(
                   total:
-                      "${cubit.moneyAccounts.fold(0, (num sum, e) => sum + ((e.amount ?? 0) * (e.rate ?? 0)))}"),
+                      "${cubit.moneyAccounts.fold(0, (num sum, e) => sum + ((e.amount ?? 0) * (e.currency == Currency.egp ? 1 : (Globals.settings?.rate ?? 1))))}"),
               Expanded(
                 child: cubit.moneyAccounts.isEmpty
                     ? Center(
@@ -51,9 +53,11 @@ class MoneyAccountsScreen extends StatelessWidget {
                       )
                     : GridView.builder(
                         shrinkWrap: true,
-                        padding: EdgeInsets.symmetric(
-                          vertical: 5.h,
-                          horizontal: 15.w,
+                        padding: EdgeInsets.only(
+                          top: 5.h,
+                          bottom: 55.h,
+                          left: 15.w,
+                          right: 15.w,
                         ),
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 1,
@@ -69,9 +73,13 @@ class MoneyAccountsScreen extends StatelessWidget {
                             total: cubit.moneyAccounts.fold(
                               0,
                               (num sum, e) =>
-                                  sum + ((e.amount ?? 0) * (e.rate ?? 0)),
+                                  sum +
+                                  ((e.amount ?? 0) *
+                                      (e.currency == Currency.egp
+                                          ? 1
+                                          : (Globals.settings?.rate ?? 1))),
                             ),
-                            onTap: (){
+                            onTap: () {
                               NavigationService.pushNamed(
                                 Routes.addAccountsScreen,
                                 arguments: AccountArguments(

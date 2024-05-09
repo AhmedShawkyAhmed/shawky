@@ -10,6 +10,7 @@ import 'package:shawky/core/shared/widgets/default_text.dart';
 import 'package:shawky/core/shared/widgets/default_title_widget.dart';
 import 'package:shawky/features/money/gold/cubit/gold_cubit.dart';
 import 'package:shawky/features/money/gold/widgets/gold_card.dart';
+import 'package:shawky/features/money/gold/widgets/total_gold_widget.dart';
 
 class GoldScreen extends StatelessWidget {
   const GoldScreen({super.key});
@@ -32,6 +33,7 @@ class GoldScreen extends StatelessWidget {
           body: Column(
             children: [
               const DefaultTitleWidget(title: "Gold"),
+              TotalGoldWidget(grams: "${cubit.goldList.fold(0, (num sum, e) => sum + double.parse(e.weight))}", price: "${cubit.goldList.fold(0, (num sum, e) => sum + e.price)}"),
               Expanded(
                 child: cubit.goldList.isEmpty
                     ? Center(
@@ -43,9 +45,11 @@ class GoldScreen extends StatelessWidget {
                       )
                     : GridView.builder(
                         shrinkWrap: true,
-                        padding: EdgeInsets.symmetric(
-                          vertical: 5.h,
-                          horizontal: 15.w,
+                        padding: EdgeInsets.only(
+                          top: 5.h,
+                          bottom: 55.h,
+                          left: 15.w,
+                          right: 15.w,
                         ),
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 1,

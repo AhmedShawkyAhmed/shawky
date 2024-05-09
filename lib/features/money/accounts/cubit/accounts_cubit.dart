@@ -13,7 +13,6 @@ class AccountsCubit extends Cubit<AccountsState> {
 
   TextEditingController accountNameController = TextEditingController();
   TextEditingController amountController = TextEditingController();
-  TextEditingController rateController = TextEditingController();
   AccountTypes accountType = AccountTypes.main;
   Currency currency = Currency.egp;
   DateTime selectedDate = DateTime.now();
@@ -30,17 +29,12 @@ class AccountsCubit extends Cubit<AccountsState> {
 
   void changeCurrency(value) {
     currency = value;
-    if (currency == Currency.egp) {
-      rateController.clear();
-      rateController.text = "1";
-    }
     printLog(currency);
   }
 
   dispose() {
     accountNameController = TextEditingController();
     amountController = TextEditingController();
-    rateController = TextEditingController();
     accountType = AccountTypes.main;
     currency = Currency.egp;
     selectedDate = DateTime.now();
@@ -63,9 +57,6 @@ class AccountsCubit extends Cubit<AccountsState> {
       AccountModel accountModel = AccountModel(
         name: accountNameController.text,
         amount: double.tryParse(amountController.text),
-        rate: currency == Currency.egp
-            ? 1.0
-            : double.tryParse(rateController.text),
         accountType: accountType,
         currency: currency,
         updatedAt: selectedDate.toString(),
@@ -97,11 +88,6 @@ class AccountsCubit extends Cubit<AccountsState> {
         amount: amountController.text.isEmpty
             ? model.amount
             : double.tryParse(amountController.text),
-        rate: currency == Currency.egp
-            ? 1.0
-            : rateController.text.isEmpty
-                ? model.rate
-                : double.tryParse(rateController.text),
         accountType: model.accountType ?? accountType,
         currency: model.currency ?? currency,
         updatedAt: selectedDate.toString(),

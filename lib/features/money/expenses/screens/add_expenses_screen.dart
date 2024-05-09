@@ -38,11 +38,6 @@ class AddExpensesScreen extends StatelessWidget {
               keyboardType: TextInputType.number,
             ),
             DefaultTextField(
-              controller: args.cubit.rateController,
-              hintText: 'Rate',
-              keyboardType: TextInputType.number,
-            ),
-            DefaultTextField(
               controller: args.cubit.dateController,
               hintText: 'Date',
               enabled: false,

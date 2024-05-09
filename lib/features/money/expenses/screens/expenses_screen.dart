@@ -52,9 +52,11 @@ class ExpensesScreen extends StatelessWidget {
                       )
                     : GridView.builder(
                         shrinkWrap: true,
-                        padding: EdgeInsets.symmetric(
-                          vertical: 10.h,
-                          horizontal: 15.w,
+                        padding: EdgeInsets.only(
+                          top: 5.h,
+                          bottom: 55.h,
+                          left: 15.w,
+                          right: 15.w,
                         ),
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 1,
@@ -75,7 +77,8 @@ class ExpensesScreen extends StatelessWidget {
                                 onPressed: () {
                                   NavigationService.pop();
                                   cubit.emitDeleteExpense(
-                                    expenseId: cubit.filteredExpensesList[index].id!,
+                                    expenseId:
+                                        cubit.filteredExpensesList[index].id!,
                                   );
                                 },
                               );

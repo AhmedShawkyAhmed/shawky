@@ -17,7 +17,6 @@ class AccountsDatabase {
         name: maps[i]['name'],
         updatedAt: maps[i]['updatedAt'],
         amount: maps[i]['amount'],
-        rate: maps[i]['rate'],
         accountType: AccountTypes.values
             .where((element) => element.name == maps[i]['accountType'])
             .first,

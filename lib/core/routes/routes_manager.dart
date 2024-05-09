@@ -33,6 +33,8 @@ import 'package:shawky/features/profiles/cubit/profiles_cubit.dart';
 import 'package:shawky/features/profiles/screens/add_profile_screen.dart';
 import 'package:shawky/features/profiles/screens/profile_details_screen.dart';
 import 'package:shawky/features/profiles/screens/profiles_screen.dart';
+import 'package:shawky/features/settings/cubit/settings_cubit.dart';
+import 'package:shawky/features/settings/screens/add_settings_screen.dart';
 import 'package:shawky/features/splash/cubit/splash_cubit.dart';
 import 'package:shawky/features/splash/screens/splash_screen.dart';
 
@@ -57,7 +59,7 @@ class RouteGenerator {
         return MaterialPageRoute(
           settings: const RouteSettings(name: Routes.homeScreen),
           builder: (_) => BlocProvider(
-            create: (context) => HomeCubit(),
+            create: (context) => HomeCubit()..getSettings(),
             child: const HomeScreen(),
           ),
         );
@@ -165,6 +167,14 @@ class RouteGenerator {
         return MaterialPageRoute(
           settings: const RouteSettings(name: Routes.addProfileScreen),
           builder: (_) => AddProfileScreen(args: args),
+        );
+      case Routes.addSettingsScreen:
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: Routes.addSettingsScreen),
+          builder: (_) => BlocProvider(
+            create: (context) => SettingsCubit(),
+            child: const AddSettingsScreen(),
+          ),
         );
       default:
         return unDefinedRoute();

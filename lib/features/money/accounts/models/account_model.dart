@@ -7,7 +7,6 @@ class AccountModel {
   Currency? currency;
   String? updatedAt;
   double? amount;
-  double? rate;
 
   AccountModel({
     this.id,
@@ -16,7 +15,6 @@ class AccountModel {
     this.currency,
     this.updatedAt,
     this.amount,
-    this.rate,
   });
 
   Map<String, dynamic> toMap() {
@@ -25,7 +23,6 @@ class AccountModel {
       'name': name,
       'updatedAt': updatedAt,
       'amount': amount,
-      'rate': rate,
       'accountType': accountType?.name,
       'currency': currency?.name,
     };
@@ -39,7 +36,6 @@ class AccountModel {
         'accountType: $accountType, '
         'currency: $currency, '
         'amount: $amount, '
-        'rate: $rate, '
         'updatedAt: $updatedAt, '
         '}';
   }

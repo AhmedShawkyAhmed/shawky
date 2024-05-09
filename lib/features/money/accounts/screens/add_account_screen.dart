@@ -35,12 +35,6 @@ class AddAccountScreen extends StatelessWidget {
               hintText: args.model?.amount.toString() ?? 'Amount',
               keyboardType: TextInputType.number,
             ),
-            DefaultTextField(
-              controller: args.cubit.rateController,
-              hintText: args.model?.rate.toString() ?? 'Rate',
-              keyboardType: TextInputType.number,
-              enabled: args.cubit.currency != Currency.egp,
-            ),
             DefaultDropdown<AccountTypes>(
               items: args.cubit.accountTypesList,
               hint: "Account Type",

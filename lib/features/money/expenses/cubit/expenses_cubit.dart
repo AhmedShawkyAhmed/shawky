@@ -4,15 +4,16 @@ import 'package:bloc/bloc.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:shawky/core/resources/color_manger.dart';
+import 'package:shawky/core/resources/globals.dart';
 import 'package:shawky/core/services/navigation_service.dart';
 import 'package:shawky/core/services/service_locator.dart';
 import 'package:shawky/core/utils/enums.dart';
 import 'package:shawky/core/utils/shared_functions.dart';
 import 'package:shawky/features/money/accounts/cubit/accounts_cubit.dart';
 import 'package:shawky/features/money/accounts/models/account_model.dart';
+import 'package:shawky/features/money/expenses/database/expenses_database.dart';
 import 'package:shawky/features/money/expenses/models/expenses_category_model.dart';
 import 'package:shawky/features/money/expenses/models/expenses_model.dart';
-import 'package:shawky/features/money/expenses/database/expenses_database.dart';
 
 part 'expenses_state.dart';
 
@@ -21,7 +22,6 @@ class ExpensesCubit extends Cubit<ExpensesState> {
 
   TextEditingController nameController = TextEditingController();
   TextEditingController amountController = TextEditingController();
-  TextEditingController rateController = TextEditingController();
   TextEditingController dateController = TextEditingController();
   ExpensesCategoryModel expensesCategoryModel = ExpensesCategoryModel();
   AccountModel fromAccount = AccountModel();
@@ -168,7 +168,6 @@ class ExpensesCubit extends Cubit<ExpensesState> {
   dispose() {
     nameController = TextEditingController();
     amountController = TextEditingController();
-    rateController = TextEditingController();
     dateController = TextEditingController();
     expensesCategoryModel = ExpensesCategoryModel();
     fromAccount = AccountModel();
@@ -264,10 +263,6 @@ class ExpensesCubit extends Cubit<ExpensesState> {
 
   void changeCurrency(value) {
     currency = value;
-    if (currency == Currency.egp) {
-      rateController.clear();
-      rateController.text = "1";
-    }
   }
 
   void chartSections() {
@@ -324,12 +319,14 @@ class ExpensesCubit extends Cubit<ExpensesState> {
 
   Future emitAddExpense() async {
     try {
+      if (expensesCategory == 0) {
+        showMyToast(message: "Select Category");
+        return;
+      }
       ExpensesModel expensesModel = ExpensesModel(
         name: nameController.text,
         amount: double.tryParse(amountController.text)!,
-        rate: currency == Currency.egp
-            ? 1.0
-            : double.tryParse(rateController.text)!,
+        rate: currency == Currency.egp ? 1.0 : Globals.settings?.rate ?? 1,
         fromAccount: fromAccount.name == null ? salaryAccount : fromAccount,
         toAccount: toAccount.name == null ? expensesAccount : toAccount,
         date: dateController.text.isEmpty
@@ -371,7 +368,6 @@ class ExpensesCubit extends Cubit<ExpensesState> {
         model: AccountModel(
           id: to.id,
           accountType: to.accountType,
-          rate: to.rate,
           amount: to.amount! + double.tryParse(amount)!,
           name: to.name,
           currency: to.currency,
@@ -384,7 +380,6 @@ class ExpensesCubit extends Cubit<ExpensesState> {
         model: AccountModel(
           id: from.id,
           accountType: from.accountType,
-          rate: from.rate,
           amount: from.amount! - double.tryParse(amount)!,
           name: from.name,
           currency: from.currency,
@@ -397,7 +392,6 @@ class ExpensesCubit extends Cubit<ExpensesState> {
         model: AccountModel(
           id: to.id,
           accountType: to.accountType,
-          rate: to.rate,
           amount: to.amount! + double.tryParse(amount)!,
           name: to.name,
           currency: to.currency,
@@ -409,7 +403,6 @@ class ExpensesCubit extends Cubit<ExpensesState> {
         model: AccountModel(
           id: from.id,
           accountType: from.accountType,
-          rate: from.rate,
           amount: from.amount! - double.tryParse(amount)!,
           name: from.name,
           currency: from.currency,

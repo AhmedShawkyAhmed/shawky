@@ -1,13 +1,14 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shawky/core/resources/color_manger.dart';
+import 'package:shawky/core/resources/globals.dart';
 import 'package:shawky/core/shared/widgets/default_text.dart';
 import 'package:shawky/core/shared/widgets/percentage_widget.dart';
 import 'package:shawky/core/utils/enums.dart';
 import 'package:shawky/core/utils/extensions.dart';
 import 'package:shawky/features/money/accounts/models/account_model.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AccountCard extends StatelessWidget {
   final AccountModel model;
@@ -36,7 +37,7 @@ class AccountCard extends StatelessWidget {
       child: Row(
         children: [
           GestureDetector(
-            onTap: (){
+            onTap: () {
               onTap();
             },
             child: SizedBox(
@@ -45,21 +46,24 @@ class AccountCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   DefaultText(
-                    text: "${model.accountType!.name.toCapitalized()} - ${model.name}",
+                    text:
+                        "${model.accountType!.name.toCapitalized()} - ${model.name}",
                     fontSize: 13.sp,
                   ),
                   DefaultText(
-                    text: "${model.amount} ${model.currency!.name.toUpperCase()}",
+                    text:
+                        "${model.amount} ${model.currency!.name.toUpperCase()}",
                     fontSize: 17.sp,
                   ),
-                  if(model.currency != Currency.egp)
-                  DefaultText(
-                    text: "${((model.amount ?? 0) * (model.rate ?? 0))} ${Currency.egp.name.toUpperCase()}",
-                    fontSize: 11.sp,
-                  ),
+                  if (model.currency != Currency.egp)
+                    DefaultText(
+                      text:
+                          "${((model.amount ?? 0) * (model.currency == Currency.egp ? 1 : (Globals.settings?.rate ?? 0)))} ${Currency.egp.name.toUpperCase()}",
+                      fontSize: 11.sp,
+                    ),
                   const Spacer(),
                   DefaultText(
-                    text: model.updatedAt?.substring(0,10) ?? "-",
+                    text: model.updatedAt?.substring(0, 10) ?? "-",
                     fontSize: 9.sp,
                   ),
                 ],
@@ -75,7 +79,10 @@ class AccountCard extends StatelessWidget {
               width: 50.w,
               child: PercentageWidget(
                 target: total,
-                current: ((model.amount ?? 0) * (model.rate ?? 0)),
+                current: ((model.amount ?? 0) *
+                    (model.currency == Currency.egp
+                        ? 1
+                        : (Globals.settings?.rate ?? 1))),
               ),
             ),
           ),

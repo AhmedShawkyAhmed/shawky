@@ -47,9 +47,11 @@ class BankCardsScreen extends StatelessWidget {
                       )
                     : GridView.builder(
                         shrinkWrap: true,
-                        padding: EdgeInsets.symmetric(
-                          vertical: 5.h,
-                          horizontal: 15.w,
+                        padding: EdgeInsets.only(
+                          top: 5.h,
+                          bottom: 55.h,
+                          left: 15.w,
+                          right: 15.w,
                         ),
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 1,
@@ -79,7 +81,7 @@ class BankCardsScreen extends StatelessWidget {
                                 onPressed: () {
                                   NavigationService.pop();
                                   cubit.emitDeleteCard(
-                                    cardId: cubit.moneyCardList[index].id!,
+                                    cardId: cubit.moneyCardList[0].id!,
                                   );
                                 },
                               );

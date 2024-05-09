@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shawky/core/components/dialogs/warning_dialog.dart';
 import 'package:shawky/core/resources/color_manger.dart';
 import 'package:shawky/core/routes/arguments/saving_arguments.dart';
@@ -8,9 +11,6 @@ import 'package:shawky/core/shared/widgets/default_text.dart';
 import 'package:shawky/core/shared/widgets/default_title_widget.dart';
 import 'package:shawky/features/money/savings/cubit/savings_cubit.dart';
 import 'package:shawky/features/money/savings/widgets/saving_card.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SavingsScreen extends StatelessWidget {
   const SavingsScreen({super.key});
@@ -47,9 +47,11 @@ class SavingsScreen extends StatelessWidget {
                       )
                     : GridView.builder(
                         shrinkWrap: true,
-                        padding: EdgeInsets.symmetric(
-                          vertical: 5.h,
-                          horizontal: 15.w,
+                        padding: EdgeInsets.only(
+                          top: 5.h,
+                          bottom: 55.h,
+                          left: 15.w,
+                          right: 15.w,
                         ),
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 1,
