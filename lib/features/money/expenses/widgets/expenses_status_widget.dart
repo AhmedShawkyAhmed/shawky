@@ -66,7 +66,7 @@ class ExpensesStatusWidget extends StatelessWidget {
                         ),
                         DefaultText(
                           text:
-                              "${cubit.filteredExpensesList.fold(0, (num sum, e) => sum + (e.type == ExpensesType.income ? ((e.amount) * (e.rate)) : 0))} £",
+                              "${cubit.filteredExpensesList.fold(0, (num sum, e) => sum + (e.type == ExpensesType.income ? ((e.amount) * (e.rate)) : 0)).toStringAsFixed(2)} £",
                           textColor: ColorManager.green,
                           fontSize: 12.sp,
                         ),
@@ -80,7 +80,7 @@ class ExpensesStatusWidget extends StatelessWidget {
                         ),
                         DefaultText(
                           text:
-                              "${cubit.filteredExpensesList.fold(0, (num sum, e) => sum + (e.type == ExpensesType.expenses ? ((e.amount) * (e.rate)) : 0))} £",
+                              "${cubit.filteredExpensesList.fold(0, (num sum, e) => sum + (e.type == ExpensesType.expenses ? ((e.amount) * (e.rate)) : 0)).toStringAsFixed(2)} £",
                           textColor: ColorManager.red,
                           fontSize: 12.sp,
                         ),
@@ -94,7 +94,7 @@ class ExpensesStatusWidget extends StatelessWidget {
                         ),
                         DefaultText(
                           text:
-                              "${cubit.filteredExpensesList.fold(0, (num sum, e) => sum + (e.type == ExpensesType.income ? ((e.amount) * (e.rate)) : 0)) - cubit.expensesList.fold(0, (num sum, e) => sum + (e.type == ExpensesType.expenses ? ((e.amount) * (e.rate)) : 0))} £",
+                              "${(cubit.filteredExpensesList.fold(0, (num sum, e) => sum + (e.type == ExpensesType.income ? ((e.amount) * (e.rate)) : 0)) - cubit.expensesList.fold(0, (num sum, e) => sum + (e.type == ExpensesType.expenses ? ((e.amount) * (e.rate)) : 0))).toStringAsFixed(2)} £",
                           textColor: ColorManager.orange,
                           fontSize: 12.sp,
                         ),

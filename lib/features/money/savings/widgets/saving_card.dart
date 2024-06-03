@@ -90,11 +90,11 @@ class SavingCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       DefaultText(
-                        text: "${model.current ?? 0} £",
+                        text: "${(model.current ?? 0).toStringAsFixed(2)} £",
                         fontSize: 12.sp,
                       ),
                       DefaultText(
-                        text: "${(model.target ?? 0) - (model.current ?? 0)} £",
+                        text: "${((model.target ?? 0) - (model.current ?? 0)).toStringAsFixed(2)} £",
                         fontSize: 12.sp,
                       ),
                     ],

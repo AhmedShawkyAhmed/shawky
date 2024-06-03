@@ -109,7 +109,7 @@ class ExpensesCard extends StatelessWidget {
                 ),
                 const Spacer(),
                 DefaultText(
-                  text: "${model.amount * model.rate} £",
+                  text: "${(model.amount * model.rate).toStringAsFixed(2)} £",
                   textColor: model.type == ExpensesType.income
                       ? ColorManager.green
                       : model.type == ExpensesType.transfer

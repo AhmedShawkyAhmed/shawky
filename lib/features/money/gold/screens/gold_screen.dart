@@ -33,7 +33,12 @@ class GoldScreen extends StatelessWidget {
           body: Column(
             children: [
               const DefaultTitleWidget(title: "Gold"),
-              TotalGoldWidget(grams: "${cubit.goldList.fold(0, (num sum, e) => sum + double.parse(e.weight))}", price: "${cubit.goldList.fold(0, (num sum, e) => sum + e.price)}"),
+              TotalGoldWidget(
+                grams:
+                    "${cubit.goldList.fold(0, (num sum, e) => sum + double.parse(e.weight))}",
+                price: (cubit.goldList.fold(0, (num sum, e) => sum + e.price))
+                    .toStringAsFixed(2),
+              ),
               Expanded(
                 child: cubit.goldList.isEmpty
                     ? Center(

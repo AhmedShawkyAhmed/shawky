@@ -86,7 +86,7 @@ class GoldCard extends StatelessWidget {
                 ),
                 const Spacer(),
                 DefaultText(
-                  text: "${model.price} £",
+                  text: "${model.price.toStringAsFixed(2)} £",
                   textColor: ColorManager.secondary,
                 ),
                 SizedBox(width: 10.w),

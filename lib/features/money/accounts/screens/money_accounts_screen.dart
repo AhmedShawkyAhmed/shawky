@@ -41,7 +41,7 @@ class MoneyAccountsScreen extends StatelessWidget {
               const DefaultTitleWidget(title: "Accounts"),
               TotalBalanceWidget(
                   total:
-                      "${cubit.moneyAccounts.fold(0, (num sum, e) => sum + ((e.amount ?? 0) * (e.currency == Currency.egp ? 1 : (Globals.settings?.rate ?? 1))))}"),
+                      cubit.moneyAccounts.fold(0, (num sum, e) => sum + ((e.amount ?? 0) * (e.currency == Currency.egp ? 1 : (Globals.settings?.rate ?? 1)))).toStringAsFixed(2)),
               Expanded(
                 child: cubit.moneyAccounts.isEmpty
                     ? Center(

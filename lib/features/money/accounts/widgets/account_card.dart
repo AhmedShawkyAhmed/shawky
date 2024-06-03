@@ -52,13 +52,13 @@ class AccountCard extends StatelessWidget {
                   ),
                   DefaultText(
                     text:
-                        "${model.amount} ${model.currency!.name.toUpperCase()}",
+                        "${model.amount?.toStringAsFixed(2)} ${model.currency!.name.toUpperCase()}",
                     fontSize: 17.sp,
                   ),
                   if (model.currency != Currency.egp)
                     DefaultText(
                       text:
-                          "${((model.amount ?? 0) * (model.currency == Currency.egp ? 1 : (Globals.settings?.rate ?? 0)))} ${Currency.egp.name.toUpperCase()}",
+                          "${((model.amount ?? 0) * (model.currency == Currency.egp ? 1 : (Globals.settings?.rate ?? 0))).toStringAsFixed(2)} ${Currency.egp.name.toUpperCase()}",
                       fontSize: 11.sp,
                     ),
                   const Spacer(),
