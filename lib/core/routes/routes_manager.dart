@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shawky/core/components/app/error_screen.dart';
 import 'package:shawky/core/routes/arguments/account_arguments.dart';
 import 'package:shawky/core/routes/arguments/card_arguments.dart';
@@ -7,35 +6,25 @@ import 'package:shawky/core/routes/arguments/expenses_arguments.dart';
 import 'package:shawky/core/routes/arguments/profiles_arguments.dart';
 import 'package:shawky/core/routes/arguments/saving_arguments.dart';
 import 'package:shawky/core/routes/routes_names.dart';
-import 'package:shawky/core/services/service_locator.dart';
 import 'package:shawky/core/shared/widgets/default_text.dart';
 import 'package:shawky/core/utils/shared_functions.dart';
-import 'package:shawky/features/home/cubit/home_cubit.dart';
 import 'package:shawky/features/home/screens/home_screen.dart';
-import 'package:shawky/features/money/accounts/cubit/accounts_cubit.dart';
 import 'package:shawky/features/money/accounts/screens/add_account_screen.dart';
 import 'package:shawky/features/money/accounts/screens/money_accounts_screen.dart';
-import 'package:shawky/features/money/cards/cubit/cards_cubit.dart';
 import 'package:shawky/features/money/cards/screens/add_card_screen.dart';
 import 'package:shawky/features/money/cards/screens/bank_cards_screen.dart';
-import 'package:shawky/features/money/expenses/cubit/expenses_cubit.dart';
 import 'package:shawky/features/money/expenses/screens/add_expenses_screen.dart';
 import 'package:shawky/features/money/expenses/screens/expenses_screen.dart';
 import 'package:shawky/features/money/gold/cubit/gold_cubit.dart';
 import 'package:shawky/features/money/gold/screens/add_gold_screen.dart';
 import 'package:shawky/features/money/gold/screens/gold_screen.dart';
-import 'package:shawky/features/money/home/cubit/money_cubit.dart';
 import 'package:shawky/features/money/home/screens/money_home_screen.dart';
-import 'package:shawky/features/money/savings/cubit/savings_cubit.dart';
 import 'package:shawky/features/money/savings/screens/add_saving_screen.dart';
 import 'package:shawky/features/money/savings/screens/savings_screen.dart';
-import 'package:shawky/features/profiles/cubit/profiles_cubit.dart';
 import 'package:shawky/features/profiles/screens/add_profile_screen.dart';
 import 'package:shawky/features/profiles/screens/profile_details_screen.dart';
 import 'package:shawky/features/profiles/screens/profiles_screen.dart';
-import 'package:shawky/features/settings/cubit/settings_cubit.dart';
 import 'package:shawky/features/settings/screens/add_settings_screen.dart';
-import 'package:shawky/features/splash/cubit/splash_cubit.dart';
 import 'package:shawky/features/splash/screens/splash_screen.dart';
 
 class RouteGenerator {
@@ -45,10 +34,7 @@ class RouteGenerator {
       case Routes.splashRoute:
         return MaterialPageRoute(
           settings: const RouteSettings(name: Routes.splashRoute),
-          builder: (_) => BlocProvider(
-            create: (context) => SplashCubit()..init(),
-            child: const SplashScreen(),
-          ),
+          builder: (_) => const SplashScreen(),
         );
       case Routes.errorScreen:
         return MaterialPageRoute(
@@ -58,26 +44,17 @@ class RouteGenerator {
       case Routes.homeScreen:
         return MaterialPageRoute(
           settings: const RouteSettings(name: Routes.homeScreen),
-          builder: (_) => BlocProvider(
-            create: (context) => HomeCubit()..getSettings(),
-            child: const HomeScreen(),
-          ),
+          builder: (_) => const HomeScreen(),
         );
       case Routes.moneyHomeScreen:
         return MaterialPageRoute(
           settings: const RouteSettings(name: Routes.moneyHomeScreen),
-          builder: (_) => BlocProvider(
-            create: (context) => MoneyCubit(),
-            child: const MoneyHomeScreen(),
-          ),
+          builder: (_) => const MoneyHomeScreen(),
         );
       case Routes.accountsScreen:
         return MaterialPageRoute(
           settings: const RouteSettings(name: Routes.accountsScreen),
-          builder: (_) => BlocProvider(
-            create: (context) => AccountsCubit()..emitGetAccounts(),
-            child: const MoneyAccountsScreen(),
-          ),
+          builder: (_) => const MoneyAccountsScreen(),
         );
       case Routes.addAccountsScreen:
         final AccountArguments args = settings.arguments as AccountArguments;
@@ -88,10 +65,7 @@ class RouteGenerator {
       case Routes.bankCardsScreen:
         return MaterialPageRoute(
           settings: const RouteSettings(name: Routes.bankCardsScreen),
-          builder: (_) => BlocProvider(
-            create: (context) => getIt<CardsCubit>()..emitGetCard(),
-            child: const BankCardsScreen(),
-          ),
+          builder: (_) => const BankCardsScreen(),
         );
       case Routes.addCardsScreen:
         final CardArguments args = settings.arguments as CardArguments;
@@ -102,17 +76,7 @@ class RouteGenerator {
       case Routes.expensesScreen:
         return MaterialPageRoute(
           settings: const RouteSettings(name: Routes.expensesScreen),
-          builder: (_) => MultiBlocProvider(
-            providers: [
-              BlocProvider(
-                create: (context) => ExpensesCubit()..emitGetExpenses(),
-              ),
-              BlocProvider(
-                create: (context) => AccountsCubit()..emitGetAccounts(),
-              ),
-            ],
-            child: const ExpensesScreen(),
-          ),
+          builder: (_) => const ExpensesScreen(),
         );
       case Routes.addExpensesScreen:
         final ExpensesArguments args = settings.arguments as ExpensesArguments;
@@ -123,10 +87,7 @@ class RouteGenerator {
       case Routes.savingsScreen:
         return MaterialPageRoute(
           settings: const RouteSettings(name: Routes.savingsScreen),
-          builder: (_) => BlocProvider(
-            create: (context) => SavingsCubit()..emitGetSavings(),
-            child: const SavingsScreen(),
-          ),
+          builder: (_) => const SavingsScreen(),
         );
       case Routes.addSavingScreen:
         final SavingArguments args = settings.arguments as SavingArguments;
@@ -137,10 +98,7 @@ class RouteGenerator {
       case Routes.goldScreen:
         return MaterialPageRoute(
           settings: const RouteSettings(name: Routes.goldScreen),
-          builder: (_) => BlocProvider(
-            create: (context) => GoldCubit()..emitGetGold(),
-            child: const GoldScreen(),
-          ),
+          builder: (_) => const GoldScreen(),
         );
       case Routes.addGoldScreen:
         final GoldCubit cubit = settings.arguments as GoldCubit;
@@ -151,10 +109,7 @@ class RouteGenerator {
       case Routes.profilesScreen:
         return MaterialPageRoute(
           settings: const RouteSettings(name: Routes.profilesScreen),
-          builder: (_) => BlocProvider(
-            create: (context) => ProfilesCubit()..emitGetProfiles(),
-            child: const ProfilesScreen(),
-          ),
+          builder: (_) => const ProfilesScreen(),
         );
       case Routes.profileDetailsScreen:
         final ProfilesArguments args = settings.arguments as ProfilesArguments;
@@ -171,10 +126,7 @@ class RouteGenerator {
       case Routes.addSettingsScreen:
         return MaterialPageRoute(
           settings: const RouteSettings(name: Routes.addSettingsScreen),
-          builder: (_) => BlocProvider(
-            create: (context) => SettingsCubit(),
-            child: const AddSettingsScreen(),
-          ),
+          builder: (_) => const AddSettingsScreen(),
         );
       default:
         return unDefinedRoute();

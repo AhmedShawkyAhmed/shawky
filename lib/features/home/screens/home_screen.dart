@@ -6,46 +6,55 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  HomeCubit cubit = HomeCubit();
+
+  @override
   Widget build(BuildContext context) {
-    HomeCubit cubit = BlocProvider.of(context);
-    return BlocBuilder<HomeCubit, HomeState>(
-      builder: (context, state) {
-        return Scaffold(
-          backgroundColor: ColorManager.secondary,
-          body: Column(
-            children: [
-              const UserInfoWidget(),
-              Expanded(
-                child: GridView.builder(
-                  shrinkWrap: true,
-                  // physics: const NeverScrollableScrollPhysics(),
-                  padding: EdgeInsets.symmetric(
-                    vertical: 15.h,
-                    horizontal: 15.w,
+    return BlocProvider(
+      create: (context) => cubit..getSettings(),
+      child: BlocBuilder<HomeCubit, HomeState>(
+        builder: (context, state) {
+          return Scaffold(
+            backgroundColor: ColorManager.secondary,
+            body: Column(
+              children: [
+                const UserInfoWidget(),
+                Expanded(
+                  child: GridView.builder(
+                    shrinkWrap: true,
+                    // physics: const NeverScrollableScrollPhysics(),
+                    padding: EdgeInsets.symmetric(
+                      vertical: 15.h,
+                      horizontal: 15.w,
+                    ),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 20.sp,
+                      mainAxisSpacing: 20.sp,
+                      mainAxisExtent: 130.h,
+                    ),
+                    scrollDirection: Axis.vertical,
+                    itemCount: cubit.itemList.length,
+                    itemBuilder: (context, index) {
+                      return DefaultItemCardWidget(
+                        model: cubit.itemList[index],
+                      );
+                    },
                   ),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 20.sp,
-                    mainAxisSpacing: 20.sp,
-                    mainAxisExtent: 130.h,
-                  ),
-                  scrollDirection: Axis.vertical,
-                  itemCount: cubit.itemList.length,
-                  itemBuilder: (context, index) {
-                    return DefaultItemCardWidget(
-                      model: cubit.itemList[index],
-                    );
-                  },
                 ),
-              ),
-            ],
-          ),
-        );
-      },
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

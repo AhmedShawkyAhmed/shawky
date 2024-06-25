@@ -286,11 +286,14 @@ class ExpensesCubit extends Cubit<ExpensesState> {
         .color!;
   }
 
-  Future emitGetExpenses() async {
+  Future emitGetExpenses({
+    required int month,
+  }) async {
     try {
       clearLists();
+      printLog(month);
       emit(GetExpenseLoading());
-      expensesList = await ExpensesDatabase.getExpenses();
+      expensesList = await ExpensesDatabase.getExpenses(month);
       filteredExpensesList = expensesList;
       await getCategoryList(expenses: expensesList);
       chartSections();
@@ -304,17 +307,7 @@ class ExpensesCubit extends Cubit<ExpensesState> {
 
   Future emitFilterExpenses() async {
     await selectDate(false);
-    if (currentDate!.day == 1) {
-      emitGetExpenses();
-    } else {
-      filteredExpensesList = expensesList
-          .where((element) =>
-              element.date.substring(5, 7) ==
-              currentDate.toString().substring(5, 7))
-          .toList();
-      await getCategoryList(expenses: filteredExpensesList);
-      chartSections();
-    }
+    emitGetExpenses(month: currentDate?.month ?? DateTime.now().month);
   }
 
   Future emitAddExpense() async {
@@ -339,7 +332,7 @@ class ExpensesCubit extends Cubit<ExpensesState> {
       emit(AddExpenseLoading());
       await ExpensesDatabase.addExpense(expensesModel);
       emit(AddExpenseSuccess());
-      emitGetExpenses();
+      emitGetExpenses(month: DateTime.now().month);
       showMyToast(message: "Expense Added Successfully", success: true);
       updateAccounts(
         from: fromAccount,
@@ -418,7 +411,7 @@ class ExpensesCubit extends Cubit<ExpensesState> {
     try {
       emit(DeleteExpenseLoading());
       await ExpensesDatabase.deleteExpense(expenseId);
-      emitGetExpenses();
+      emitGetExpenses(month: DateTime.now().month);
       showMyToast(message: "Expense Deleted Successfully", success: true);
       emit(DeleteExpenseSuccess());
     } catch (e) {

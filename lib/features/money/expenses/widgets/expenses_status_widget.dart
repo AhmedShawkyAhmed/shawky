@@ -27,14 +27,16 @@ class ExpensesStatusWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               GestureDetector(
-                onTap: ()async {
+                onTap: () async {
                   await cubit.emitFilterExpenses();
                 },
-                child:  Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     DefaultText(
-                      text: (cubit.currentDate ?? DateTime.now()).month.toString(),
+                      text: (cubit.currentDate ?? DateTime.now())
+                          .month
+                          .toString(),
                       textColor: ColorManager.white,
                     ),
                     const DefaultText(
@@ -42,7 +44,8 @@ class ExpensesStatusWidget extends StatelessWidget {
                       textColor: ColorManager.white,
                     ),
                     DefaultText(
-                      text: (cubit.currentDate ?? DateTime.now()).year.toString(),
+                      text:
+                          (cubit.currentDate ?? DateTime.now()).year.toString(),
                       textColor: ColorManager.white,
                     ),
                   ],

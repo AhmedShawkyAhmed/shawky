@@ -14,83 +14,99 @@ import 'package:shawky/features/money/expenses/cubit/expenses_cubit.dart';
 import 'package:shawky/features/money/expenses/widgets/expenses_card.dart';
 import 'package:shawky/features/money/expenses/widgets/expenses_status_widget.dart';
 
-class ExpensesScreen extends StatelessWidget {
+class ExpensesScreen extends StatefulWidget {
   const ExpensesScreen({super.key});
 
   @override
+  State<ExpensesScreen> createState() => _ExpensesScreenState();
+}
+
+class _ExpensesScreenState extends State<ExpensesScreen> {
+  ExpensesCubit cubit = ExpensesCubit();
+  AccountsCubit accountsCubit = AccountsCubit();
+
+  @override
   Widget build(BuildContext context) {
-    ExpensesCubit cubit = BlocProvider.of(context);
-    AccountsCubit accountsCubit = BlocProvider.of(context);
-    return BlocBuilder<ExpensesCubit, ExpensesState>(
-      builder: (context, state) {
-        return Scaffold(
-          backgroundColor: ColorManager.secondary,
-          floatingActionButton: DefaultFloatingButton(
-            onPressed: () {
-              NavigationService.pushNamed(
-                Routes.addExpensesScreen,
-                arguments: ExpensesArguments(
-                  cubit: cubit,
-                  accountsCubit: accountsCubit,
-                  title: "Add Expenses",
-                ),
-              );
-            },
-          ),
-          body: Column(
-            children: [
-              const DefaultTitleWidget(title: "Expenses"),
-              ExpensesStatusWidget(cubit: cubit),
-              Expanded(
-                child: cubit.filteredExpensesList.isEmpty
-                    ? Center(
-                        child: DefaultText(
-                          text: "No Expenses Found !",
-                          textColor: ColorManager.white,
-                          fontSize: 18.sp,
-                        ),
-                      )
-                    : GridView.builder(
-                        shrinkWrap: true,
-                        padding: EdgeInsets.only(
-                          top: 5.h,
-                          bottom: 55.h,
-                          left: 15.w,
-                          right: 15.w,
-                        ),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 1,
-                          crossAxisSpacing: 20.sp,
-                          mainAxisSpacing: 10.sp,
-                          mainAxisExtent: 90.h,
-                        ),
-                        scrollDirection: Axis.vertical,
-                        itemCount: cubit.filteredExpensesList.length,
-                        itemBuilder: (context, index) {
-                          return ExpensesCard(
-                            cubit: cubit,
-                            model: cubit.filteredExpensesList[index],
-                            onLongPress: () {
-                              WarningDialog.show(
-                                message:
-                                    "Are you Sure you want to Delete this Expenses ?",
-                                onPressed: () {
-                                  NavigationService.pop();
-                                  cubit.emitDeleteExpense(
-                                    expenseId:
-                                        cubit.filteredExpensesList[index].id!,
-                                  );
-                                },
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => cubit..emitGetExpenses(month: DateTime.now().month),
+        ),
+        BlocProvider(
+          create: (context) =>accountsCubit..emitGetAccounts(),
+        ),
+      ],
+      child: BlocBuilder<ExpensesCubit, ExpensesState>(
+        builder: (context, state) {
+          return Scaffold(
+            backgroundColor: ColorManager.secondary,
+            floatingActionButton: DefaultFloatingButton(
+              onPressed: () {
+                NavigationService.pushNamed(
+                  Routes.addExpensesScreen,
+                  arguments: ExpensesArguments(
+                    cubit: cubit,
+                    accountsCubit: accountsCubit,
+                    title: "Add Expenses",
+                  ),
+                );
+              },
+            ),
+            body: Column(
+              children: [
+                const DefaultTitleWidget(title: "Expenses"),
+                ExpensesStatusWidget(cubit: cubit),
+                Expanded(
+                  child: cubit.filteredExpensesList.isEmpty
+                      ? Center(
+                    child: DefaultText(
+                      text: "No Expenses Found !",
+                      textColor: ColorManager.white,
+                      fontSize: 18.sp,
+                    ),
+                  )
+                      : GridView.builder(
+                    shrinkWrap: true,
+                    padding: EdgeInsets.only(
+                      top: 5.h,
+                      bottom: 55.h,
+                      left: 15.w,
+                      right: 15.w,
+                    ),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 1,
+                      crossAxisSpacing: 20.sp,
+                      mainAxisSpacing: 10.sp,
+                      mainAxisExtent: 90.h,
+                    ),
+                    scrollDirection: Axis.vertical,
+                    itemCount: cubit.filteredExpensesList.length,
+                    itemBuilder: (context, index) {
+                      return ExpensesCard(
+                        cubit: cubit,
+                        model: cubit.filteredExpensesList[index],
+                        onLongPress: () {
+                          WarningDialog.show(
+                            message:
+                            "Are you Sure you want to Delete this Expenses ?",
+                            onPressed: () {
+                              NavigationService.pop();
+                              cubit.emitDeleteExpense(
+                                expenseId:
+                                cubit.filteredExpensesList[index].id!,
                               );
                             },
                           );
                         },
-                      ),
-              ),
-            ],
-          ),
-        );
-      },
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

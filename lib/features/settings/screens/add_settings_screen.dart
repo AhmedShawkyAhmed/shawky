@@ -8,57 +8,66 @@ import 'package:shawky/core/shared/widgets/default_text_field.dart';
 import 'package:shawky/core/shared/widgets/default_title_widget.dart';
 import 'package:shawky/features/settings/cubit/settings_cubit.dart';
 
-class AddSettingsScreen extends StatelessWidget {
+class AddSettingsScreen extends StatefulWidget {
   const AddSettingsScreen({
     super.key,
   });
 
   @override
+  State<AddSettingsScreen> createState() => _AddSettingsScreenState();
+}
+
+class _AddSettingsScreenState extends State<AddSettingsScreen> {
+  SettingsCubit cubit = SettingsCubit();
+
+  @override
   Widget build(BuildContext context) {
-    late SettingsCubit cubit = BlocProvider.of(context);
-    return BlocBuilder<SettingsCubit, SettingsState>(
-      builder: (context, state) {
-        return Scaffold(
-          backgroundColor: ColorManager.secondary,
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                const DefaultTitleWidget(title: "Settings"),
-                SizedBox(height: 20.h),
-                DefaultTextField(
-                  controller: cubit.nameController,
-                  hintText: Globals.settings?.name ?? 'Name',
-                ),
-                DefaultTextField(
-                  controller: cubit.titleController,
-                  hintText: Globals.settings?.title ?? 'Title',
-                ),
-                DefaultTextField(
-                  controller: cubit.rateController,
-                  hintText: Globals.settings?.rate.toString() ?? 'Rate',
-                  keyboardType: TextInputType.number,
-                ),
-                DefaultTextField(
-                  controller: cubit.goldController,
-                  hintText: Globals.settings?.gold.toString() ?? 'Gold',
-                  keyboardType: TextInputType.number,
-                ),
-                SizedBox(height: 20.h),
-                DefaultAppButton(
-                  title: "Save",
-                  onTap: () {
-                    if (Globals.settings == null) {
-                      cubit.emitAddSettings();
-                    } else {
-                      cubit.emitUpdateSettings(model: Globals.settings!);
-                    }
-                  },
-                ),
-              ],
+    return BlocProvider(
+      create: (context) => cubit,
+      child: BlocBuilder<SettingsCubit, SettingsState>(
+        builder: (context, state) {
+          return Scaffold(
+            backgroundColor: ColorManager.secondary,
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const DefaultTitleWidget(title: "Settings"),
+                  SizedBox(height: 20.h),
+                  DefaultTextField(
+                    controller: cubit.nameController,
+                    hintText: Globals.settings?.name ?? 'Name',
+                  ),
+                  DefaultTextField(
+                    controller: cubit.titleController,
+                    hintText: Globals.settings?.title ?? 'Title',
+                  ),
+                  DefaultTextField(
+                    controller: cubit.rateController,
+                    hintText: Globals.settings?.rate.toString() ?? 'Rate',
+                    keyboardType: TextInputType.number,
+                  ),
+                  DefaultTextField(
+                    controller: cubit.goldController,
+                    hintText: Globals.settings?.gold.toString() ?? 'Gold',
+                    keyboardType: TextInputType.number,
+                  ),
+                  SizedBox(height: 20.h),
+                  DefaultAppButton(
+                    title: "Save",
+                    onTap: () {
+                      if (Globals.settings == null) {
+                        cubit.emitAddSettings();
+                      } else {
+                        cubit.emitUpdateSettings(model: Globals.settings!);
+                      }
+                    },
+                  ),
+                ],
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

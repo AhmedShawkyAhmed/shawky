@@ -7,10 +7,14 @@ import 'package:sqflite/sqflite.dart';
 class ExpensesDatabase {
   static const _expensesTable = "expenses";
 
-  static Future<List<ExpensesModel>> getExpenses() async {
+  static Future<List<ExpensesModel>> getExpenses(int month) async {
     final db = await LocalDatabase.database;
 
-    final List<Map<String, dynamic>> maps = await db.query(_expensesTable);
+    final List<Map<String, dynamic>> maps = await db.query(
+      _expensesTable,
+      where: "strftime('%m', date) = ?",
+      whereArgs: [month.toString().length == 1 ? "0$month" : month],
+    );
 
     return List.generate(maps.length, (i) {
       return ExpensesModel(

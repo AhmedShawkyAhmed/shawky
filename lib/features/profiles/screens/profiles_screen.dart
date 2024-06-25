@@ -12,79 +12,88 @@ import 'package:shawky/core/shared/widgets/default_title_widget.dart';
 import 'package:shawky/features/profiles/cubit/profiles_cubit.dart';
 import 'package:shawky/features/profiles/widgets/profile_card.dart';
 
-class ProfilesScreen extends StatelessWidget {
+class ProfilesScreen extends StatefulWidget {
   const ProfilesScreen({super.key});
 
   @override
+  State<ProfilesScreen> createState() => _ProfilesScreenState();
+}
+
+class _ProfilesScreenState extends State<ProfilesScreen> {
+  ProfilesCubit cubit = ProfilesCubit();
+
+  @override
   Widget build(BuildContext context) {
-    ProfilesCubit cubit = BlocProvider.of(context);
-    return BlocBuilder<ProfilesCubit, ProfilesState>(
-      builder: (context, state) {
-        return Scaffold(
-          backgroundColor: ColorManager.secondary,
-          floatingActionButton: DefaultFloatingButton(
-            onPressed: () {
-              NavigationService.pushNamed(
-                Routes.addProfileScreen,
-                arguments: ProfilesArguments(
-                  cubit: cubit,
-                  title: "Add Profile",
-                ),
-              );
-            },
-          ),
-          body: Column(
-            children: [
-              const DefaultTitleWidget(title: "Profiles"),
-              Expanded(
-                child: cubit.profileList.isEmpty
-                    ? Center(
-                        child: DefaultText(
-                          text: "No Profiles Found !",
-                          textColor: ColorManager.white,
-                          fontSize: 18.sp,
-                        ),
-                      )
-                    : GridView.builder(
-                        shrinkWrap: true,
-                        padding: EdgeInsets.only(
-                          top: 5.h,
-                          bottom: 55.h,
-                          left: 15.w,
-                          right: 15.w,
-                        ),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 1,
-                          crossAxisSpacing: 20.sp,
-                          mainAxisSpacing: 10.sp,
-                          mainAxisExtent: 60.h,
-                        ),
-                        scrollDirection: Axis.vertical,
-                        itemCount: cubit.profileList.length,
-                        itemBuilder: (context, index) {
-                          return ProfileCard(
-                            model: cubit.profileList[index],
-                            cubit: cubit,
-                            onLongPress: () {
-                              WarningDialog.show(
-                                message:
-                                    "Are you Sure you want to Delete this Profile ?",
-                                onPressed: () {
-                                  NavigationService.pop();
-                                  cubit.emitDeleteProfile(
-                                    profileId: cubit.profileList[index].id!,
-                                  );
-                                },
+    return BlocProvider(
+      create: (context) => cubit..emitGetProfiles(),
+      child: BlocBuilder<ProfilesCubit, ProfilesState>(
+        builder: (context, state) {
+          return Scaffold(
+            backgroundColor: ColorManager.secondary,
+            floatingActionButton: DefaultFloatingButton(
+              onPressed: () {
+                NavigationService.pushNamed(
+                  Routes.addProfileScreen,
+                  arguments: ProfilesArguments(
+                    cubit: cubit,
+                    title: "Add Profile",
+                  ),
+                );
+              },
+            ),
+            body: Column(
+              children: [
+                const DefaultTitleWidget(title: "Profiles"),
+                Expanded(
+                  child: cubit.profileList.isEmpty
+                      ? Center(
+                    child: DefaultText(
+                      text: "No Profiles Found !",
+                      textColor: ColorManager.white,
+                      fontSize: 18.sp,
+                    ),
+                  )
+                      : GridView.builder(
+                    shrinkWrap: true,
+                    padding: EdgeInsets.only(
+                      top: 5.h,
+                      bottom: 55.h,
+                      left: 15.w,
+                      right: 15.w,
+                    ),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 1,
+                      crossAxisSpacing: 20.sp,
+                      mainAxisSpacing: 10.sp,
+                      mainAxisExtent: 60.h,
+                    ),
+                    scrollDirection: Axis.vertical,
+                    itemCount: cubit.profileList.length,
+                    itemBuilder: (context, index) {
+                      return ProfileCard(
+                        model: cubit.profileList[index],
+                        cubit: cubit,
+                        onLongPress: () {
+                          WarningDialog.show(
+                            message:
+                            "Are you Sure you want to Delete this Profile ?",
+                            onPressed: () {
+                              NavigationService.pop();
+                              cubit.emitDeleteProfile(
+                                profileId: cubit.profileList[index].id!,
                               );
                             },
                           );
                         },
-                      ),
-              ),
-            ],
-          ),
-        );
-      },
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

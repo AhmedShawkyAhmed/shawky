@@ -12,88 +12,97 @@ import 'package:shawky/core/shared/widgets/default_title_widget.dart';
 import 'package:shawky/features/money/savings/cubit/savings_cubit.dart';
 import 'package:shawky/features/money/savings/widgets/saving_card.dart';
 
-class SavingsScreen extends StatelessWidget {
+class SavingsScreen extends StatefulWidget {
   const SavingsScreen({super.key});
 
   @override
+  State<SavingsScreen> createState() => _SavingsScreenState();
+}
+
+class _SavingsScreenState extends State<SavingsScreen> {
+  SavingsCubit cubit = SavingsCubit();
+
+  @override
   Widget build(BuildContext context) {
-    SavingsCubit cubit = BlocProvider.of(context);
-    return BlocBuilder<SavingsCubit, SavingsState>(
-      builder: (context, state) {
-        return Scaffold(
-          backgroundColor: ColorManager.secondary,
-          floatingActionButton: DefaultFloatingButton(
-            onPressed: () {
-              NavigationService.pushNamed(
-                Routes.addSavingScreen,
-                arguments: SavingArguments(
-                  cubit: cubit,
-                  title: "Add Savings",
-                ),
-              );
-            },
-          ),
-          body: Column(
-            children: [
-              const DefaultTitleWidget(title: "Savings"),
-              Expanded(
-                child: cubit.savingList.isEmpty
-                    ? Center(
-                        child: DefaultText(
-                          text: "No Savings Found !",
-                          textColor: ColorManager.white,
-                          fontSize: 18.sp,
-                        ),
-                      )
-                    : GridView.builder(
-                        shrinkWrap: true,
-                        padding: EdgeInsets.only(
-                          top: 5.h,
-                          bottom: 55.h,
-                          left: 15.w,
-                          right: 15.w,
-                        ),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 1,
-                          crossAxisSpacing: 20.sp,
-                          mainAxisSpacing: 10.sp,
-                          mainAxisExtent: 70.h,
-                        ),
-                        scrollDirection: Axis.vertical,
-                        itemCount: cubit.savingList.length,
-                        itemBuilder: (context, index) {
-                          return SavingCard(
-                            model: cubit.savingList[index],
-                            onTap: () {
-                              NavigationService.pushNamed(
-                                Routes.addSavingScreen,
-                                arguments: SavingArguments(
-                                  cubit: cubit,
-                                  title: "Edit Savings",
-                                  model: cubit.savingList[index],
-                                ),
-                              );
-                            },
-                            onLongPress: () {
-                              WarningDialog.show(
-                                message:
-                                    "Are you Sure you want to Delete this Saving ?",
-                                onPressed: () {
-                                  NavigationService.pop();
-                                  cubit.emitDeleteSavings(
-                                    savingsId: cubit.savingList[index].id!,
-                                  );
-                                },
+    return BlocProvider(
+      create: (context) => cubit..emitGetSavings(),
+      child: BlocBuilder<SavingsCubit, SavingsState>(
+        builder: (context, state) {
+          return Scaffold(
+            backgroundColor: ColorManager.secondary,
+            floatingActionButton: DefaultFloatingButton(
+              onPressed: () {
+                NavigationService.pushNamed(
+                  Routes.addSavingScreen,
+                  arguments: SavingArguments(
+                    cubit: cubit,
+                    title: "Add Savings",
+                  ),
+                );
+              },
+            ),
+            body: Column(
+              children: [
+                const DefaultTitleWidget(title: "Savings"),
+                Expanded(
+                  child: cubit.savingList.isEmpty
+                      ? Center(
+                    child: DefaultText(
+                      text: "No Savings Found !",
+                      textColor: ColorManager.white,
+                      fontSize: 18.sp,
+                    ),
+                  )
+                      : GridView.builder(
+                    shrinkWrap: true,
+                    padding: EdgeInsets.only(
+                      top: 5.h,
+                      bottom: 55.h,
+                      left: 15.w,
+                      right: 15.w,
+                    ),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 1,
+                      crossAxisSpacing: 20.sp,
+                      mainAxisSpacing: 10.sp,
+                      mainAxisExtent: 70.h,
+                    ),
+                    scrollDirection: Axis.vertical,
+                    itemCount: cubit.savingList.length,
+                    itemBuilder: (context, index) {
+                      return SavingCard(
+                        model: cubit.savingList[index],
+                        onTap: () {
+                          NavigationService.pushNamed(
+                            Routes.addSavingScreen,
+                            arguments: SavingArguments(
+                              cubit: cubit,
+                              title: "Edit Savings",
+                              model: cubit.savingList[index],
+                            ),
+                          );
+                        },
+                        onLongPress: () {
+                          WarningDialog.show(
+                            message:
+                            "Are you Sure you want to Delete this Saving ?",
+                            onPressed: () {
+                              NavigationService.pop();
+                              cubit.emitDeleteSavings(
+                                savingsId: cubit.savingList[index].id!,
                               );
                             },
                           );
                         },
-                      ),
-              ),
-            ],
-          ),
-        );
-      },
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

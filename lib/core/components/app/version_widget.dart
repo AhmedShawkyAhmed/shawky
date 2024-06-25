@@ -14,7 +14,7 @@ class VersionWidget extends StatelessWidget {
       decoration: const BoxDecoration(color: ColorManager.black),
       child: Center(
         child: DefaultText(
-          text: 'Version 0.0.1+4',
+          text: 'Version 0.0.1+5',
           textColor: ColorManager.white,
           fontSize: isPortrait ? 15.sp : 8.sp,
         ),

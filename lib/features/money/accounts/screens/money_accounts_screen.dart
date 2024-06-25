@@ -15,13 +15,20 @@ import 'package:shawky/features/money/accounts/cubit/accounts_cubit.dart';
 import 'package:shawky/features/money/accounts/widgets/account_card.dart';
 import 'package:shawky/features/money/accounts/widgets/total_balance_widget.dart';
 
-class MoneyAccountsScreen extends StatelessWidget {
+class MoneyAccountsScreen extends StatefulWidget {
   const MoneyAccountsScreen({super.key});
 
   @override
+  State<MoneyAccountsScreen> createState() => _MoneyAccountsScreenState();
+}
+
+class _MoneyAccountsScreenState extends State<MoneyAccountsScreen> {
+  AccountsCubit cubit = AccountsCubit();
+  @override
   Widget build(BuildContext context) {
-    AccountsCubit cubit = BlocProvider.of(context);
-    return BlocBuilder<AccountsCubit, AccountsState>(
+    return BlocProvider(
+  create: (context) => cubit..emitGetAccounts(),
+  child: BlocBuilder<AccountsCubit, AccountsState>(
       builder: (context, state) {
         return Scaffold(
           backgroundColor: ColorManager.secondary,
@@ -109,6 +116,7 @@ class MoneyAccountsScreen extends StatelessWidget {
           ),
         );
       },
-    );
+    ),
+);
   }
 }
