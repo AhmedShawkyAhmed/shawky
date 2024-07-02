@@ -8,6 +8,7 @@ import 'package:shawky/core/shared/widgets/default_text_field.dart';
 import 'package:shawky/core/shared/widgets/default_title_widget.dart';
 import 'package:shawky/core/utils/enums.dart';
 import 'package:shawky/core/utils/extensions.dart';
+import 'package:shawky/features/profiles/constants/profiles_constants.dart';
 
 class AddProfileScreen extends StatelessWidget {
   final ProfilesArguments args;
@@ -33,7 +34,7 @@ class AddProfileScreen extends StatelessWidget {
               keyboardType: TextInputType.url,
             ),
             DefaultDropdown<ProfileType>(
-              items: args.cubit.profileTypeList,
+              items: ProfilesConstants.profileTypeList,
               hint: "Profile Type",
               selectedItem: args.model?.type ?? args.cubit.profileType,
               itemAsString: (ProfileType? u) => u!.name.toCapitalized(),

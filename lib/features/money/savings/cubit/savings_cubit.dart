@@ -8,7 +8,9 @@ import 'package:shawky/features/money/savings/database/saving_database.dart';
 part 'savings_state.dart';
 
 class SavingsCubit extends Cubit<SavingsState> {
-  SavingsCubit() : super(SavingsInitial());
+  SavingsCubit(this.database) : super(SavingsInitial());
+
+  final SavingsDatabase database;
 
   TextEditingController nameController = TextEditingController();
   TextEditingController targetController = TextEditingController();
@@ -25,7 +27,7 @@ class SavingsCubit extends Cubit<SavingsState> {
   Future emitGetSavings() async {
     try {
       emit(GetSavingsLoading());
-      savingList = await SavingsDatabase.getSavings();
+      savingList = await database.getSavings();
       emit(GetSavingsSuccess());
     } catch (e) {
       emit(GetSavingsError());
@@ -42,7 +44,7 @@ class SavingsCubit extends Cubit<SavingsState> {
         target: double.tryParse(targetController.text),
       );
       emit(AddSavingsLoading());
-      await SavingsDatabase.addSavings(savingModel);
+      await database.addSavings(savingModel);
       emit(AddSavingsSuccess());
       emitGetSavings();
       showMyToast(message: "Savings Added Successfully", success: true);
@@ -70,7 +72,7 @@ class SavingsCubit extends Cubit<SavingsState> {
             : double.tryParse(targetController.text),
       );
       emit(UpdateSavingsLoading());
-      await SavingsDatabase.updateSavings(savingModel);
+      await database.updateSavings(savingModel);
       emit(UpdateSavingsSuccess());
       int index = savingList.indexOf(model);
       savingList.removeAt(index);
@@ -90,7 +92,7 @@ class SavingsCubit extends Cubit<SavingsState> {
   }) async {
     try {
       emit(DeleteSavingsLoading());
-      await SavingsDatabase.deleteSavings(savingsId);
+      await database.deleteSavings(savingsId);
       savingList.removeWhere((element) => element.id == savingsId);
       showMyToast(message: "Savings Deleted Successfully", success: true);
       emit(DeleteSavingsSuccess());

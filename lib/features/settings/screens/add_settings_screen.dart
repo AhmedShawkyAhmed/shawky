@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shawky/core/resources/color_manger.dart';
 import 'package:shawky/core/resources/globals.dart';
+import 'package:shawky/core/services/service_locator.dart';
 import 'package:shawky/core/shared/widgets/default_app_button.dart';
 import 'package:shawky/core/shared/widgets/default_text_field.dart';
 import 'package:shawky/core/shared/widgets/default_title_widget.dart';
@@ -18,7 +19,7 @@ class AddSettingsScreen extends StatefulWidget {
 }
 
 class _AddSettingsScreenState extends State<AddSettingsScreen> {
-  SettingsCubit cubit = SettingsCubit();
+  SettingsCubit cubit = SettingsCubit(getIt());
 
   @override
   Widget build(BuildContext context) {

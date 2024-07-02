@@ -9,7 +9,10 @@ import 'package:shawky/features/settings/models/settings_model.dart';
 part 'settings_state.dart';
 
 class SettingsCubit extends Cubit<SettingsState> {
-  SettingsCubit() : super(SettingsInitial());
+  SettingsCubit(this.database) : super(SettingsInitial());
+
+  final SettingsDatabase database;
+
   TextEditingController nameController = TextEditingController();
   TextEditingController titleController = TextEditingController();
   TextEditingController rateController = TextEditingController();
@@ -27,7 +30,7 @@ class SettingsCubit extends Cubit<SettingsState> {
   Future emitGetSettings() async {
     try {
       emit(GetSettingsLoading());
-      settingsList = await SettingsDatabase.getSettings();
+      settingsList = await database.getSettings();
       Globals.settings = settingsList.isEmpty ? null : settingsList.first;
       emit(GetSettingsSuccess());
       WidgetsBinding.instance.reassembleApplication();
@@ -47,7 +50,7 @@ class SettingsCubit extends Cubit<SettingsState> {
         gold: double.parse(goldController.text),
       );
       emit(AddSettingsLoading());
-      await SettingsDatabase.addSettings(settingsModel);
+      await database.addSettings(settingsModel);
       emit(AddSettingsSuccess());
       await emitGetSettings();
       showMyToast(message: "Settings Added Successfully", success: true);
@@ -77,7 +80,7 @@ class SettingsCubit extends Cubit<SettingsState> {
             : double.parse(goldController.text),
       );
       emit(UpdateSettingsLoading());
-      await SettingsDatabase.updateSettings(settingsModel);
+      await database.updateSettings(settingsModel);
       emit(UpdateSettingsSuccess());
       await emitGetSettings();
       showMyToast(message: "Settings Updated Successfully", success: true);
@@ -95,7 +98,7 @@ class SettingsCubit extends Cubit<SettingsState> {
   }) async {
     try {
       emit(DeleteSettingsLoading());
-      await SettingsDatabase.deleteSettings(settingsId);
+      await database.deleteSettings(settingsId);
       settingsList.removeWhere((element) => element.id == settingsId);
       showMyToast(message: "Settings Deleted Successfully", success: true);
       emit(DeleteSettingsSuccess());

@@ -6,6 +6,7 @@ import 'package:shawky/core/resources/color_manger.dart';
 import 'package:shawky/core/routes/arguments/expenses_arguments.dart';
 import 'package:shawky/core/routes/routes_names.dart';
 import 'package:shawky/core/services/navigation_service.dart';
+import 'package:shawky/core/services/service_locator.dart';
 import 'package:shawky/core/shared/widgets/default_floating_button.dart';
 import 'package:shawky/core/shared/widgets/default_text.dart';
 import 'package:shawky/core/shared/widgets/default_title_widget.dart';
@@ -22,20 +23,13 @@ class ExpensesScreen extends StatefulWidget {
 }
 
 class _ExpensesScreenState extends State<ExpensesScreen> {
-  ExpensesCubit cubit = ExpensesCubit();
-  AccountsCubit accountsCubit = AccountsCubit();
+  ExpensesCubit cubit = ExpensesCubit(getIt());
+
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => cubit..emitGetExpenses(month: DateTime.now().month),
-        ),
-        BlocProvider(
-          create: (context) =>accountsCubit..emitGetAccounts(),
-        ),
-      ],
+    return BlocProvider(
+      create: (context) => cubit..emitGetExpenses(month: DateTime.now().month),
       child: BlocBuilder<ExpensesCubit, ExpensesState>(
         builder: (context, state) {
           return Scaffold(
@@ -46,7 +40,6 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
                   Routes.addExpensesScreen,
                   arguments: ExpensesArguments(
                     cubit: cubit,
-                    accountsCubit: accountsCubit,
                     title: "Add Expenses",
                   ),
                 );
@@ -73,7 +66,8 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
                       left: 15.w,
                       right: 15.w,
                     ),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate:
+                    SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 1,
                       crossAxisSpacing: 20.sp,
                       mainAxisSpacing: 10.sp,

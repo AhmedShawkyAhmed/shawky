@@ -81,7 +81,7 @@ class ExpensesCard extends StatelessWidget {
                 ),
                 SizedBox(width: 5.w),
                 DefaultText(
-                  text: model.type.name.toCapitalized(),
+                  text: cubit.getExpensesCategory(model.category).toCapitalized(),
                   fontSize: 12.sp,
                 ),
                 SizedBox(width: 10.w),

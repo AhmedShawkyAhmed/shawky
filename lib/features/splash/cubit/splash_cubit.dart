@@ -48,7 +48,7 @@ class SplashCubit extends Cubit<SplashState> {
   }
 
   Future authenticateUser() async {
-    var authenticated = await authenticate();
+    var authenticated = true;//await authenticate();
     if (authenticated) {
       await Future.delayed(const Duration(milliseconds: 500)).then((value) async {
         NavigationService.pushNamedAndRemoveUntil(

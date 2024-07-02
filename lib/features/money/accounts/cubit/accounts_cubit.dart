@@ -1,26 +1,26 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:shawky/core/services/navigation_service.dart';
 import 'package:shawky/core/utils/enums.dart';
 import 'package:shawky/core/utils/shared_functions.dart';
-import 'package:shawky/features/money/accounts/models/account_model.dart';
-import 'package:flutter/material.dart';
 import 'package:shawky/features/money/accounts/database/accounts_database.dart';
+import 'package:shawky/features/money/accounts/models/account_model.dart';
 
 part 'accounts_state.dart';
 
 class AccountsCubit extends Cubit<AccountsState> {
-  AccountsCubit() : super(AccountsInitial());
+  AccountsCubit(this.database) : super(AccountsInitial());
+
+  final AccountsDatabase database;
 
   TextEditingController accountNameController = TextEditingController();
   TextEditingController amountController = TextEditingController();
-  AccountTypes accountType = AccountTypes.main;
-  Currency currency = Currency.egp;
+  AccountTypes? accountType;
+  Currency? currency;
   DateTime selectedDate = DateTime.now();
 
   List<AccountModel> moneyAccounts = [];
 
-  final List<AccountTypes> accountTypesList = AccountTypes.values;
-  final List<Currency> currencyList = Currency.values;
 
   void changeAccountTypes(value) {
     accountType = value;
@@ -43,7 +43,7 @@ class AccountsCubit extends Cubit<AccountsState> {
   Future emitGetAccounts() async {
     try {
       emit(GetAccountLoading());
-      moneyAccounts = await AccountsDatabase.getAccounts();
+      moneyAccounts = await database.getAccounts();
       emit(GetAccountSuccess());
     } catch (e) {
       emit(GetAccountError());
@@ -54,6 +54,19 @@ class AccountsCubit extends Cubit<AccountsState> {
 
   Future emitAddAccount() async {
     try {
+      if (accountNameController.text.isEmpty) {
+        showMyToast(message: "Enter Account Name");
+        return;
+      } else if (amountController.text.isEmpty) {
+        showMyToast(message: "Enter Amount");
+        return;
+      } else if (accountType == null) {
+        showMyToast(message: "Select Account Type");
+        return;
+      } else if (currency == null) {
+        showMyToast(message: "Select Currency");
+        return;
+      }
       AccountModel accountModel = AccountModel(
         name: accountNameController.text,
         amount: double.tryParse(amountController.text),
@@ -62,7 +75,7 @@ class AccountsCubit extends Cubit<AccountsState> {
         updatedAt: selectedDate.toString(),
       );
       emit(AddAccountLoading());
-      await AccountsDatabase.addAccount(accountModel);
+      await database.addAccount(accountModel);
       emit(AddAccountSuccess());
       emitGetAccounts();
       showMyToast(message: "Account Added Successfully", success: true);
@@ -88,14 +101,14 @@ class AccountsCubit extends Cubit<AccountsState> {
         amount: amountController.text.isEmpty
             ? model.amount
             : double.tryParse(amountController.text),
-        accountType: model.accountType ?? accountType,
-        currency: model.currency ?? currency,
+        accountType: accountType ?? model.accountType,
+        currency: currency ?? model.currency,
         updatedAt: selectedDate.toString(),
       );
       emit(UpdateAccountLoading());
-      await AccountsDatabase.updateAccount(accountModel);
+      await database.updateAccount(accountModel);
       emit(UpdateAccountSuccess());
-      if(fromExpenses == false){
+      if (fromExpenses == false) {
         int index = moneyAccounts.indexOf(model);
         moneyAccounts.removeAt(index);
         moneyAccounts.insert(index, accountModel);
@@ -115,7 +128,7 @@ class AccountsCubit extends Cubit<AccountsState> {
   }) async {
     try {
       emit(DeleteAccountLoading());
-      await AccountsDatabase.deleteAccount(accountId);
+      await database.deleteAccount(accountId);
       moneyAccounts.removeWhere((element) => element.id == accountId);
       showMyToast(message: "Account Deleted Successfully", success: true);
       emit(DeleteAccountSuccess());

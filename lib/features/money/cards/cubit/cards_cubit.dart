@@ -1,15 +1,17 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:shawky/core/services/navigation_service.dart';
 import 'package:shawky/core/utils/enums.dart';
 import 'package:shawky/core/utils/shared_functions.dart';
-import 'package:shawky/features/money/cards/models/bank_card_model.dart';
 import 'package:shawky/features/money/cards/database/cards_database.dart';
-import 'package:flutter/material.dart';
+import 'package:shawky/features/money/cards/models/bank_card_model.dart';
 
 part 'cards_state.dart';
 
 class CardsCubit extends Cubit<CardsState> {
-  CardsCubit() : super(CardsInitial());
+  CardsCubit(this.database) : super(CardsInitial());
+
+  final CardsDatabase database;
 
   TextEditingController nameController = TextEditingController();
   TextEditingController nameOnCardController = TextEditingController();
@@ -20,36 +22,6 @@ class CardsCubit extends Cubit<CardsState> {
   String year = "00", month = "00";
 
   List<BankCardModel> moneyCardList = [];
-
-  final List<CardType> cardTypeList = CardType.values;
-  final List<CardCompany> cardCompanyList = CardCompany.values;
-  final List<String> monthList = [
-    "01",
-    "02",
-    "03",
-    "04",
-    "05",
-    "06",
-    "07",
-    "08",
-    "09",
-    "10",
-    "11",
-    "12",
-  ];
-  final List<String> yearList = [
-    (DateTime.now().year).toString(),
-    (DateTime.now().year + 1).toString(),
-    (DateTime.now().year + 2).toString(),
-    (DateTime.now().year + 3).toString(),
-    (DateTime.now().year + 4).toString(),
-    (DateTime.now().year + 5).toString(),
-    (DateTime.now().year + 6).toString(),
-    (DateTime.now().year + 7).toString(),
-    (DateTime.now().year + 8).toString(),
-    (DateTime.now().year + 9).toString(),
-    (DateTime.now().year + 10).toString(),
-  ];
 
   void changeYear(value) {
     year = value;
@@ -81,7 +53,7 @@ class CardsCubit extends Cubit<CardsState> {
   Future emitGetCard() async {
     try {
       emit(GetCardLoading());
-      moneyCardList = await CardsDatabase.getCards();
+      moneyCardList = await database.getCards();
       emit(GetCardSuccess());
     } catch (e) {
       emit(GetCardError());
@@ -102,7 +74,7 @@ class CardsCubit extends Cubit<CardsState> {
         cardCompany: cardCompany,
       );
       emit(AddCardLoading());
-      await CardsDatabase.addCard(cardModel);
+      await database.addCard(cardModel);
       emit(AddCardSuccess());
       emitGetCard();
       showMyToast(message: "Card Added Successfully", success: true);
@@ -135,7 +107,7 @@ class CardsCubit extends Cubit<CardsState> {
         cardCompany: model.cardCompany,
       );
       emit(UpdateCardLoading());
-      await CardsDatabase.updateCard(cardModel);
+      await database.updateCard(cardModel);
       emit(UpdateCardSuccess());
       int index = moneyCardList.indexOf(model);
       moneyCardList.removeAt(index);
@@ -155,7 +127,7 @@ class CardsCubit extends Cubit<CardsState> {
   }) async {
     try {
       emit(DeleteCardLoading());
-      await CardsDatabase.deleteCard(cardId);
+      await database.deleteCard(cardId);
       moneyCardList.removeWhere((element) => element.id == cardId);
       showMyToast(message: "Card Deleted Successfully", success: true);
       emit(DeleteCardSuccess());

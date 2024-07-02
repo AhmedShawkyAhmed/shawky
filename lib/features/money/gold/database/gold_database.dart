@@ -5,7 +5,7 @@ import 'package:sqflite/sqflite.dart';
 class GoldDatabase {
   static const _goldTable = "gold";
 
-  static Future<List<GoldModel>> getGold() async {
+  Future<List<GoldModel>> getGold() async {
     final db = await LocalDatabase.database;
 
     final List<Map<String, dynamic>> maps = await db.query(_goldTable);
@@ -21,7 +21,7 @@ class GoldDatabase {
     });
   }
 
-  static Future<void> addGold(GoldModel goldModel) async {
+  Future<void> addGold(GoldModel goldModel) async {
     final db = await LocalDatabase.database;
 
     await db.insert(
@@ -31,7 +31,7 @@ class GoldDatabase {
     );
   }
 
-  static Future<void> deleteGold(int id) async {
+  Future<void> deleteGold(int id) async {
     final db = await LocalDatabase.database;
     await db.delete(
       _goldTable,

@@ -9,7 +9,9 @@ import 'package:shawky/features/money/gold/models/gold_model.dart';
 part 'gold_state.dart';
 
 class GoldCubit extends Cubit<GoldState> {
-  GoldCubit() : super(GoldInitial());
+  GoldCubit(this.database) : super(GoldInitial());
+
+  final GoldDatabase database;
 
   TextEditingController nameController = TextEditingController();
   TextEditingController weightController = TextEditingController();
@@ -54,7 +56,7 @@ class GoldCubit extends Cubit<GoldState> {
   Future emitGetGold() async {
     try {
       emit(GetGoldLoading());
-      goldList = await GoldDatabase.getGold();
+      goldList = await database.getGold();
       emit(GetGoldSuccess());
     } catch (e) {
       emit(GetGoldError());
@@ -75,7 +77,7 @@ class GoldCubit extends Cubit<GoldState> {
             : dateController.text,
       );
       emit(AddGoldLoading());
-      await GoldDatabase.addGold(goldModel);
+      await database.addGold(goldModel);
       emit(AddGoldSuccess());
       emitGetGold();
       showMyToast(message: "Gold Added Successfully", success: true);
@@ -93,7 +95,7 @@ class GoldCubit extends Cubit<GoldState> {
   }) async {
     try {
       emit(DeleteGoldLoading());
-      await GoldDatabase.deleteGold(goldId);
+      await database.deleteGold(goldId);
       emitGetGold();
       showMyToast(message: "Gold Deleted Successfully", success: true);
       emit(DeleteGoldSuccess());

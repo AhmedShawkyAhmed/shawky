@@ -8,6 +8,7 @@ import 'package:shawky/core/utils/enums.dart';
 import 'package:shawky/core/utils/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shawky/features/money/accounts/constants/accounts_constants.dart';
 
 class AddAccountScreen extends StatelessWidget {
   final AccountArguments args;
@@ -36,14 +37,14 @@ class AddAccountScreen extends StatelessWidget {
               keyboardType: TextInputType.number,
             ),
             DefaultDropdown<AccountTypes>(
-              items: args.cubit.accountTypesList,
+              items: AccountsConstants.accountTypesList,
               hint: "Account Type",
               selectedItem: args.model?.accountType ?? args.cubit.accountType,
               itemAsString: (AccountTypes? u) => u!.name.toCapitalized(),
               onChanged: args.cubit.changeAccountTypes,
             ),
             DefaultDropdown<Currency>(
-              items: args.cubit.currencyList,
+              items: AccountsConstants.currencyList,
               hint: "Currency",
               selectedItem: args.model?.currency ?? args.cubit.currency,
               itemAsString: (Currency? u) => u!.name.toUpperCase(),

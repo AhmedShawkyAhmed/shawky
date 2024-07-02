@@ -7,7 +7,7 @@ import 'package:sqflite/sqflite.dart';
 class ExpensesDatabase {
   static const _expensesTable = "expenses";
 
-  static Future<List<ExpensesModel>> getExpenses(int month) async {
+  Future<List<ExpensesModel>> getExpenses(int month) async {
     final db = await LocalDatabase.database;
 
     final List<Map<String, dynamic>> maps = await db.query(
@@ -40,7 +40,7 @@ class ExpensesDatabase {
     });
   }
 
-  static Future<void> addExpense(ExpensesModel expensesModel) async {
+  Future<void> addExpense(ExpensesModel expensesModel) async {
     final db = await LocalDatabase.database;
 
     await db.insert(
@@ -50,7 +50,7 @@ class ExpensesDatabase {
     );
   }
 
-  static Future<void> deleteExpense(int id) async {
+  Future<void> deleteExpense(int id) async {
     final db = await LocalDatabase.database;
     await db.delete(
       _expensesTable,

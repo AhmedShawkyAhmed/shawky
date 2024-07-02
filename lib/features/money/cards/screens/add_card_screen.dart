@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shawky/core/resources/color_manger.dart';
 import 'package:shawky/core/resources/credit_card_formatter.dart';
 import 'package:shawky/core/routes/arguments/card_arguments.dart';
@@ -7,9 +10,7 @@ import 'package:shawky/core/shared/widgets/default_text_field.dart';
 import 'package:shawky/core/shared/widgets/default_title_widget.dart';
 import 'package:shawky/core/utils/enums.dart';
 import 'package:shawky/core/utils/extensions.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shawky/features/money/cards/constants/cards_constants.dart';
 
 class AddCardScreen extends StatelessWidget {
   final CardArguments args;
@@ -63,7 +64,7 @@ class AddCardScreen extends StatelessWidget {
                     width: 170.w,
                     child: DefaultDropdown<String>(
                       padding: 0,
-                      items: args.cubit.monthList,
+                      items: CardsConstants.monthList,
                       hint: "Month",
                       selectedItem: args.model?.exp.substring(0, 2),
                       itemAsString: (String? u) => u!,
@@ -74,7 +75,7 @@ class AddCardScreen extends StatelessWidget {
                     width: 170.w,
                     child: DefaultDropdown<String>(
                       padding: 0,
-                      items: args.cubit.yearList,
+                      items: CardsConstants.yearList,
                       hint: "Year",
                       selectedItem: args.model?.exp.substring(3, 5),
                       itemAsString: (String? u) => u!,
@@ -85,14 +86,14 @@ class AddCardScreen extends StatelessWidget {
               ),
             ),
             DefaultDropdown<CardType>(
-              items: args.cubit.cardTypeList,
+              items: CardsConstants.cardTypeList,
               hint: "Card Type",
               selectedItem: args.model?.cardType ?? args.cubit.cardType,
               itemAsString: (CardType? u) => u!.name.toCapitalized(),
               onChanged: args.cubit.changeCardType,
             ),
             DefaultDropdown<CardCompany>(
-              items: args.cubit.cardCompanyList,
+              items: CardsConstants.cardCompanyList,
               hint: "Card Company",
               selectedItem: args.model?.cardCompany ?? args.cubit.cardCompany,
               itemAsString: (CardCompany? u) => u!.name.toUpperCase(),

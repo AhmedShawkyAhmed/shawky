@@ -7,6 +7,7 @@ import 'package:shawky/core/resources/globals.dart';
 import 'package:shawky/core/routes/arguments/account_arguments.dart';
 import 'package:shawky/core/routes/routes_names.dart';
 import 'package:shawky/core/services/navigation_service.dart';
+import 'package:shawky/core/services/service_locator.dart';
 import 'package:shawky/core/shared/widgets/default_floating_button.dart';
 import 'package:shawky/core/shared/widgets/default_text.dart';
 import 'package:shawky/core/shared/widgets/default_title_widget.dart';
@@ -23,7 +24,7 @@ class MoneyAccountsScreen extends StatefulWidget {
 }
 
 class _MoneyAccountsScreenState extends State<MoneyAccountsScreen> {
-  AccountsCubit cubit = AccountsCubit();
+  AccountsCubit cubit = AccountsCubit(getIt());
   @override
   Widget build(BuildContext context) {
     return BlocProvider(

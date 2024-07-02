@@ -1,5 +1,6 @@
 import 'package:shawky/core/shared/widgets/default_item_card_widget.dart';
 import 'package:shawky/core/resources/color_manger.dart';
+import 'package:shawky/features/home/constants/home_constants.dart';
 import 'package:shawky/features/home/cubit/home_cubit.dart';
 import 'package:shawky/features/home/widgets/user_info_widget.dart';
 import 'package:flutter/material.dart';
@@ -42,10 +43,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisExtent: 130.h,
                     ),
                     scrollDirection: Axis.vertical,
-                    itemCount: cubit.itemList.length,
+                    itemCount: HomeConstants.itemList.length,
                     itemBuilder: (context, index) {
                       return DefaultItemCardWidget(
-                        model: cubit.itemList[index],
+                        model: HomeConstants.itemList[index],
                       );
                     },
                   ),

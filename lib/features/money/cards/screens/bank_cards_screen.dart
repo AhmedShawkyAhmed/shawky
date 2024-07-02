@@ -3,6 +3,7 @@ import 'package:shawky/core/resources/color_manger.dart';
 import 'package:shawky/core/routes/arguments/card_arguments.dart';
 import 'package:shawky/core/routes/routes_names.dart';
 import 'package:shawky/core/services/navigation_service.dart';
+import 'package:shawky/core/services/service_locator.dart';
 import 'package:shawky/core/shared/widgets/default_floating_button.dart';
 import 'package:shawky/core/shared/widgets/default_text.dart';
 import 'package:shawky/core/shared/widgets/default_title_widget.dart';
@@ -20,7 +21,7 @@ class BankCardsScreen extends StatefulWidget {
 }
 
 class _BankCardsScreenState extends State<BankCardsScreen> {
-  CardsCubit cubit = CardsCubit();
+  CardsCubit cubit = CardsCubit(getIt());
 
   @override
   Widget build(BuildContext context) {

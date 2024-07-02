@@ -9,12 +9,13 @@ import 'package:shawky/features/profiles/models/profile_model.dart';
 part 'profiles_state.dart';
 
 class ProfilesCubit extends Cubit<ProfilesState> {
-  ProfilesCubit() : super(ProfilesInitial());
+  ProfilesCubit(this.database) : super(ProfilesInitial());
+
+  final ProfilesDatabase database;
 
   TextEditingController nameController = TextEditingController();
   TextEditingController linkController = TextEditingController();
   ProfileType profileType = ProfileType.facebook;
-  final List<ProfileType> profileTypeList = ProfileType.values;
 
   List<ProfileModel> profileList = [];
 
@@ -31,7 +32,7 @@ class ProfilesCubit extends Cubit<ProfilesState> {
   Future emitGetProfiles() async {
     try {
       emit(GetProfileLoading());
-      profileList = await ProfilesDatabase.getProfiles();
+      profileList = await database.getProfiles();
       emit(GetProfileSuccess());
     } catch (e) {
       emit(GetProfileError());
@@ -48,7 +49,7 @@ class ProfilesCubit extends Cubit<ProfilesState> {
         type: profileType,
       );
       emit(AddProfileLoading());
-      await ProfilesDatabase.addProfile(profileModel);
+      await database.addProfile(profileModel);
       emit(AddProfileSuccess());
       emitGetProfiles();
       showMyToast(message: "Profile Added Successfully", success: true);
@@ -72,7 +73,7 @@ class ProfilesCubit extends Cubit<ProfilesState> {
         type: model.type,
       );
       emit(UpdateProfileLoading());
-      await ProfilesDatabase.updateProfile(profileModel);
+      await database.updateProfile(profileModel);
       emit(UpdateProfileSuccess());
       int index = profileList.indexOf(model);
       profileList.removeAt(index);
@@ -92,7 +93,7 @@ class ProfilesCubit extends Cubit<ProfilesState> {
   }) async {
     try {
       emit(DeleteProfileLoading());
-      await ProfilesDatabase.deleteProfile(profileId);
+      await database.deleteProfile(profileId);
       profileList.removeWhere((element) => element.id == profileId);
       showMyToast(message: "Profile Deleted Successfully", success: true);
       emit(DeleteProfileSuccess());

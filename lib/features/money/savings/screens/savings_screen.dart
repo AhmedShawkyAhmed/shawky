@@ -6,6 +6,7 @@ import 'package:shawky/core/resources/color_manger.dart';
 import 'package:shawky/core/routes/arguments/saving_arguments.dart';
 import 'package:shawky/core/routes/routes_names.dart';
 import 'package:shawky/core/services/navigation_service.dart';
+import 'package:shawky/core/services/service_locator.dart';
 import 'package:shawky/core/shared/widgets/default_floating_button.dart';
 import 'package:shawky/core/shared/widgets/default_text.dart';
 import 'package:shawky/core/shared/widgets/default_title_widget.dart';
@@ -20,7 +21,7 @@ class SavingsScreen extends StatefulWidget {
 }
 
 class _SavingsScreenState extends State<SavingsScreen> {
-  SavingsCubit cubit = SavingsCubit();
+  SavingsCubit cubit = SavingsCubit(getIt());
 
   @override
   Widget build(BuildContext context) {

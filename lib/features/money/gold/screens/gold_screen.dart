@@ -5,6 +5,7 @@ import 'package:shawky/core/components/dialogs/warning_dialog.dart';
 import 'package:shawky/core/resources/color_manger.dart';
 import 'package:shawky/core/routes/routes_names.dart';
 import 'package:shawky/core/services/navigation_service.dart';
+import 'package:shawky/core/services/service_locator.dart';
 import 'package:shawky/core/shared/widgets/default_floating_button.dart';
 import 'package:shawky/core/shared/widgets/default_text.dart';
 import 'package:shawky/core/shared/widgets/default_title_widget.dart';
@@ -20,7 +21,7 @@ class GoldScreen extends StatefulWidget {
 }
 
 class _GoldScreenState extends State<GoldScreen> {
-  GoldCubit cubit = GoldCubit();
+  GoldCubit cubit = GoldCubit(getIt());
 
   @override
   Widget build(BuildContext context) {

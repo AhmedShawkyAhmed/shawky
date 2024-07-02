@@ -24,6 +24,8 @@ class ExpensesCategoryColors {
   static const Color home = Color(0xfff05527);
   static const Color internet = Color(0xff953041);
   static const Color gas = Color(0xffe8c648);
+  static const Color gold = Color(0xfffff200);
+  static const Color installment = Color(0xffd00000);
   static const Color stocks = Color(0xff01da87);
   static const Color retirement = Color(0xff3344a1);
   static const Color electricity = Color(0xffd9952f);
@@ -35,7 +37,7 @@ class ExpensesCategoryColors {
   static const Color transportation = Color(0xff154fa1);
   static const Color loan = Color(0xff5e7c85);
   static const Color transfer = Color(0xff0fa58c);
-  static const Color rent = Color(0xfff4dd0c);
+  static const Color rent = Color(0xffc5b215);
   static const Color tools = Color(0xff6e230c);
   static const Color electronics = Color(0xffaa0c4d);
   static const Color education = Color(0xff7bb60c);
