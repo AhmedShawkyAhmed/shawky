@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shawky/core/resources/color_manger.dart';
 import 'package:shawky/core/shared/widgets/default_text.dart';
 import 'package:shawky/core/utils/enums.dart';
+import 'package:shawky/core/utils/extensions.dart';
 import 'package:shawky/features/money/expenses/cubit/expenses_cubit.dart';
 import 'package:shawky/features/money/expenses/widgets/expenses_category_item_widget.dart';
 
@@ -69,7 +70,7 @@ class ExpensesStatusWidget extends StatelessWidget {
                         ),
                         DefaultText(
                           text:
-                              "${cubit.filteredExpensesList.fold(0, (num sum, e) => sum + (e.type == ExpensesType.income ? ((e.amount) * (e.rate)) : 0)).toStringAsFixed(2)} £",
+                              "${cubit.filteredExpensesList.fold(0, (num sum, e) => sum + (e.type == ExpensesType.income ? ((e.amount) * (e.rate)) : 0)).toString().toFormatNumber()} £",
                           textColor: ColorManager.green,
                           fontSize: 12.sp,
                         ),
@@ -83,7 +84,7 @@ class ExpensesStatusWidget extends StatelessWidget {
                         ),
                         DefaultText(
                           text:
-                              "${cubit.filteredExpensesList.fold(0, (num sum, e) => sum + (e.type == ExpensesType.expenses ? ((e.amount) * (e.rate)) : 0)).toStringAsFixed(2)} £",
+                              "${cubit.filteredExpensesList.fold(0, (num sum, e) => sum + (e.type == ExpensesType.expenses ? ((e.amount) * (e.rate)) : 0)).toString().toFormatNumber()} £",
                           textColor: ColorManager.red,
                           fontSize: 12.sp,
                         ),
@@ -97,7 +98,7 @@ class ExpensesStatusWidget extends StatelessWidget {
                         ),
                         DefaultText(
                           text:
-                              "${(cubit.filteredExpensesList.fold(0, (num sum, e) => sum + (e.type == ExpensesType.income ? ((e.amount) * (e.rate)) : 0)) - cubit.expensesList.fold(0, (num sum, e) => sum + (e.type == ExpensesType.expenses ? ((e.amount) * (e.rate)) : 0))).toStringAsFixed(2)} £",
+                              "${(cubit.filteredExpensesList.fold(0, (num sum, e) => sum + (e.type == ExpensesType.income ? ((e.amount) * (e.rate)) : 0)) - cubit.expensesList.fold(0, (num sum, e) => sum + (e.type == ExpensesType.expenses ? ((e.amount) * (e.rate)) : 0))).toString().toFormatNumber()} £",
                           textColor: ColorManager.orange,
                           fontSize: 12.sp,
                         ),

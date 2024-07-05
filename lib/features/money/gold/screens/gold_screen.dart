@@ -9,6 +9,7 @@ import 'package:shawky/core/services/service_locator.dart';
 import 'package:shawky/core/shared/widgets/default_floating_button.dart';
 import 'package:shawky/core/shared/widgets/default_text.dart';
 import 'package:shawky/core/shared/widgets/default_title_widget.dart';
+import 'package:shawky/core/utils/extensions.dart';
 import 'package:shawky/features/money/gold/cubit/gold_cubit.dart';
 import 'package:shawky/features/money/gold/widgets/gold_card.dart';
 import 'package:shawky/features/money/gold/widgets/total_gold_widget.dart';

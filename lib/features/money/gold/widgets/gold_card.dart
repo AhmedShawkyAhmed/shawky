@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shawky/core/resources/color_manger.dart';
 import 'package:shawky/core/shared/widgets/default_text.dart';
+import 'package:shawky/core/utils/extensions.dart';
 import 'package:shawky/features/money/gold/models/gold_model.dart';
 
 class GoldCard extends StatelessWidget {
@@ -86,7 +87,7 @@ class GoldCard extends StatelessWidget {
                 ),
                 const Spacer(),
                 DefaultText(
-                  text: "${model.price.toStringAsFixed(2)} £",
+                  text: "${model.price.toString().toFormatNumber()} £",
                   textColor: ColorManager.secondary,
                 ),
                 SizedBox(width: 10.w),

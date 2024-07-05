@@ -1,8 +1,8 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:shawky/core/resources/color_manger.dart';
 import 'package:shawky/core/shared/widgets/default_text.dart';
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shawky/core/utils/enums.dart';
 import 'package:shawky/core/utils/extensions.dart';
 import 'package:shawky/features/money/expenses/cubit/expenses_cubit.dart';
@@ -81,7 +81,8 @@ class ExpensesCard extends StatelessWidget {
                 ),
                 SizedBox(width: 5.w),
                 DefaultText(
-                  text: cubit.getExpensesCategory(model.category).toCapitalized(),
+                  text:
+                      cubit.getExpensesCategory(model.category).toCapitalized(),
                   fontSize: 12.sp,
                 ),
                 SizedBox(width: 10.w),
@@ -109,7 +110,8 @@ class ExpensesCard extends StatelessWidget {
                 ),
                 const Spacer(),
                 DefaultText(
-                  text: "${(model.amount * model.rate).toStringAsFixed(2)} £",
+                  text:
+                      "${(model.amount * model.rate).toString().toFormatNumber()} £",
                   textColor: model.type == ExpensesType.income
                       ? ColorManager.green
                       : model.type == ExpensesType.transfer

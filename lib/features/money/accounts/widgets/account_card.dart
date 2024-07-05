@@ -52,13 +52,13 @@ class AccountCard extends StatelessWidget {
                   ),
                   DefaultText(
                     text:
-                        "${model.amount?.toStringAsFixed(2)} ${model.currency!.name.toUpperCase()}",
+                        "${model.amount?.toString().toFormatNumber()} ${model.currency!.name.toUpperCase()}",
                     fontSize: 17.sp,
                   ),
                   if (model.currency != Currency.egp)
                     DefaultText(
                       text:
-                          "${((model.amount ?? 0) * (model.currency == Currency.egp ? 1 : (Globals.settings?.rate ?? 0))).toStringAsFixed(2)} ${Currency.egp.name.toUpperCase()}",
+                          "${((model.amount ?? 0) * (model.currency == Currency.egp ? 1 : (Globals.settings?.rate ?? 0))).toString().toFormatNumber()} ${Currency.egp.name.toUpperCase()}",
                       fontSize: 11.sp,
                     ),
                   const Spacer(),
@@ -79,7 +79,7 @@ class AccountCard extends StatelessWidget {
               width: 50.w,
               child: PercentageWidget(
                 target: total,
-                current: ((model.amount ?? 0) *
+                current: (((model.amount ?? 0) < 0 ? 0 : (model.amount ?? 0)) *
                     (model.currency == Currency.egp
                         ? 1
                         : (Globals.settings?.rate ?? 1))),

@@ -19,7 +19,7 @@ class ColorManager {
 }
 
 class ExpensesCategoryColors {
-  static const Color salary = Color(0xff12bb00);
+  static const Color salary = Color(0xff0f7200);
   static const Color profit = Color(0xff5902e8);
   static const Color home = Color(0xfff05527);
   static const Color internet = Color(0xff953041);
@@ -31,7 +31,7 @@ class ExpensesCategoryColors {
   static const Color electricity = Color(0xffd9952f);
   static const Color mobile = Color(0xff8f29f8);
   static const Color fund = Color(0xff257d8f);
-  static const Color food = Color(0xff4a9c49);
+  static const Color food = Color(0xff62ab61);
   static const Color entertainment = Color(0xff491b4a);
   static const Color clothing = Color(0xff5296a4);
   static const Color transportation = Color(0xff154fa1);

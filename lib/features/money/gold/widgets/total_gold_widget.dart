@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shawky/core/resources/color_manger.dart';
 import 'package:shawky/core/resources/globals.dart';
 import 'package:shawky/core/shared/widgets/default_text.dart';
+import 'package:shawky/core/utils/extensions.dart';
 
 class TotalGoldWidget extends StatelessWidget {
   final String grams;
@@ -48,13 +49,13 @@ class TotalGoldWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               DefaultText(
-                text: "$price EGP",
+                text: "${price.toFormatNumber()} EGP",
                 fontSize: 17.sp,
               ),
               SizedBox(height: 3.h),
               DefaultText(
                 text:
-                    "${double.parse(grams) * (Globals.settings?.gold ?? 1)} EGP",
+                    "${(double.parse(grams) * (Globals.settings?.gold ?? 1)).toString().toFormatNumber()} EGP",
                 fontSize: 17.sp,
                 textColor: double.parse(price) >
                         double.parse(grams) * (Globals.settings?.gold ?? 1)

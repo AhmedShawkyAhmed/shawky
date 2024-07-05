@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:shawky/core/resources/color_manger.dart';
 import 'package:shawky/core/shared/widgets/default_text.dart';
 import 'package:shawky/core/shared/widgets/percentage_widget.dart';
+import 'package:shawky/core/utils/extensions.dart';
 import 'package:shawky/features/money/savings/models/saving_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -73,7 +74,7 @@ class SavingCard extends StatelessWidget {
                         fontSize: 13.sp,
                       ),
                       DefaultText(
-                        text: "${model.target ?? 0} £",
+                        text: "${(model.target ?? 0).toString().toFormatNumber()} £",
                         fontSize: 13.sp,
                       ),
                     ],
@@ -90,11 +91,11 @@ class SavingCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       DefaultText(
-                        text: "${(model.current ?? 0).toStringAsFixed(2)} £",
+                        text: "${(model.current ?? 0).toString().toFormatNumber()} £",
                         fontSize: 12.sp,
                       ),
                       DefaultText(
-                        text: "${((model.target ?? 0) - (model.current ?? 0)).toStringAsFixed(2)} £",
+                        text: "${((model.target ?? 0) - (model.current ?? 0)).toString().toFormatNumber()} £",
                         fontSize: 12.sp,
                       ),
                     ],
