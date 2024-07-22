@@ -29,7 +29,7 @@ class AccountCard extends StatelessWidget {
     return Container(
       width: 100.w,
       padding:
-          EdgeInsetsDirectional.symmetric(horizontal: 15.w, vertical: 10.h),
+          EdgeInsetsDirectional.symmetric(horizontal: 15.w, vertical: 5.h),
       decoration: BoxDecoration(
         color: ColorManager.white,
         borderRadius: BorderRadius.circular(15.r),

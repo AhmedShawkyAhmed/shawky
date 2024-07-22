@@ -20,9 +20,14 @@ class TotalGoldWidget extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: 100.h,
-      margin: EdgeInsetsDirectional.symmetric(horizontal: 15.w, vertical: 10.h),
-      padding:
-          EdgeInsetsDirectional.symmetric(horizontal: 15.w, vertical: 10.h),
+      margin: EdgeInsetsDirectional.symmetric(
+        horizontal: 15.w,
+        vertical: 10.h,
+      ),
+      padding: EdgeInsetsDirectional.symmetric(
+        horizontal: 15.w,
+        vertical: 10.h,
+      ),
       decoration: BoxDecoration(
         color: ColorManager.white,
         borderRadius: BorderRadius.circular(15.r),
@@ -42,6 +47,11 @@ class TotalGoldWidget extends StatelessWidget {
                 text: "$grams Grams",
                 fontSize: 17.sp,
               ),
+              // SizedBox(height: 3.h),
+              // DefaultText(
+              //   text: "${price.toFormatNumber()} EGP",
+              //   fontSize: 17.sp,
+              // ),
             ],
           ),
           Column(
@@ -49,18 +59,34 @@ class TotalGoldWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               DefaultText(
-                text: "${price.toFormatNumber()} EGP",
-                fontSize: 17.sp,
-              ),
-              SizedBox(height: 3.h),
-              DefaultText(
                 text:
                     "${(double.parse(grams) * (Globals.settings?.gold ?? 1)).toString().toFormatNumber()} EGP",
-                fontSize: 17.sp,
-                textColor: double.parse(price) >
-                        double.parse(grams) * (Globals.settings?.gold ?? 1)
-                    ? ColorManager.red
-                    : ColorManager.green,
+                fontSize: 18.sp,
+              ),
+              SizedBox(height: 3.h),
+              Row(
+                children: [
+                  DefaultText(
+                    text:
+                        "${((double.parse(grams) * (Globals.settings?.gold ?? 1)) - double.parse(price)).toString().toFormatNumber()} EGP",
+                    fontSize: 14.sp,
+                    textColor: double.parse(price) >
+                            double.parse(grams) * (Globals.settings?.gold ?? 1)
+                        ? ColorManager.red
+                        : ColorManager.green,
+                  ),
+                  Icon(
+                    double.parse(price) >
+                            double.parse(grams) * (Globals.settings?.gold ?? 1)
+                        ? Icons.arrow_drop_down_outlined
+                        : Icons.arrow_drop_up_outlined,
+                    size: 20.sp,
+                    color: double.parse(price) >
+                            double.parse(grams) * (Globals.settings?.gold ?? 1)
+                        ? ColorManager.red
+                        : ColorManager.green,
+                  ),
+                ],
               ),
             ],
           ),

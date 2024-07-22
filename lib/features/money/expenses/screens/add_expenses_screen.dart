@@ -75,23 +75,25 @@ class _AddExpensesScreenState extends State<AddExpensesScreen> {
               ),
               BlocBuilder<AccountsCubit, AccountsState>(
                 builder: (context, state) {
-                  return widget.args.cubit.expensesType != ExpensesType.income
-                      ? DefaultDropdown<AccountModel>(
+                  return Column(
+                    children: [
+                      if (widget.args.cubit.expensesType != ExpensesType.income)
+                        DefaultDropdown<AccountModel>(
                           items: accountsCubit.moneyAccounts,
                           hint: "From Account",
-                          itemAsString: (AccountModel? u) =>
-                              u!.name!,
+                          itemAsString: (AccountModel? u) => u!.name!,
                           onChanged: widget.args.cubit.changeFromAccount,
-                        )
-                      : widget.args.cubit.expensesType != ExpensesType.expenses
-                          ? DefaultDropdown<AccountModel>(
-                              items: accountsCubit.moneyAccounts,
-                              hint: "To Account",
-                              itemAsString: (AccountModel? u) =>
-                                  u!.name!,
-                              onChanged: widget.args.cubit.changeToAccount,
-                            )
-                          : const SizedBox();
+                        ),
+                      if (widget.args.cubit.expensesType !=
+                          ExpensesType.expenses)
+                        DefaultDropdown<AccountModel>(
+                          items: accountsCubit.moneyAccounts,
+                          hint: "To Account",
+                          itemAsString: (AccountModel? u) => u!.name!,
+                          onChanged: widget.args.cubit.changeToAccount,
+                        ),
+                    ],
+                  );
                 },
               ),
               DefaultDropdown<Currency>(
