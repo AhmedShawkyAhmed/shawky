@@ -1,18 +1,18 @@
 import 'package:shawky/features/home/cubit/home_cubit.dart';
 import 'package:shawky/features/money/accounts/cubit/accounts_cubit.dart';
-import 'package:shawky/features/money/accounts/database/accounts_database.dart';
+import 'package:shawky/features/money/accounts/data/database/accounts_database.dart';
 import 'package:shawky/features/money/cards/cubit/cards_cubit.dart';
-import 'package:shawky/features/money/cards/database/cards_database.dart';
+import 'package:shawky/features/money/cards/data/database/cards_database.dart';
 import 'package:shawky/features/money/expenses/cubit/expenses_cubit.dart';
-import 'package:shawky/features/money/expenses/database/expenses_database.dart';
+import 'package:shawky/features/money/expenses/data/database/expenses_database.dart';
 import 'package:shawky/features/money/gold/cubit/gold_cubit.dart';
-import 'package:shawky/features/money/gold/database/gold_database.dart';
+import 'package:shawky/features/money/gold/data/database/gold_database.dart';
 import 'package:shawky/features/money/savings/cubit/savings_cubit.dart';
-import 'package:shawky/features/money/savings/database/saving_database.dart';
+import 'package:shawky/features/money/savings/data/database/saving_database.dart';
 import 'package:shawky/features/profiles/cubit/profiles_cubit.dart';
-import 'package:shawky/features/profiles/database/profiles_database.dart';
+import 'package:shawky/features/profiles/data/database/profiles_database.dart';
 import 'package:shawky/features/settings/cubit/settings_cubit.dart';
-import 'package:shawky/features/settings/database/settings_database.dart';
+import 'package:shawky/features/settings/data/database/settings_database.dart';
 import 'package:shawky/features/splash/cubit/splash_cubit.dart';
 import 'package:get_it/get_it.dart';
 

@@ -10,11 +10,11 @@ import 'package:shawky/core/services/service_locator.dart';
 import 'package:shawky/core/utils/enums.dart';
 import 'package:shawky/core/utils/shared_functions.dart';
 import 'package:shawky/features/money/accounts/cubit/accounts_cubit.dart';
-import 'package:shawky/features/money/accounts/models/account_model.dart';
-import 'package:shawky/features/money/expenses/constants/expenses_constants.dart';
-import 'package:shawky/features/money/expenses/database/expenses_database.dart';
-import 'package:shawky/features/money/expenses/models/expenses_category_model.dart';
-import 'package:shawky/features/money/expenses/models/expenses_model.dart';
+import 'package:shawky/features/money/accounts/data/models/account_model.dart';
+import 'package:shawky/features/money/expenses/data/constants/expenses_constants.dart';
+import 'package:shawky/features/money/expenses/data/database/expenses_database.dart';
+import 'package:shawky/features/money/expenses/data/models/expenses_category_model.dart';
+import 'package:shawky/features/money/expenses/data/models/expenses_model.dart';
 
 part 'expenses_state.dart';
 

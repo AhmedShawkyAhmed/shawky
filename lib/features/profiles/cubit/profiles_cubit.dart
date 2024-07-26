@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:shawky/core/services/navigation_service.dart';
 import 'package:shawky/core/utils/enums.dart';
 import 'package:shawky/core/utils/shared_functions.dart';
-import 'package:shawky/features/profiles/database/profiles_database.dart';
-import 'package:shawky/features/profiles/models/profile_model.dart';
+import 'package:shawky/features/profiles/data/database/profiles_database.dart';
+import 'package:shawky/features/profiles/data/models/profile_model.dart';
 
 part 'profiles_state.dart';
 

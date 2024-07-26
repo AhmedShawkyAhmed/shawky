@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:shawky/core/services/navigation_service.dart';
 import 'package:shawky/core/utils/enums.dart';
 import 'package:shawky/core/utils/shared_functions.dart';
-import 'package:shawky/features/money/accounts/database/accounts_database.dart';
-import 'package:shawky/features/money/accounts/models/account_model.dart';
+import 'package:shawky/features/money/accounts/data/database/accounts_database.dart';
+import 'package:shawky/features/money/accounts/data/models/account_model.dart';
 
 part 'accounts_state.dart';
 

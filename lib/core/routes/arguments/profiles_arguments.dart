@@ -1,5 +1,5 @@
 import 'package:shawky/features/profiles/cubit/profiles_cubit.dart';
-import 'package:shawky/features/profiles/models/profile_model.dart';
+import 'package:shawky/features/profiles/data/models/profile_model.dart';
 
 class ProfilesArguments {
   final ProfilesCubit cubit;

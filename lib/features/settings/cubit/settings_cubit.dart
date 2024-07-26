@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:shawky/core/resources/globals.dart';
 import 'package:shawky/core/services/navigation_service.dart';
 import 'package:shawky/core/utils/shared_functions.dart';
-import 'package:shawky/features/settings/database/settings_database.dart';
-import 'package:shawky/features/settings/models/settings_model.dart';
+import 'package:shawky/features/settings/data/database/settings_database.dart';
+import 'package:shawky/features/settings/data/models/settings_model.dart';
 
 part 'settings_state.dart';
 

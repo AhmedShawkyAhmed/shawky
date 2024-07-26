@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:shawky/core/resources/color_manger.dart';
 import 'package:shawky/core/services/navigation_service.dart';
 import 'package:shawky/core/utils/shared_functions.dart';
-import 'package:shawky/features/money/gold/database/gold_database.dart';
-import 'package:shawky/features/money/gold/models/gold_model.dart';
+import 'package:shawky/features/money/gold/data/database/gold_database.dart';
+import 'package:shawky/features/money/gold/data/models/gold_model.dart';
 
 part 'gold_state.dart';
 
